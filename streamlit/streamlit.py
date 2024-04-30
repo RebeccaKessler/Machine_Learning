@@ -75,34 +75,6 @@ def load_data(username):
     c.execute('SELECT preface, prediction FROM user_data WHERE username = ?', (username,))
     return c.fetchall()  
 
-
-# Sidebar
-st.sidebar.title('Difficulty Level Predictor')
-if 'username' not in st.session_state:
-    st.sidebar.markdown('**🔑 Login to save the predictions to your library**')
-    username = st.sidebar.text_input("Username", key="unique_username_input")
-    if st.sidebar.button("Login", key="login_button"):
-        st.session_state.username = username
-        st.experimental_rerun()  # Rerun to update UI
-
-if 'username' in st.session_state:
-    st.sidebar.markdown(f"Welcome **{st.session_state.username}**!")
-
-# Display user's library in the main content
-if 'username' in st.session_state and st.sidebar.button("Show My Library", key="show_library_button"):
-    user_data = load_data(st.session_state.username)
-    if user_data:
-        st.subheader('My Library')
-        for preface, prediction in user_data:
-            st.write("Preface:", preface)
-            st.write("Prediction:", prediction)
-    else:
-        st.write("No data found in your library.")
-
-# File uploader in the sidebar
-st.sidebar.subheader('📄 Upload the Cover Text of your Book')
-uploaded_file = st.sidebar.file_uploader("", type=["pdf", "docx"])
-
 # Main content
 st.markdown('<div class="header-style">', unsafe_allow_html=True)
 st.markdown('<p class="big-font">📚 Bookly</p>', unsafe_allow_html=True)
@@ -138,6 +110,33 @@ if uploaded_file is not None:
     st.markdown('<div class="result-box"><p class="pred-font">' + prediction[0] + '</p></div>', unsafe_allow_html=True)
 else:
     st.sidebar.warning('Please upload a PDF or Word document.')
+
+# Sidebar
+st.sidebar.title('Difficulty Level Predictor')
+if 'username' not in st.session_state:
+    st.sidebar.markdown('**🔑 Login to save the predictions to your library**')
+    username = st.sidebar.text_input("Username", key="unique_username_input")
+    if st.sidebar.button("Login", key="login_button"):
+        st.session_state.username = username
+        st.experimental_rerun()  # Rerun to update UI
+
+if 'username' in st.session_state:
+    st.sidebar.markdown(f"Welcome **{st.session_state.username}**!")
+
+# Display user's library in the main content
+if 'username' in st.session_state and st.sidebar.button("Show My Library", key="show_library_button"):
+    user_data = load_data(st.session_state.username)
+    if user_data:
+        st.subheader('My Library')
+        for preface, prediction in user_data:
+            st.write("Preface:", preface)
+            st.write("Prediction:", prediction)
+    else:
+        st.write("No data found in your library.")
+
+# File uploader in the sidebar
+st.sidebar.subheader('📄 Upload the Cover Text of your Book')
+uploaded_file = st.sidebar.file_uploader("", type=["pdf", "docx"])
 
 # Save to profile functionality
 if 'username' in st.session_state and uploaded_file is not None:
