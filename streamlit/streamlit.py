@@ -39,12 +39,6 @@ st.markdown(
         border-radius: 5px;
         margin-top: 10px;
     }
-    .library-container {
-        background-color: white;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
-    }
     </style>
     """, unsafe_allow_html=True
 )
@@ -100,19 +94,15 @@ if 'username' in st.session_state:
     st.sidebar.subheader(f"👋🏼 Welcome **{st.session_state.username}**!")
 
 # Library button logic
-if 'username' in st.session_state:
-    if st.sidebar.button("Show My Library"):
-        user_data = load_data(st.session_state.username)
-        if user_data:
-            with st.container():
-                st.markdown('<div class="library-container">', unsafe_allow_html=True)
-                st.subheader('My Library')
-                for title, prediction in user_data:
-                    st.write(f"Title: {title}")
-                    st.write(f"Prediction: {prediction}")
-                st.markdown('</div>', unsafe_allow_html=True)
-        else:
-            st.error("No data found in your library.")
+if 'username' in st.session_state and st.sidebar.button("Show My Library"):
+    user_data = load_data(st.session_state.username)
+    if user_data:
+        st.subheader('My Library')
+        for title, prediction in user_data:
+            st.write("Title:", title)
+            st.write("Prediction:", prediction)
+    else:
+        st.write("No data found in your library.")
 
 # File uploader in the sidebar
 st.sidebar.subheader('📄 Upload the Cover Text of your Book')
