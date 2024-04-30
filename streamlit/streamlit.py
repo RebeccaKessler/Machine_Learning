@@ -15,7 +15,7 @@ st.markdown(
         font-family:Helvetica; 
         font-size:100px !important; 
         font-weight: bold;
-        color: #FF4B4B;
+        color: #FDBA74;
     }
     .pred-font {
         font-family:Helvetica; 
