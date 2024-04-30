@@ -88,6 +88,7 @@ if 'username' not in st.session_state:
     username = st.sidebar.text_input("Username", key="unique_username_input")
     if st.sidebar.button("Login", key="login_button"):
         st.session_state.username = username
+        st.experimental_rerun()
 
 if 'username' in st.session_state:
     st.sidebar.markdown(f"Welcome **{st.session_state.username}**!")
