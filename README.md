@@ -5,10 +5,10 @@
 
 In this report, you can find the following sections:
 - [Team Approach and Task Division](#team-Approach-and-Task-Division)
-- [Comparison of Different Models](#chapter-2)
-- [Final Model](#chapter-3)
-- [Application of the Model](#chapter-4)
-- [Final Words](#chapter-5)
+- [Comparison of Different Models](#Comparison-of-Different-Models)
+- [Final Model](#Final-Model)
+- [Application of the Model](#Application-of-the-Model)
+- [Final Words](#Final-Words)
 
 
 # Team Approach and Task Division
