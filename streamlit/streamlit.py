@@ -88,16 +88,6 @@ if 'username' not in st.session_state:
 if 'username' in st.session_state:
     st.sidebar.markdown(f"Welcome **{st.session_state.username}**!")
 
-# File uploader in the sidebar
-st.sidebar.subheader('📄 Upload the Cover Text of your Book')
-uploaded_file = st.sidebar.file_uploader("", type=["pdf", "docx"])
-
-# Main content
-st.markdown('<div class="header-style">', unsafe_allow_html=True)
-st.markdown('<p class="big-font">📚 Bookly</p>', unsafe_allow_html=True)
-st.subheader('This app allows you to predict the French difficulty level of a book. Never worry again about whether or not your French skills are sufficient to read a book. Use Bookly and find it out within seconds!')
-st.markdown('</div>', unsafe_allow_html=True)
-
 # Display user's library in the main content
 if 'username' in st.session_state and st.sidebar.button("Show My Library", key="show_library_button"):
     user_data = load_data(st.session_state.username)
@@ -108,6 +98,17 @@ if 'username' in st.session_state and st.sidebar.button("Show My Library", key="
             st.write("Prediction:", prediction)
     else:
         st.write("No data found in your library.")
+
+# File uploader in the sidebar
+st.sidebar.subheader('📄 Upload the Cover Text of your Book')
+uploaded_file = st.sidebar.file_uploader("", type=["pdf", "docx"])
+
+# Main content
+st.markdown('<div class="header-style">', unsafe_allow_html=True)
+st.markdown('<p class="big-font">📚 Bookly</p>', unsafe_allow_html=True)
+st.subheader('This app allows you to predict the French difficulty level of a book. Never worry again about whether or not your French skills are sufficient to read a book. Use Bookly and find it out within seconds!')
+st.markdown('</div>', unsafe_allow_html=True)
+
 
 if uploaded_file is not None:
     if uploaded_file.type == "text/plain":
