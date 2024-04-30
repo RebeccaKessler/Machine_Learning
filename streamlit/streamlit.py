@@ -81,14 +81,15 @@ st.markdown('<p class="big-font">📚 Bookly</p>', unsafe_allow_html=True)
 st.subheader('This app allows you to predict the French difficulty level of a book. Never worry again about whether or not your French skills are sufficient to read a book. Use Bookly and find it out within seconds!')
 st.markdown('</div>', unsafe_allow_html=True)
 
-# Sidebar
+#Sidebar
 st.sidebar.title('Difficulty Level Predictor')
-if 'username' not in st.session_state:
-    st.sidebar.markdown('**🔑 Login to save the predictions to your library**')
-    username = st.sidebar.text_input("Username", key="unique_username_input")
-    if st.sidebar.button("Login", key="login_button"):
+with st.sidebar.form("login_form", clear_on_submit=False):
+    st.markdown('**🔑 Login to save the predictions to your library**')
+    username = st.text_input("Username", key="unique_username_input")
+    submit_button = st.form_submit_button("Login")
+    if submit_button:
         st.session_state.username = username
-        st.experimental_rerun()
+        st.experimental_rerun() 
 
 if 'username' in st.session_state:
     st.sidebar.subheader(f"👋🏼 Welcome **{st.session_state.username}**!")
