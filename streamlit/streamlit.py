@@ -56,8 +56,6 @@ model_LR, vectorizer = load_model(url)
 # Initialize connection
 conn = sqlite3.connect('data.db')
 c = conn.cursor()
-
-# Create table
 c.execute('''
     CREATE TABLE IF NOT EXISTS user_data (
         username TEXT,
@@ -79,36 +77,37 @@ def load_data(username):
 
 
 # Sidebar
-st.sidebar.markdown('<div class="sidebar-style">', unsafe_allow_html=True)
 st.sidebar.title('Difficulty Level Predictor')
-st.sidebar.markdown('**🔑 Login to save the predictions to your library**')
-
-# User login logic
 if 'username' not in st.session_state:
+    st.sidebar.markdown('**🔑 Login to save the predictions to your library**')
     username = st.sidebar.text_input("Username", key="unique_username_input")
     if st.sidebar.button("Login", key="login_button"):
         st.session_state.username = username
+        st.experimental_rerun()  # Rerun to update UI
 
 if 'username' in st.session_state:
     st.sidebar.markdown(f"Welcome **{st.session_state.username}**!")
 
-# Add functionality to show saved entries
-if st.sidebar.button("Show My Library"):
-    user_data = load_data(st.session_state.username)
-    for preface, prediction in user_data:
-        st.write("Preface:", preface)
-        st.write("Prediction:", prediction)
-
 # File uploader in the sidebar
 st.sidebar.subheader('📄 Upload the Cover Text of your Book')
 uploaded_file = st.sidebar.file_uploader("", type=["pdf", "docx"])
-st.sidebar.markdown('</div>', unsafe_allow_html=True)
 
 # Main content
 st.markdown('<div class="header-style">', unsafe_allow_html=True)
 st.markdown('<p class="big-font">📚 Bookly</p>', unsafe_allow_html=True)
 st.subheader('This app allows you to predict the French difficulty level of a book. Never worry again about whether or not your French skills are sufficient to read a book. Use Bookly and find it out within seconds!')
 st.markdown('</div>', unsafe_allow_html=True)
+
+# Display user's library in the main content
+if 'username' in st.session_state and st.sidebar.button("Show My Library", key="show_library_button"):
+    user_data = load_data(st.session_state.username)
+    if user_data:
+        st.subheader('My Library')
+        for preface, prediction in user_data:
+            st.write("Preface:", preface)
+            st.write("Prediction:", prediction)
+    else:
+        st.write("No data found in your library.")
 
 if uploaded_file is not None:
     if uploaded_file.type == "text/plain":
@@ -139,21 +138,8 @@ if uploaded_file is not None:
 else:
     st.sidebar.warning('Please upload a PDF or Word document.')
 
-if 'username' in st.session_state:
-    # Add save functionality within the file processing section
-    if uploaded_file is not None:
-        if st.button("Save to Profile"):
-            save_data(st.session_state.username, preface_text, prediction)
-            st.success("Saved!")
-if 'username' in st.session_state:
-    if st.sidebar.button("Show My Library", key="show_library"):
-        user_data = load_data(st.session_state.username)
-        if user_data:
-            st.sidebar.markdown('### My Library')
-            preface_selection = st.sidebar.selectbox("Select a preface to view details:", 
-                                                     options=[(preface, prediction) for preface, prediction in user_data], 
-                                                     format_func=lambda x: x[0][:50] + '...')  # Display first 50 characters
-            st.write("Preface:", preface_selection[0])
-            st.write("Prediction:", preface_selection[1])
-        else:
-            st.sidebar.write("No data found in your library.")
+# Save to profile functionality
+if 'username' in st.session_state and uploaded_file is not None:
+    if st.button("Save to Profile"):
+        save_data(st.session_state.username, preface_text, prediction)
+        st.success("Saved!")
