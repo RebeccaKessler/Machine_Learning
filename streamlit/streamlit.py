@@ -34,7 +34,7 @@ st.markdown(
     }
     .result-box {
         background-color: #C8E6C9; 
-        padding: 10px;
+        padding: 20px;
         border-radius: 5px;
         margin-top: 10px;
     }
