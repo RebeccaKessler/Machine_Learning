@@ -11,10 +11,9 @@ st.markdown(
     """
     <style>
     .big-font {
-        font-family: 'Arial Black', sans-serif; 
-        font-size:30px !important; 
+        font-family:Helvetica; 
+        font-size:22px !important; 
         font-weight: bold;
-        color: #1E88E5;
     }
     .pred-font {
         font-family:Helvetica; 
@@ -23,8 +22,7 @@ st.markdown(
     }
     .sidebar-style {
         background-color: #FDBA74;  /* Light orange background */
-        padding: 20px;
-        border-radius: 0px 15px 15px 0px;
+        padding: 10px;
     }
     .header-style {
         background-color: #E8EAF6;
@@ -47,9 +45,12 @@ url = 'https://github.com/RebeccaKessler/Machine_Learning/blob/main/streamlit/mo
 model_LR, vectorizer = load_model(url)
 
 # Sidebar
-st.markdown('<div class="sidebar-style">', unsafe_allow_html=True)
+st.sidebar.markdown('<div class="sidebar-style">', unsafe_allow_html=True)
 st.sidebar.title('📚 Difficulty Level Predictor')
 st.sidebar.subheader('📄 Upload a Book Preface')
+
+# File uploader in the sidebar
+uploaded_file = st.sidebar.file_uploader("", type=["txt", "docx"])
 st.sidebar.markdown('</div>', unsafe_allow_html=True)
 
 # Main content
@@ -75,6 +76,6 @@ if uploaded_file is not None:
         prediction = model_LR.predict(preface_transformed)
 
     st.subheader('Predicted Difficulty Level')
-    st.write(f"{prediction[0]} 🔮")
+    st.write(prediction[0])
 else:
     st.sidebar.warning('Please upload a text or Word document.')
