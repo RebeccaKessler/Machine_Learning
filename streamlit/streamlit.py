@@ -91,7 +91,7 @@ if 'username' not in st.session_state:
         st.experimental_rerun()
 
 if 'username' in st.session_state:
-    st.sidebar.subheader(f"Welcome **{st.session_state.username}**!")
+    st.sidebar.subheader(f"👋🏼 Welcome **{st.session_state.username}**!")
 
 if 'username' in st.session_state and st.sidebar.button("Show My Library"):
     user_data = load_data(st.session_state.username)
