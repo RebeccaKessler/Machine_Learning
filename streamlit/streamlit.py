@@ -14,10 +14,13 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 import pickle
 
+url = "https://github.com/RebeccaKessler/Machine_Learning/blob/main/streamlit/model_LR.pkl"
+
 def load_model():
-    with open('model_LR.pkl', 'rb') as file:
+    with open('url', 'rb') as file:
         data = pickle.load(file)
     return data
+
 
 #load model and vectorizer
 model_LR, vectorizer = load_model()
