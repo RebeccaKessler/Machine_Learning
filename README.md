@@ -22,6 +22,14 @@ Hence, we distirbuted the tasks among the members accordingly:
 
 #### 2.) Comparison of Different Models
 
+
+| Metric    | Logistic Regression | KNN | Decision Tree | Random Forest | Any other technique |
+|-----------|---------------------|-----|---------------|---------------|---------------------|
+| Precision |                     |     |               |               |                     |
+| Recall    |                     |     |               |               |                     |
+| F1-score  |                     |     |               |               |                     |
+| Accuracy  |                     |     |               |               |                     |
+
 #### 3.) Final Model
 
 #### 4.) Application of the Model
