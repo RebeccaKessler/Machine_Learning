@@ -67,13 +67,15 @@ conn.commit()
 
 # Function to save data
 def save_data(username, preface, prediction):
+    if isinstance(prediction, bytes):
+        prediction = prediction.decode('utf-8')
     c.execute('INSERT INTO user_data (username, preface, prediction) VALUES (?, ?, ?)', (username, preface, prediction))
     conn.commit()
 
 # Function to load user data
 def load_data(username):
     c.execute('SELECT preface, prediction FROM user_data WHERE username = ?', (username,))
-    return c.fetchall()  
+    return [(preface, prediction) for preface, prediction in c.fetchall()]  
 
 # Main content
 st.markdown('<div class="header-style">', unsafe_allow_html=True)
@@ -100,7 +102,9 @@ if 'username' in st.session_state and st.sidebar.button("Show My Library", key="
         st.subheader('My Library')
         for preface, prediction in user_data:
             st.write("Preface:", preface)
-            st.write("Prediction:", prediction)
+            if isinstance(prediction, bytes):
+                prediction = prediction.decode('utf-8')
+            st.write("Prediction:", prediction))
     else:
         st.write("No data found in your library.")
 
