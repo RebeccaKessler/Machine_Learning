@@ -1,7 +1,7 @@
 # Machine_Learning
 
 
-Welcome to the Swatch report. 
+Welcome to final report of the Group Swatch 
 
 In this report, you can find the following sections:
 1.) Team Approach and Task Division
