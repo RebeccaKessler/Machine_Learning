@@ -131,10 +131,10 @@ if uploaded_file is not None:
     # Progress bar during prediction
     with st.spinner('🔍 Predicting difficulty level...'):
         preface_transformed = vectorizer.transform([preface_text])
-        prediction = model_LR.predict(preface_transformed)[0]
+        prediction = model_LR.predict(preface_transformed)
  
 st.subheader('💡 Predicted Difficulty Level')
-st.markdown('<div class="result-box"><p class="pred-font">{prediction}</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="result-box"><p class="pred-font"> + prediction[0] + '</p></div>', unsafe_allow_html=True)
 
 # Save to profile functionality
 if st.button("Save to Profile"):
