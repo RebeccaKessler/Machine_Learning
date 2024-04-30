@@ -19,18 +19,14 @@ st.markdown(
     }
     .big-font {
         font-family:Helvetica; 
-        font-size:100px !important; 
+        font-size:100px 
         font-weight: bold;
         color: #FDBA74;
     }
     .pred-font {
         font-family:Helvetica; 
         color: #FF4B4B;
-        font-size:24px !important; 
-    }
-    }
-    .css-1adrfps {
-        background-color: #33425B;
+        font-size:24px 
     }
     .header-style {
         padding: 20px;
@@ -60,7 +56,7 @@ model_LR, vectorizer = load_model(url)
 # Sidebar
 st.sidebar.markdown('<div class="sidebar-style">', unsafe_allow_html=True)
 st.sidebar.title('Difficulty Level Predictor')
-st.sidebar.text('This app allows you to predict the French difficulty level of a book. Never worry again about whether or not your French skills are sufficient to read a book. Use Bookly and find it out within seconds!')
+st.sidebar.subheader('This app allows you to predict the French difficulty level of a book. Never worry again about whether or not your French skills are sufficient to read a book. Use Bookly and find it out within seconds!')
 st.sidebar.subheader('📄 Upload the Cover Text of your Book')
 
 # File uploader in the sidebar
