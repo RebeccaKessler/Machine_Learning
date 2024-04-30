@@ -12,7 +12,7 @@ st.markdown(
     """
     <style>
     .stApp {
-        background-image: url("https://github.com/RebeccaKessler/Machine_Learning/blob/main/streamlit/book-composition-with-open-book_23-2147690555.jpg.avif");
+        background-image: url("https://github.com/RebeccaKessler/Machine_Learning/blob/main/streamlit/book-composition-with-open-book_23-2147690555.jpg.avif?raw=true");
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
