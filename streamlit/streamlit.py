@@ -72,6 +72,7 @@ def load_model(url):
     data = pickle.loads(response.content)
     return data
 
+#import our final model
 url = 'https://github.com/RebeccaKessler/Machine_Learning/blob/main/streamlit/model_LR.pkl?raw=true'
 model_LR, vectorizer = load_model(url)
 
@@ -82,18 +83,18 @@ st.subheader('This app allows you to predict the French difficulty level of a bo
 st.markdown('</div>', unsafe_allow_html=True)
 
 #Sidebar
-with st.sidebar.form("login_form", clear_on_submit=False):
-    st.markdown('**🔑 Login to save the predictions to your library**')
-    username = st.text_input("Username", key="unique_username_input")
-    submit_button = st.form_submit_button("Login")
-    if submit_button:
-        st.session_state.username = username
-        st.experimental_rerun() 
-
-if 'username' in st.session_state:
+if 'username' not in st.session_state:
+    with st.sidebar.form("login_form", clear_on_submit=False):
+        st.markdown('**🔑 Login to save the predictions to your library**')
+        username = st.text_input("Username", key="unique_username_input")
+        submitted = st.form_submit_button("Login")
+        if submitted:
+            st.session_state.username = username
+            st.experimental_rerun()
+else:
     st.sidebar.subheader(f"👋🏼 Welcome **{st.session_state.username}**!")
 
-# Library button logic
+# Library button logic in sidebae
 if 'username' in st.session_state and st.sidebar.button("Show My Library"):
     user_data = load_data(st.session_state.username)
     if user_data:
@@ -112,6 +113,7 @@ uploaded_file = st.sidebar.file_uploader("", type=["pdf", "docx"])
 if uploaded_file is not None:
     book_title = st.sidebar.text_input("Enter the book title", key="book_title")
 
+#run model for prediction
 if uploaded_file is not None:
     if uploaded_file.type == "text/plain":
         preface_text = str(uploaded_file.read(), 'utf-8')
@@ -126,7 +128,8 @@ if uploaded_file is not None:
         # Read as DOCX file
         doc = Document(uploaded_file)
         preface_text = "\n".join([para.text for para in doc.paragraphs])
-    
+
+    #print result of prediction
     st.write("### 📄 Uploaded Preface")
     st.text_area("", preface_text, height=250, help="This is the preface text extracted from your document.")
 
