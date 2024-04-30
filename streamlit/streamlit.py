@@ -3,6 +3,7 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 import pickle
+import requests
 
 url = 'https://github.com/RebeccaKessler/Machine_Learning/blob/main/streamlit/model_LR.pkl?raw=true'
 
@@ -12,7 +13,7 @@ def load_model(url):
     return data
 
 #load model and vectorizer
-model_LR, vectorizer = load_model()
+model_LR, vectorizer = load_model(url)
 
 st.title('Book Difficulty Prediction App')
 st.header('Upload the Preface of a Book')
