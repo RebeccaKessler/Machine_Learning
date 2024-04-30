@@ -4,7 +4,7 @@
 ## Welcome to final report of the Group Swatch 
 
 In this report, you can find the following sections:
-- [Team Approach and Task Division](#chapter-1)
+- [Team Approach and Task Division](#Team Approach and Task Division)
 - [Comparison of Different Models](#chapter-2)
 - [Final Model](#chapter-3)
 - [Application of the Model](#chapter-4)
