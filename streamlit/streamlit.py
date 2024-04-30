@@ -139,7 +139,7 @@ if uploaded_file is not None:
         prediction = model_LR.predict(preface_transformed)
 
     st.subheader('💡 Predicted Difficulty Level')
-    st.write(f"<p class='pred-font'>{prediction[0]} </p>", unsafe_allow_html=True)
+    st.markdown(f'<h1 style="color:#1E88E5;">{prediction[0]}</h1>', unsafe_allow_html=True)
     
 # Save to profile functionality
 if st.button("Save to Profile"):
