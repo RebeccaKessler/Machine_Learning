@@ -92,7 +92,7 @@ if 'username' not in st.session_state:
             st.session_state.username = username
             st.experimental_rerun()
 else:
-    st.sidebar.subheader(f"👋🏼 Welcome **{st.session_state.username}**!")
+    st.sidebar.title(f"👋🏼 Welcome **{st.session_state.username}**!")
 
 # Library button logic in sidebae
 if 'username' in st.session_state and st.sidebar.button("Show My Library"):
@@ -139,7 +139,7 @@ if uploaded_file is not None:
         prediction = model_LR.predict(preface_transformed)
 
     st.subheader('💡 Predicted Difficulty Level')
-    st.markdown('<div class="result-box"><p class="pred-font">' + prediction[0] + '</p></div>', unsafe_allow_html=True)
+    st.success('<div class="pred-font">' + prediction[0] + '</p></div>', unsafe_allow_html=True)
     
 # Save to profile functionality
 if st.button("Save to Profile"):
