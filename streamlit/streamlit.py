@@ -13,7 +13,7 @@ def load_model(url):
     data = pickle.loads(response.content)
     return data
 
-#load model and vectorizer
+# Load model and vectorizer
 model_LR, vectorizer = load_model(url)
 
 st.title('Book Difficulty Prediction App')
@@ -27,7 +27,7 @@ if uploaded_file is not None:
     # Attempt to detect the encoding
     try:
         results = from_bytes(file_content)  # Analyze the bytes to detect encoding
-        preface_text = results.best().first().text  # Get the best match and extract text
+        preface_text = results.best().text  # Get the best match and extract text
         st.write("Uploaded Preface:")
         st.write(preface_text)
 
