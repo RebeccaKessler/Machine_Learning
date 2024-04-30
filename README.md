@@ -10,6 +10,7 @@ In this report, you can find the following sections:
 #### 4.) Application of the Model
 #### 5.) Final Words
 
+---
 
 #### 1.) Team Approach and Task Division
 
@@ -18,6 +19,7 @@ From the beginning, we thereby already started to think about potential applicat
 Hence, we distirbuted the tasks among the members accordingly:
 - Giulia: creating the ML model to predict the language level of French texts
 - Rebecca: working on the application and UI of the final model as well as preparing the report
+
 
 
 #### 2.) Comparison of Different Models
