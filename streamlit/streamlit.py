@@ -21,7 +21,7 @@ st.markdown(
         font-size:20px !important; 
     }
     .sidebar-style {
-        background-color: #F0F2F6;
+        background-color: #FDBA74;  /* Light orange background */
         padding: 10px;
     }
     .header-style {
@@ -46,8 +46,8 @@ model_LR, vectorizer = load_model(url)
 
 # Sidebar
 st.sidebar.markdown('<div class="sidebar-style">', unsafe_allow_html=True)
-st.sidebar.title('📚 Book Difficulty Prediction App')
-st.sidebar.subheader('📄 Upload the Preface of a Book')
+st.sidebar.title('📚 Difficulty Level Predictor')
+st.sidebar.subheader('📄 Upload a Book Preface')
 
 # File uploader in the sidebar
 uploaded_file = st.sidebar.file_uploader("", type=["txt", "docx"])
@@ -55,7 +55,7 @@ st.sidebar.markdown('</div>', unsafe_allow_html=True)
 
 # Main content
 st.markdown('<div class="header-style">', unsafe_allow_html=True)
-st.markdown('<p class="big-font">Book Preface Analysis</p>', unsafe_allow_html=True)
+st.markdown('<p class="big-font">Analyze Book Preface</p>', unsafe_allow_html=True)
 st.markdown('</div>', unsafe_allow_html=True)
 
 if uploaded_file is not None:
@@ -75,7 +75,7 @@ if uploaded_file is not None:
         preface_transformed = vectorizer.transform([preface_text])
         prediction = model_LR.predict(preface_transformed)
 
-    st.markdown('<p class="pred-font">Predicted Difficulty Level:</p>', unsafe_allow_html=True)
-    st.markdown(f'<h1 style="color:#1E88E5;">{prediction[0]}</h1>', unsafe_allow_html=True)
+    st.subheader('Predicted Difficulty Level')
+    st.write(prediction[0])
 else:
     st.sidebar.warning('Please upload a text or Word document.')
