@@ -11,6 +11,12 @@ import PyPDF2  # Import the library to handle PDF files
 st.markdown(
     """
     <style>
+    .stApp {
+        background-image: url("https://your-image-url.jpg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
     .big-font {
         font-family:Helvetica; 
         font-size:100px !important; 
@@ -52,7 +58,7 @@ model_LR, vectorizer = load_model(url)
 # Sidebar
 st.sidebar.markdown('<div class="sidebar-style">', unsafe_allow_html=True)
 st.sidebar.title('Difficulty Level Predictor')
-st.sidebar.subheader('This app allows you to predict the French difficulty level of a book. Never worry again about whether or not your French skills are sufficient to read a book. Use Bookly and find it out within seconds!')
+st.sidebar.text('This app allows you to predict the French difficulty level of a book. Never worry again about whether or not your French skills are sufficient to read a book. Use Bookly and find it out within seconds!')
 st.sidebar.subheader('📄 Upload the Cover Text of your Book')
 
 # File uploader in the sidebar
