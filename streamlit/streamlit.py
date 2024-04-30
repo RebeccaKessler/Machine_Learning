@@ -89,8 +89,6 @@ if uploaded_file is not None:
         prediction = model_LR.predict(preface_transformed)
 
     st.subheader('💡 Predicted Difficulty Level')
-    st.markdown('<div class="result-box">', unsafe_allow_html=True)
-    st.write(f"<p class='pred-font'>{prediction[0]}</p>", unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown('<div class="result-box"><p class="pred-font">' + prediction[0] + '</p></div>', unsafe_allow_html=True)
 else:
     st.sidebar.warning('Please upload a text, PDF, or Word document.')
