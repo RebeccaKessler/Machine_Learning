@@ -4,6 +4,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 import pickle
 import requests
+from charset_normalizer import from_bytes  # This library helps detect the encoding
 
 url = 'https://github.com/RebeccaKessler/Machine_Learning/blob/main/streamlit/model_LR.pkl?raw=true'
 
@@ -21,17 +22,23 @@ st.header('Upload the Preface of a Book')
 # File uploader allows user to add their own preface
 uploaded_file = st.file_uploader("Choose a file", type=["txt"])
 if uploaded_file is not None:
-    # To read file as string:
-    preface_text = str(uploaded_file.read(), 'utf-8')
-    st.write("Uploaded Preface:")
-    st.write(preface_text)
+    file_content = uploaded_file.read()
+    
+    # Attempt to detect the encoding
+    try:
+        result = from_bytes(file_content)
+        preface_text = result.best().text
+        st.write("Uploaded Preface:")
+        st.write(preface_text)
 
-    # Predicting the difficulty
-    preface_transformed = vectorizer.transform([preface_text])
-    prediction = model_LR.predict(preface_transformed)
+        # Predicting the difficulty
+        preface_transformed = vectorizer.transform([preface_text])
+        prediction = model_LR.predict(preface_transformed)
 
-    st.subheader('Predicted Difficulty Level')
-    st.write(prediction[0])
+        st.subheader('Predicted Difficulty Level')
+        st.write(prediction[0])
+    except Exception as e:
+        st.error(f"Failed to decode the file: {str(e)}")
+        st.stop()
 else:
     st.warning('Please upload a text file.')
-    st.stop()
