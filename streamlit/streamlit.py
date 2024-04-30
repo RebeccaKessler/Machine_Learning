@@ -5,6 +5,7 @@ from sklearn.linear_model import LogisticRegression
 import pickle
 import requests
 from docx import Document  # Import the library to handle .docx files
+import PyPDF2  # Import the library to handle PDF files
 
 # Define colors and styles
 st.markdown(
@@ -12,7 +13,7 @@ st.markdown(
     <style>
     .big-font {
         font-family:Helvetica; 
-        font-size:50px !important; 
+        font-size:100px !important; 
         font-weight: bold;
     }
     .pred-font {
@@ -21,7 +22,6 @@ st.markdown(
         font-size:20px !important; 
     }
     .sidebar-style {
-        background-color: #FDBA74;  /* Light orange background */
         padding: 10px;
     }
     .header-style {
@@ -29,6 +29,11 @@ st.markdown(
         padding: 10px;
         border-radius: 10px;
         border: 1px solid #1E88E5;
+    }
+    .result-box {
+        background-color: #C8E6C9;  /* Light green background */
+        padding: 10px;
+        border-radius: 5px;
     }
     </style>
     """, unsafe_allow_html=True
@@ -46,7 +51,7 @@ model_LR, vectorizer = load_model(url)
 
 # Sidebar
 st.sidebar.markdown('<div class="sidebar-style">', unsafe_allow_html=True)
-st.sidebar.title('📚 Difficulty Level Predictor')
+st.sidebar.title('📚 Language Level Predictor')
 st.sidebar.subheader('This app allows you to predict the French difficulty level of a book. Never worry again about whether or not your French skills are sufficient to read a book. Use Bookly and find it out within seconds!')
 st.sidebar.subheader('📄 Upload the Cover Text of your Book')
 
@@ -63,8 +68,15 @@ if uploaded_file is not None:
     if uploaded_file.type == "text/plain":
         # Read as text file
         preface_text = str(uploaded_file.read(), 'utf-8')
+    elif uploaded_file.type == "application/pdf":
+        # Read as PDF file
+        with st.spinner('📄 Extracting text from PDF...'):
+            pdf_reader = PyPDF2.PdfFileReader(uploaded_file)
+            preface_text = ""
+            for page_num in range(pdf_reader.numPages):
+                preface_text += pdf_reader.getPage(page_num).extractText()
     elif uploaded_file.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
-        # Read as docx file
+        # Read as DOCX file
         doc = Document(uploaded_file)
         preface_text = "\n".join([para.text for para in doc.paragraphs])
     
@@ -77,6 +89,8 @@ if uploaded_file is not None:
         prediction = model_LR.predict(preface_transformed)
 
     st.subheader('Predicted Difficulty Level')
-    st.write(prediction[0])
+    st.markdown('<div class="result-box">', unsafe_allow_html=True)
+    st.write(f"{prediction[0]} 💡")
+    st.markdown('</div>', unsafe_allow_html=True)
 else:
-    st.sidebar.warning('Please upload a text or Word document.')
+    st.sidebar.warning('Please upload a text, PDF, or Word document.')
