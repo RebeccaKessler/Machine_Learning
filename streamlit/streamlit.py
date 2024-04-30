@@ -6,13 +6,6 @@ import pickle
 import requests
 from docx import Document  # Import the library to handle .docx files
 import PyPDF2  # Import the library to handle PDF files
-
-# Simulate user login
-if 'username' not in st.session_state:
-    username = st.sidebar.text_input("Username")
-    if st.sidebar.button("Login"):
-        st.session_state.username = username
-
 import sqlite3
 
 # Initialize connection
