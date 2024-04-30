@@ -6,6 +6,34 @@ import pickle
 import requests
 from docx import Document  # Import the library to handle .docx files
 
+# Define colors and styles
+st.markdown(
+    """
+    <style>
+    .big-font {
+        font-family:Helvetica; 
+        font-size:22px !important; 
+        font-weight: bold;
+    }
+    .pred-font {
+        font-family:Helvetica; 
+        color: #FF4B4B;
+        font-size:20px !important; 
+    }
+    .sidebar-style {
+        background-color: #F0F2F6;
+        padding: 10px;
+    }
+    .header-style {
+        background-color: #E8EAF6;
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px solid #1E88E5;
+    }
+    </style>
+    """, unsafe_allow_html=True
+)
+
 # Load model and vectorizer once when the app starts
 @st.cache(allow_output_mutation=True)
 def load_model(url):
@@ -16,11 +44,20 @@ def load_model(url):
 url = 'https://github.com/RebeccaKessler/Machine_Learning/blob/main/streamlit/model_LR.pkl?raw=true'
 model_LR, vectorizer = load_model(url)
 
-st.sidebar.title('Book Difficulty Prediction App')
-st.sidebar.subheader('Upload the Preface of a Book')
+# Sidebar
+st.sidebar.markdown('<div class="sidebar-style">', unsafe_allow_html=True)
+st.sidebar.title('📚 Book Difficulty Prediction App')
+st.sidebar.subheader('📄 Upload the Preface of a Book')
 
 # File uploader in the sidebar
-uploaded_file = st.sidebar.file_uploader("Choose a file", type=["txt", "docx"])
+uploaded_file = st.sidebar.file_uploader("", type=["txt", "docx"])
+st.sidebar.markdown('</div>', unsafe_allow_html=True)
+
+# Main content
+st.markdown('<div class="header-style">', unsafe_allow_html=True)
+st.markdown('<p class="big-font">Book Preface Analysis</p>', unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
+
 if uploaded_file is not None:
     if uploaded_file.type == "text/plain":
         # Read as text file
@@ -30,15 +67,15 @@ if uploaded_file is not None:
         doc = Document(uploaded_file)
         preface_text = "\n".join([para.text for para in doc.paragraphs])
     
-    st.write("Uploaded Preface:")
-    st.write(preface_text)
+    st.write("### Uploaded Preface")
+    st.text_area("", preface_text, height=250, help="This is the preface text extracted from your document.")
 
     # Progress bar during prediction
-    with st.spinner('Predicting difficulty level...'):
+    with st.spinner('🔍 Predicting difficulty level...'):
         preface_transformed = vectorizer.transform([preface_text])
         prediction = model_LR.predict(preface_transformed)
 
-    st.subheader('Predicted Difficulty Level')
-    st.success(f"The predicted difficulty level is: {prediction[0]}")
+    st.markdown('<p class="pred-font">Predicted Difficulty Level:</p>', unsafe_allow_html=True)
+    st.markdown(f'<h1 style="color:#1E88E5;">{prediction[0]}</h1>', unsafe_allow_html=True)
 else:
     st.sidebar.warning('Please upload a text or Word document.')
