@@ -25,7 +25,7 @@ st.markdown(
     }
     .pred-font {
         font-family:Helvetica; 
-        color: #FF4B4B;
+        color: #000000;
         font-size:24px !important;
     }
     .header-style {
@@ -33,7 +33,7 @@ st.markdown(
         border-radius: 0 0 10px 10px;
     }
     .result-box {
-        background-color: #C8E6C9; 
+        background-color: #FDBA74; 
         padding: 10px;
         border-radius: 5px;
         margin-top: 10px;
