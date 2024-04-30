@@ -13,9 +13,8 @@ st.markdown(
     <style>
     .big-font {
         font-family:Helvetica; 
-        font-size:50px !important; 
+        font-size:100px !important; 
         font-weight: bold;
-        color: #1E88E5;
     }
     .pred-font {
         font-family:Helvetica; 
@@ -82,7 +81,7 @@ if uploaded_file is not None:
         doc = Document(uploaded_file)
         preface_text = "\n".join([para.text for para in doc.paragraphs])
     
-    st.write("### Uploaded Preface")
+    st.write("### 📄 Uploaded Preface")
     st.text_area("", preface_text, height=250, help="This is the preface text extracted from your document.")
 
     # Progress bar during prediction
