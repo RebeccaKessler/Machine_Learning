@@ -135,7 +135,7 @@ if 'username' in st.session_state:
         # Existing file processing logic...
         # Save to database
         if st.button("Save to Profile"):
-            save_data(st.session_state.username, preface_text, prediction)
+            save_data(st.session_state.username, preface_text, prediction[0])
             st.success("Saved!")
 
     # Add functionality to show saved entries
@@ -143,4 +143,4 @@ if 'username' in st.session_state:
         user_data = load_data(st.session_state.username)
         for preface, prediction in user_data:
             st.write("Preface:", preface)
-            st.write("Prediction:", prediction)
+            st.write("Prediction:", prediction[0])
