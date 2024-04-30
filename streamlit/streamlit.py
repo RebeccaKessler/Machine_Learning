@@ -28,15 +28,17 @@ st.markdown(
         color: #FF4B4B;
         font-size:24px !important; 
     }
-    .sidebar-style {
-        padding: 10px;
+    }
+    .css-1adrfps {
+        background-color: #33425B;
     }
     .header-style {
         padding: 20px;
         border-radius: 0 0 10px 10px;
     }
     .result-box {
-        background-color: #C8E6C9;  /* Light green background */
+        background-color: #004D40;  /* Deep teal background */
+        color: #FFFFFF;  /* White text color */
         padding: 20px;
         border-radius: 5px;
         margin-top: 10px;
