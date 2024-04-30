@@ -43,6 +43,28 @@ st.markdown(
     """, unsafe_allow_html=True
 )
 
+# Initialize connection
+conn = sqlite3.connect('data.db')
+c = conn.cursor()
+c.execute('''
+    CREATE TABLE IF NOT EXISTS user_data (
+        username TEXT,
+        title TEXT,
+        prediction TEXT
+    )
+''')
+conn.commit()
+
+# Function to save data
+def save_data(username, preface, prediction):
+    c.execute('INSERT INTO user_data (username, preface, prediction) VALUES (?, ?, ?)', (username, preface, prediction))
+    conn.commit()
+
+# Function to load user data
+def load_data(username):
+    c.execute('SELECT preface, prediction FROM user_data WHERE username = ?', (username,))
+    return  c.fetchall() 
+
 # Load model and vectorizer once when the app starts
 @st.cache(allow_output_mutation=True)
 def load_model(url):
@@ -52,30 +74,6 @@ def load_model(url):
 
 url = 'https://github.com/RebeccaKessler/Machine_Learning/blob/main/streamlit/model_LR.pkl?raw=true'
 model_LR, vectorizer = load_model(url)
-
-# Initialize connection
-conn = sqlite3.connect('data.db')
-c = conn.cursor()
-c.execute('''
-    CREATE TABLE IF NOT EXISTS user_data (
-        username TEXT,
-        preface TEXT,
-        prediction TEXT
-    )
-''')
-conn.commit()
-
-# Function to save data
-def save_data(username, preface, prediction):
-    if isinstance(prediction, bytes):
-        prediction = prediction.decode('utf-8')
-    c.execute('INSERT INTO user_data (username, preface, prediction) VALUES (?, ?, ?)', (username, preface, prediction))
-    conn.commit()
-
-# Function to load user data
-def load_data(username):
-    c.execute('SELECT preface, prediction FROM user_data WHERE username = ?', (username,))
-    return [(preface, prediction) for preface, prediction in c.fetchall()]  
 
 # Main content
 st.markdown('<div class="header-style">', unsafe_allow_html=True)
@@ -90,20 +88,16 @@ if 'username' not in st.session_state:
     username = st.sidebar.text_input("Username", key="unique_username_input")
     if st.sidebar.button("Login", key="login_button"):
         st.session_state.username = username
-        st.experimental_rerun()  # Rerun to update UI
 
 if 'username' in st.session_state:
     st.sidebar.markdown(f"Welcome **{st.session_state.username}**!")
 
-# Display user's library in the main content
-if 'username' in st.session_state and st.sidebar.button("Show My Library", key="show_library_button"):
+if 'username' in st.session_state and st.sidebar.button("Show My Library"):
     user_data = load_data(st.session_state.username)
     if user_data:
         st.subheader('My Library')
-        for preface, prediction in user_data:
-            st.write("Preface:", preface)
-            if isinstance(prediction, bytes):
-                prediction = prediction.decode('utf-8')
+        for title, prediction in user_data:
+            st.write("Title:", title)
             st.write("Prediction:", prediction)
     else:
         st.write("No data found in your library.")
@@ -112,9 +106,12 @@ if 'username' in st.session_state and st.sidebar.button("Show My Library", key="
 st.sidebar.subheader('📄 Upload the Cover Text of your Book')
 uploaded_file = st.sidebar.file_uploader("", type=["pdf", "docx"])
 
+# Input for the book title
+if uploaded_file is not None:
+    book_title = st.sidebar.text_input("Enter the book title", key="book_title")
+
 if uploaded_file is not None:
     if uploaded_file.type == "text/plain":
-        # Read as text file
         preface_text = str(uploaded_file.read(), 'utf-8')
     elif uploaded_file.type == "application/pdf":
         # Read as PDF file
@@ -135,14 +132,16 @@ if uploaded_file is not None:
     with st.spinner('🔍 Predicting difficulty level...'):
         preface_transformed = vectorizer.transform([preface_text])
         prediction = model_LR.predict(preface_transformed)
-
-    st.subheader('💡 Predicted Difficulty Level')
+ 
+st.subheader('💡 Predicted Difficulty Level')
     st.markdown('<div class="result-box"><p class="pred-font">' + prediction[0] + '</p></div>', unsafe_allow_html=True)
 else:
     st.sidebar.warning('Please upload a PDF or Word document.')
 
 # Save to profile functionality
-if 'username' in st.session_state and uploaded_file is not None:
-    if st.button("Save to Profile"):
-        save_data(st.session_state.username, preface_text, prediction)
-        st.success("Saved!")
+if st.button("Save to Profile"):
+        if book_title:  # Ensure a title is provided
+            save_data(st.session_state.username, book_title, prediction)
+            st.success("Saved!")
+        else:
+            st.error("Please enter a title for the book.")
