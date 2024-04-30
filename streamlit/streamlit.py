@@ -13,8 +13,9 @@ st.markdown(
     <style>
     .big-font {
         font-family:Helvetica; 
-        font-size:100px !important; 
+        font-size:50px !important; 
         font-weight: bold;
+        color: #1E88E5;
     }
     .pred-font {
         font-family:Helvetica; 
@@ -22,6 +23,7 @@ st.markdown(
         font-size:24px !important; 
     }
     .sidebar-style {
+        background-color: #FDBA74;  /* Light orange background */
         padding: 10px;
     }
     .header-style {
