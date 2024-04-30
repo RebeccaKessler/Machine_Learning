@@ -77,6 +77,12 @@ def load_data(username):
     c.execute('SELECT preface, prediction FROM user_data WHERE username = ?', (username,))
     return c.fetchall()  
 
+
+# Sidebar
+st.sidebar.markdown('<div class="sidebar-style">', unsafe_allow_html=True)
+st.sidebar.title('Difficulty Level Predictor')
+st.sidebar.markdown('**🔑 Login to save the predictions to your library**')
+
 # User login logic
 if 'username' not in st.session_state:
     username = st.sidebar.text_input("Username", key="unique_username_input")
@@ -86,18 +92,12 @@ if 'username' not in st.session_state:
 if 'username' in st.session_state:
     st.sidebar.markdown(f"Welcome **{st.session_state.username}**!")
 
-# Sidebar
-st.sidebar.markdown('<div class="sidebar-style">', unsafe_allow_html=True)
-st.sidebar.title('Difficulty Level Predictor')
-st.sidebar.markdown('**🔑 Login to save the predictions to your library**')
-
-
 # Add functionality to show saved entries
 if st.sidebar.button("Show My Library"):
     user_data = load_data(st.session_state.username)
     for preface, prediction in user_data:
         st.write("Preface:", preface)
-        st.write("Prediction:", prediction[0])
+        st.write("Prediction:", prediction[0] + '</p></div>)
 
 # File uploader in the sidebar
 st.sidebar.subheader('📄 Upload the Cover Text of your Book')
@@ -142,8 +142,6 @@ else:
 if 'username' in st.session_state:
     # Add save functionality within the file processing section
     if uploaded_file is not None:
-        # Existing file processing logic...
-        # Save to database
         if st.button("Save to Profile"):
             save_data(st.session_state.username, preface_text, prediction)
             st.success("Saved!")
