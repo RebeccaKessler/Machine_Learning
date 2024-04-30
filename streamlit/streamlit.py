@@ -6,21 +6,21 @@ import pickle
 import requests
 from docx import Document  # Import the library to handle .docx files
 
-url = 'https://github.com/RebeccaKessler/Machine_Learning/blob/main/streamlit/model_LR.pkl?raw=true'
-
+# Load model and vectorizer once when the app starts
+@st.cache(allow_output_mutation=True)
 def load_model(url):
     response = requests.get(url)
     data = pickle.loads(response.content)
     return data
 
-# Load model and vectorizer
+url = 'https://github.com/RebeccaKessler/Machine_Learning/blob/main/streamlit/model_LR.pkl?raw=true'
 model_LR, vectorizer = load_model(url)
 
-st.title('Book Difficulty Prediction App')
-st.header('Upload the Preface of a Book')
+st.sidebar.title('Book Difficulty Prediction App')
+st.sidebar.subheader('Upload the Preface of a Book')
 
-# File uploader allows user to add their own preface
-uploaded_file = st.file_uploader("Choose a file", type=["txt", "docx"])
+# File uploader in the sidebar
+uploaded_file = st.sidebar.file_uploader("Choose a file", type=["txt", "docx"])
 if uploaded_file is not None:
     if uploaded_file.type == "text/plain":
         # Read as text file
@@ -29,15 +29,16 @@ if uploaded_file is not None:
         # Read as docx file
         doc = Document(uploaded_file)
         preface_text = "\n".join([para.text for para in doc.paragraphs])
-
+    
     st.write("Uploaded Preface:")
     st.write(preface_text)
 
-    # Predicting the difficulty
-    preface_transformed = vectorizer.transform([preface_text])
-    prediction = model_LR.predict(preface_transformed)
+    # Progress bar during prediction
+    with st.spinner('Predicting difficulty level...'):
+        preface_transformed = vectorizer.transform([preface_text])
+        prediction = model_LR.predict(preface_transformed)
 
     st.subheader('Predicted Difficulty Level')
-    st.write(prediction[0])
+    st.success(f"The predicted difficulty level is: {prediction[0]}")
 else:
-    st.warning('Please upload a text or Word document.')
+    st.sidebar.warning('Please upload a text or Word document.')
