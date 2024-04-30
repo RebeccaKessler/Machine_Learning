@@ -11,7 +11,7 @@ In this report, you can find the following sections:
 - [Final Words](#chapter-5)
 
 
-#### 1.) Team Approach and Task Division
+# Chapter 1
 
 We approached the task as a reiterative process, incrementally improving our model to predict the language level of French texts. We started off with simple ML models inlcuding Logistic Regression, KNN, Decision Tree, and Random Forest before then advancing to more sophisticated text embeddings. Within the different models, we used hyper-parameter optimization to find the best solution. 
 From the beginning, we thereby already started to think about potential applications of our final model, an attractive user interfence, and an engaging concept for the video presentation. 
