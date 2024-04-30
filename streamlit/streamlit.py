@@ -26,8 +26,8 @@ if uploaded_file is not None:
     
     # Attempt to detect the encoding
     try:
-        result = from_bytes(file_content)
-        preface_text = result.best().text
+        results = from_bytes(file_content)  # Analyze the bytes to detect encoding
+        preface_text = results.best().first().text  # Get the best match and extract text
         st.write("Uploaded Preface:")
         st.write(preface_text)
 
