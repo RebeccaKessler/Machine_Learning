@@ -4,3 +4,4 @@ plotly
 matplotlib
 scikit-learn
 python-docx
+PyPDF2
