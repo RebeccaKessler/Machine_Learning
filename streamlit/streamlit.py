@@ -37,9 +37,9 @@ st.markdown(
         border-radius: 0 0 10px 10px;
     }
     .result-box {
-        background-color: #004D40;  /* Deep teal background */
-        color: #FFFFFF;  /* White text color */
-        padding: 20px;
+        background-color: #004D40; 
+        color: #FFFFFF; /
+        padding: 10px;
         border-radius: 5px;
         margin-top: 10px;
     }
