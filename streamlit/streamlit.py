@@ -88,9 +88,9 @@ if uploaded_file is not None:
         preface_transformed = vectorizer.transform([preface_text])
         prediction = model_LR.predict(preface_transformed)
 
-    st.subheader('💡 Predicted Difficulty Level')
     st.markdown('<div class="result-box">', unsafe_allow_html=True)
-    st.write(f"<p class='pred-font'>{prediction[0]} </p>", unsafe_allow_html=True)
+    st.subheader('💡 Predicted Difficulty Level')
+    st.write(f"<p class='pred-font'>{prediction[0]}</p>", unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 else:
     st.sidebar.warning('Please upload a text, PDF, or Word document.')
