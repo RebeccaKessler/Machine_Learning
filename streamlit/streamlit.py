@@ -6,9 +6,9 @@ import pickle
 
 url = 'https://github.com/RebeccaKessler/Machine_Learning/blob/main/streamlit/model_LR.pkl'
 
-def load_model():
-    with open(url, 'rb') as file:
-        data = pickle.load(file)
+def load_model(url):
+    response = requests.get(url)
+    data = pickle.loads(response.content)
     return data
 
 #load model and vectorizer
