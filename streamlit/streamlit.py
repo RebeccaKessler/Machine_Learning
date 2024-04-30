@@ -21,12 +21,12 @@ st.markdown(
         font-family:Helvetica; 
         font-size:100px 
         font-weight: bold;
-        color: #FDBA74;
+        color: #FDBA74; !important;
     }
     .pred-font {
         font-family:Helvetica; 
         color: #FF4B4B;
-        font-size:24px 
+        font-size:24px !important;
     }
     .header-style {
         padding: 20px;
