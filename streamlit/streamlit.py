@@ -74,19 +74,6 @@ st.markdown(
     """, unsafe_allow_html=True
 )
 
-# Example of positioning buttons
-col1, col2 = st.columns([3, 1])  # Adjust the ratio to push content to the right
-with col2:
-    if 'username' not in st.session_state:
-        username = st.text_input("Username", key="login_name")
-        if st.button("Login"):
-            st.session_state.username = username
-    if 'username' in st.session_state:
-        if st.button("Show My Library"):
-            # Function to display the library should be called here
-            st.write("Library data goes here")
-
-
 # Load model and vectorizer once when the app starts
 @st.cache(allow_output_mutation=True)
 def load_model(url):
