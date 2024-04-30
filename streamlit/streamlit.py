@@ -7,6 +7,38 @@ import requests
 from docx import Document  # Import the library to handle .docx files
 import PyPDF2  # Import the library to handle PDF files
 
+# Simulate user login
+if 'username' not in st.session_state:
+    username = st.sidebar.text_input("Username")
+    if st.sidebar.button("Login"):
+        st.session_state.username = username
+
+import sqlite3
+
+# Initialize connection
+conn = sqlite3.connect('data.db')
+c = conn.cursor()
+
+# Create table
+c.execute('''
+    CREATE TABLE IF NOT EXISTS user_data (
+        username TEXT,
+        preface TEXT,
+        prediction TEXT
+    )
+''')
+conn.commit()
+
+# Function to save data
+def save_data(username, preface, prediction):
+    c.execute('INSERT INTO user_data (username, preface, prediction) VALUES (?, ?, ?)', (username, preface, prediction))
+    conn.commit()
+
+# Function to load user data
+def load_data(username):
+    c.execute('SELECT preface, prediction FROM user_data WHERE username = ?', (username,))
+    return c.fetchall()    
+
 # Define colors and styles
 st.markdown(
     """
@@ -95,3 +127,20 @@ if uploaded_file is not None:
     st.markdown('<div class="result-box"><p class="pred-font">' + prediction[0] + '</p></div>', unsafe_allow_html=True)
 else:
     st.sidebar.warning('Please upload a PDF or Word document.')
+
+
+if 'username' in st.session_state:
+    # Add save functionality within the file processing section
+    if uploaded_file is not None:
+        # Existing file processing logic...
+        # Save to database
+        if st.button("Save to Profile"):
+            save_data(st.session_state.username, preface_text, prediction)
+            st.success("Saved!")
+
+    # Add functionality to show saved entries
+    if st.sidebar.button("Show My Library"):
+        user_data = load_data(st.session_state.username)
+        for preface, prediction in user_data:
+            st.write("Preface:", preface)
+            st.write("Prediction:", prediction)
