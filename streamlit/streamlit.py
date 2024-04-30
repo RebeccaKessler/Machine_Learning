@@ -70,16 +70,6 @@ st.markdown(
         border-radius: 5px;
         margin-top: 10px;
     }
-    .css-1adrfps {  /* this class might change, check your app's actual class for the sidebar */
-        position: fixed;
-        right: 1rem;
-        top: 1rem;
-        z-index: 999;  /* ensures the sidebar is above other content */
-    }
-    .css-18e3th9 {  /* this class is typically for column layout and might need updating */
-        display: flex;
-        justify-content: flex-end;  /* aligns content to the right */
-    }
     </style>
     """, unsafe_allow_html=True
 )
