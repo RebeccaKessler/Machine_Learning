@@ -13,27 +13,29 @@ st.markdown(
     <style>
     .big-font {
         font-family:Helvetica; 
-        font-size:100px !important; 
+        font-size:50px !important; 
         font-weight: bold;
+        color: #1E88E5;
     }
     .pred-font {
         font-family:Helvetica; 
         color: #FF4B4B;
-        font-size:20px !important; 
+        font-size:24px !important; 
     }
     .sidebar-style {
+        background-color: #FDBA74;  /* Light orange background */
         padding: 10px;
     }
     .header-style {
-        background-color: #E8EAF6;
-        padding: 10px;
-        border-radius: 10px;
-        border: 1px solid #1E88E5;
+        background-color: #FDBA74;  /* Light orange background */
+        padding: 20px;
+        border-radius: 0 0 10px 10px;
     }
     .result-box {
         background-color: #C8E6C9;  /* Light green background */
-        padding: 10px;
+        padding: 20px;
         border-radius: 5px;
+        margin-top: 10px;
     }
     </style>
     """, unsafe_allow_html=True
@@ -51,7 +53,7 @@ model_LR, vectorizer = load_model(url)
 
 # Sidebar
 st.sidebar.markdown('<div class="sidebar-style">', unsafe_allow_html=True)
-st.sidebar.title('📚 Language Level Predictor')
+st.sidebar.title('📚 Difficulty Level Predictor')
 st.sidebar.subheader('This app allows you to predict the French difficulty level of a book. Never worry again about whether or not your French skills are sufficient to read a book. Use Bookly and find it out within seconds!')
 st.sidebar.subheader('📄 Upload the Cover Text of your Book')
 
@@ -90,7 +92,7 @@ if uploaded_file is not None:
 
     st.subheader('Predicted Difficulty Level')
     st.markdown('<div class="result-box">', unsafe_allow_html=True)
-    st.write(f"{prediction[0]} 💡")
+    st.write(f"<p class='pred-font'>{prediction[0]} 💡</p>", unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 else:
     st.sidebar.warning('Please upload a text, PDF, or Word document.')
