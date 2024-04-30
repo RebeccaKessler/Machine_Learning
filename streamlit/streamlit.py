@@ -97,7 +97,7 @@ if st.sidebar.button("Show My Library"):
     user_data = load_data(st.session_state.username)
     for preface, prediction in user_data:
         st.write("Preface:", preface)
-        st.write("Prediction:", prediction[0] + '</p></div>)
+        st.write("Prediction:", prediction[0] + '</p></div>')
 
 # File uploader in the sidebar
 st.sidebar.subheader('📄 Upload the Cover Text of your Book')
