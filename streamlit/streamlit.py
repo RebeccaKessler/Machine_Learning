@@ -70,9 +70,32 @@ st.markdown(
         border-radius: 5px;
         margin-top: 10px;
     }
+    .css-1adrfps {  /* this class might change, check your app's actual class for the sidebar */
+        position: fixed;
+        right: 1rem;
+        top: 1rem;
+        z-index: 999;  /* ensures the sidebar is above other content */
+    }
+    .css-18e3th9 {  /* this class is typically for column layout and might need updating */
+        display: flex;
+        justify-content: flex-end;  /* aligns content to the right */
+    }
     </style>
     """, unsafe_allow_html=True
 )
+
+# Example of positioning buttons
+col1, col2 = st.columns([3, 1])  # Adjust the ratio to push content to the right
+with col2:
+    if 'username' not in st.session_state:
+        username = st.text_input("Username", key="login_name")
+        if st.button("Login"):
+            st.session_state.username = username
+    if 'username' in st.session_state:
+        if st.button("Show My Library"):
+            # Function to display the library should be called here
+            st.write("Library data goes here")
+
 
 # Load model and vectorizer once when the app starts
 @st.cache(allow_output_mutation=True)
