@@ -56,7 +56,6 @@ model_LR, vectorizer = load_model(url)
 # Sidebar
 st.sidebar.markdown('<div class="sidebar-style">', unsafe_allow_html=True)
 st.sidebar.title('Difficulty Level Predictor')
-st.sidebar.subheader('This app allows you to predict the French difficulty level of a book. Never worry again about whether or not your French skills are sufficient to read a book. Use Bookly and find it out within seconds!')
 st.sidebar.subheader('📄 Upload the Cover Text of your Book')
 
 # File uploader in the sidebar
@@ -66,6 +65,7 @@ st.sidebar.markdown('</div>', unsafe_allow_html=True)
 # Main content
 st.markdown('<div class="header-style">', unsafe_allow_html=True)
 st.markdown('<p class="big-font">📚 Bookly</p>', unsafe_allow_html=True)
+st.sidebar.subheader('This app allows you to predict the French difficulty level of a book. Never worry again about whether or not your French skills are sufficient to read a book. Use Bookly and find it out within seconds!')
 st.markdown('</div>', unsafe_allow_html=True)
 
 if uploaded_file is not None:
