@@ -104,7 +104,7 @@ if 'username' in st.session_state and st.sidebar.button("Show My Library", key="
             st.write("Preface:", preface)
             if isinstance(prediction, bytes):
                 prediction = prediction.decode('utf-8')
-            st.write("Prediction:", prediction))
+            st.write("Prediction:", prediction)
     else:
         st.write("No data found in your library.")
 
