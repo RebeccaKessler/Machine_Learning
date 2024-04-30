@@ -91,4 +91,4 @@ if uploaded_file is not None:
     st.subheader('💡 Predicted Difficulty Level')
     st.markdown('<div class="result-box"><p class="pred-font">' + prediction[0] + '</p></div>', unsafe_allow_html=True)
 else:
-    st.sidebar.warning('Please upload a text, PDF, or Word document.')
+    st.sidebar.warning('Please upload a PDF or Word document.')
