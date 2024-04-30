@@ -8,30 +8,6 @@ from docx import Document  # Import the library to handle .docx files
 import PyPDF2  # Import the library to handle PDF files
 import sqlite3
 
-# Initialize connection
-conn = sqlite3.connect('data.db')
-c = conn.cursor()
-
-# Create table
-c.execute('''
-    CREATE TABLE IF NOT EXISTS user_data (
-        username TEXT,
-        preface TEXT,
-        prediction TEXT
-    )
-''')
-conn.commit()
-
-# Function to save data
-def save_data(username, preface, prediction):
-    c.execute('INSERT INTO user_data (username, preface, prediction) VALUES (?, ?, ?)', (username, preface, prediction))
-    conn.commit()
-
-# Function to load user data
-def load_data(username):
-    c.execute('SELECT preface, prediction FROM user_data WHERE username = ?', (username,))
-    return c.fetchall()    
-
 # Define colors and styles
 st.markdown(
     """
@@ -77,24 +53,53 @@ def load_model(url):
 url = 'https://github.com/RebeccaKessler/Machine_Learning/blob/main/streamlit/model_LR.pkl?raw=true'
 model_LR, vectorizer = load_model(url)
 
-# Sidebar
-st.sidebar.markdown('<div class="sidebar-style">', unsafe_allow_html=True)
-st.sidebar.markdown('**🔑 Login to save the predictions to your library**')
+# Initialize connection
+conn = sqlite3.connect('data.db')
+c = conn.cursor()
 
-# Simulate user login
+# Create table
+c.execute('''
+    CREATE TABLE IF NOT EXISTS user_data (
+        username TEXT,
+        preface TEXT,
+        prediction TEXT
+    )
+''')
+conn.commit()
+
+# Function to save data
+def save_data(username, preface, prediction):
+    c.execute('INSERT INTO user_data (username, preface, prediction) VALUES (?, ?, ?)', (username, preface, prediction))
+    conn.commit()
+
+# Function to load user data
+def load_data(username):
+    c.execute('SELECT preface, prediction FROM user_data WHERE username = ?', (username,))
+    return c.fetchall()  
+
+# User login logic
 if 'username' not in st.session_state:
-    username = st.sidebar.text_input("Username")
-    if st.sidebar.button("Login"):
+    username = st.sidebar.text_input("Username", key="unique_username_input")
+    if st.sidebar.button("Login", key="login_button"):
         st.session_state.username = username
-        # Reset input field after login
-        st.experimental_rerun()
 
-# Display welcome message if logged in
 if 'username' in st.session_state:
     st.sidebar.markdown(f"Welcome **{st.session_state.username}**!")
 
-# File uploader in the sidebar
+# Sidebar
+st.sidebar.markdown('<div class="sidebar-style">', unsafe_allow_html=True)
 st.sidebar.title('Difficulty Level Predictor')
+st.sidebar.markdown('**🔑 Login to save the predictions to your library**')
+
+
+# Add functionality to show saved entries
+if st.sidebar.button("Show My Library"):
+    user_data = load_data(st.session_state.username)
+    for preface, prediction in user_data:
+        st.write("Preface:", preface)
+        st.write("Prediction:", prediction[0])
+
+# File uploader in the sidebar
 st.sidebar.subheader('📄 Upload the Cover Text of your Book')
 uploaded_file = st.sidebar.file_uploader("", type=["pdf", "docx"])
 st.sidebar.markdown('</div>', unsafe_allow_html=True)
@@ -134,7 +139,6 @@ if uploaded_file is not None:
 else:
     st.sidebar.warning('Please upload a PDF or Word document.')
 
-
 if 'username' in st.session_state:
     # Add save functionality within the file processing section
     if uploaded_file is not None:
@@ -143,10 +147,15 @@ if 'username' in st.session_state:
         if st.button("Save to Profile"):
             save_data(st.session_state.username, preface_text, prediction)
             st.success("Saved!")
-
-    # Add functionality to show saved entries
-    if st.sidebar.button("Show My Library"):
+if 'username' in st.session_state:
+    if st.sidebar.button("Show My Library", key="show_library"):
         user_data = load_data(st.session_state.username)
-        for preface, prediction in user_data:
-            st.write("Preface:", preface)
-            st.write("Prediction:", prediction[0])
+        if user_data:
+            st.sidebar.markdown('### My Library')
+            preface_selection = st.sidebar.selectbox("Select a preface to view details:", 
+                                                     options=[(preface, prediction) for preface, prediction in user_data], 
+                                                     format_func=lambda x: x[0][:50] + '...')  # Display first 50 characters
+            st.write("Preface:", preface_selection[0])
+            st.write("Prediction:", preface_selection[1])
+        else:
+            st.sidebar.write("No data found in your library.")
