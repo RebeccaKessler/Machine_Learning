@@ -4,7 +4,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 import pickle
 import requests
-from charset_normalizer import from_bytes  # This library helps detect the encoding
+from charset_normalizer import from_bytes
 
 url = 'https://github.com/RebeccaKessler/Machine_Learning/blob/main/streamlit/model_LR.pkl?raw=true'
 
