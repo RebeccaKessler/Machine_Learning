@@ -79,8 +79,7 @@ model_LR, vectorizer = load_model(url)
 
 # Sidebar
 st.sidebar.markdown('<div class="sidebar-style">', unsafe_allow_html=True)
-st.sidebar.title('Difficulty Level Predictor')
-st.sidebar.markdown('**Login to save the predictions to your library**')
+st.sidebar.markdown('**🔑 Login to save the predictions to your library**')
 
 # Simulate user login
 if 'username' not in st.session_state:
@@ -95,6 +94,7 @@ if 'username' in st.session_state:
     st.sidebar.markdown(f"Welcome **{st.session_state.username}**!")
 
 # File uploader in the sidebar
+st.sidebar.title('Difficulty Level Predictor')
 st.sidebar.subheader('📄 Upload the Cover Text of your Book')
 uploaded_file = st.sidebar.file_uploader("", type=["pdf", "docx"])
 st.sidebar.markdown('</div>', unsafe_allow_html=True)
