@@ -101,6 +101,8 @@ with st.sidebar:
     display_button = st.button("Display Library")
     if display_button:
         st.session_state.show_filters = True
+        st.session_state.filter_type = None  
+        display_library()
 
     if 'show_filters' in st.session_state and st.session_state.show_filters:
         filter_options = st.radio("Filter by:", ["Title", "Prediction Level"], index=0, key='filter_selection')
