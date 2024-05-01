@@ -49,7 +49,6 @@ def save_to_library(title, prediction):
         c.execute("INSERT INTO library (title, prediction) VALUES (?, ?)", (title, prediction))
         conn.commit()
 
-# Function to fetch and display filtered data
 def fetch_and_display_library(query, params):
     with sqlite3.connect(DB_FILE) as conn:
         c = conn.cursor()
@@ -61,7 +60,6 @@ def fetch_and_display_library(query, params):
         else:
             st.write("No data found based on filter criteria.")
 
-# Main function to control the library display
 def display_library():
     filter_type = st.session_state.filter_type
     filter_value = st.session_state.filter_value
@@ -77,25 +75,6 @@ def display_library():
         params = ()
     
     fetch_and_display_library(query, params)
-
-# Sidebar setup for filters and display library button
-with st.sidebar:
-    st.write("## 📓 Filter Library")
-    filter_options = st.radio("Filter by:", ["None", "Title", "Prediction Level"], index=0, key='filter_selection')
-    if filter_options == "Title":
-        title_filter = st.text_input("Enter Title:", key='title_filter')
-    elif filter_options == "Prediction Level":
-        pred_filter = st.selectbox("Select Prediction Level", ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'], key='pred_filter')
-    
-    # Check if display button is pressed
-    if st.button("Display Library"):
-        st.session_state.filter_type = filter_options
-        st.session_state.filter_value = st.session_state.title_filter if filter_options == "Title" else st.session_state.pred_filter if filter_options == "Prediction Level" else None
-        display_library()
-
-# Ensuring library is displayed if filters are already set
-if 'filter_type' in st.session_state:
-    display_library()
 
 # Load model and vectorizer once when the app starts
 @st.cache(allow_output_mutation=True)
@@ -118,8 +97,18 @@ with st.sidebar:
     title = st.text_input(" 🖊️ Enter the title of your book", key="book_title", help="Enter title of book.")
     uploaded_file = st.file_uploader("📄 Upload your abstract", type=["pdf", "docx"], help="Upload abstract of book.")
     predict_button = st.button("Predict Difficulty of Book")
-    st.markdown("##") 
-    display_button = st.button("Display Library")
+
+    st.write("## 📓 Filter Library")
+    filter_options = st.radio("Filter by:", ["None", "Title", "Prediction Level"], index=0, key='filter_selection')
+    if filter_options == "Title":
+        title_filter = st.text_input("Enter Title:", key='title_filter')
+    elif filter_options == "Prediction Level":
+        pred_filter = st.selectbox("Select Prediction Level", ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'], key='pred_filter')
+
+ if st.button("Display Library"):
+        st.session_state.filter_type = filter_options
+        st.session_state.filter_value = st.session_state.title_filter if filter_options == "Title" else st.session_state.pred_filter if filter_options == "Prediction Level" else None
+        display_library()
    
 #run model for prediction
 if predict_button and uploaded_file is not None and title:
@@ -150,9 +139,6 @@ if predict_button and uploaded_file is not None and title:
     #Automatically save prediction
     save_to_library(title, prediction[0])
 
-
-if st.sidebar.button("Display Library"):
-    display_library()
 
 
 
