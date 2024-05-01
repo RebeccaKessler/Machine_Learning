@@ -122,14 +122,14 @@ if predict_button and uploaded_file is not None and title:
     save_to_library(title, prediction[0])
 
 if display_button:
-    display_library(filter_type, filter_value)
+    display_library(None, None)
     filter_type = st.sidebar.radio("Filter by:", [ "Title", "Prediction Level"], index=0, key='filter_selection')
     if filter_type == "Title":
         filter_value = st.sidebar.text_input("Enter Title:", key='filter_title_input')
         display_library(filter_type == "Title", filter_value)
     elif filter_type == "Prediction Level":
         filter_value = st.sidebar.selectbox("Select Prediction Level", ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'], key='filter_prediction_select')
-        display_library(filter_type == "prediction", filter_value)
+        display_library(filter_type == "Prediction Level", filter_value)
 
 
 
