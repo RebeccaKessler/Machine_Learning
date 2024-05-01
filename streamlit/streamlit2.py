@@ -50,13 +50,16 @@ def save_to_library(title, prediction):
         conn.commit()
 
 def display_library():
-    st.sidebar.markdown("## Filter Options")
-    filter_type = st.sidebar.radio("Filter by:", ["Title", "Prediction Level"], index=0, key='filter_selection')
+    filter_type = st.sidebar.radio("Filter by:", ["None", "Title", "Prediction Level"], index=0, key='filter_selection')
     
     if filter_type == "Title":
         filter_value = st.sidebar.text_input("Enter Title:", key='filter_title_input')
-        query = "SELECT * FROM library WHERE title LIKE ?"
-        params = ('%' + filter_value + '%',)
+        if filter_value:
+            query = "SELECT * FROM library WHERE title LIKE ?"
+            params = ('%' + filter_value + '%',)
+        else:
+            query = "SELECT * FROM library"
+            params = ()
     elif filter_type == "Prediction Level":
         filter_value = st.sidebar.selectbox("Select Prediction Level", ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'], key='filter_prediction_select')
         query = "SELECT * FROM library WHERE prediction = ?"
@@ -70,10 +73,11 @@ def display_library():
         c.execute(query, params)
         data = c.fetchall()
         if data:
-            df = pd.DataFrame(data, columns=["Title", "Prediction"])
+            df = pd.DataFrame(data, columns=["ID", "Title", "Prediction"])
             st.write(df)
         else:
             st.write("No data found based on filter criteria.")
+
 
 # Load model and vectorizer once when the app starts
 @st.cache(allow_output_mutation=True)
@@ -128,7 +132,16 @@ if predict_button and uploaded_file is not None and title:
     #Automatically save prediction
     save_to_library(title, prediction[0])
 
+
+if 'display_clicked' not in st.session_state:
+    st.session_state.display_clicked = False
+
+display_button = st.button("Display Library")
+
 if display_button:
+    st.session_state.display_clicked = True
+
+if st.session_state.display_clicked:
     display_library()
 
 
