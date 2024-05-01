@@ -102,8 +102,8 @@ with st.sidebar:
     predict_button = st.button("Predict Difficulty of Book")
     st.markdown("##") 
     display_button = st.button("Display Library")
-    if display_button:
-        st.session_state['display_library'] = True
+    if display_button or 'show_filters' in st.session_state:
+        st.session_state.show_filters = True
 
     if 'show_filters' in st.session_state and st.session_state.show_filters:
         filter_options = st.radio("Filter by:", ["Title", "Prediction Level"], index=0, key='filter_selection')
