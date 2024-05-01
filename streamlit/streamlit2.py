@@ -123,13 +123,14 @@ if predict_button and uploaded_file is not None and title:
 
 # Display library with filters
 if display_button:
-    filter_type = st.sidebar.radio("Filter by:", ["None", "Title", "Prediction Level"], index=0, key='filter_selection')
+    filter_type = st.sidebar.radio("Filter by:", ["Title", "Prediction Level"], index=0, key='filter_selection')
     filter_value = None
     if filter_type == "Title":
         filter_value = st.sidebar.text_input("Enter Title:", key='filter_title_input')
     elif filter_type == "Prediction Level":
         filter_value = st.sidebar.selectbox("Select Prediction Level", ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'], key='filter_prediction_select')
-
+   
+if st.sidebar.button('Show Library', key='display_button') or 'init' not in st.session_state:
     display_library("title" if filter_type == "Title" else "prediction" if filter_type == "Prediction Level" else None, filter_value)
     st.session_state['init'] = True
 
