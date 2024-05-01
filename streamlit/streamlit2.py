@@ -66,14 +66,15 @@ model_LR, vectorizer = load_model(url)
 
 # Main content
 st.markdown('<div class="header-style">', unsafe_allow_html=True)
-st.markdown('<p class="big-font">Bookly</p>', unsafe_allow_html=True)
-st.subheader('This app allows you to predict the French difficulty level of a book. Never worry again about whether or not your French skills are sufficient to read a book. Use Bookly and find it out within seconds!')
+st.markdown('<p class="big-font">📚 Bookly</p>', unsafe_allow_html=True)
+st.subheader('This app allows you to predict the French difficulty level of a book.')
 st.markdown('</div>', unsafe_allow_html=True)
 
 #Sidebar
-st.sidebar.subheader('📄 Upload the Cover Text of your Book')
-title = st.sidebar.text_input("Enter the book title", key="book_title")
-uploaded_file = st.sidebar.file_uploader("", type=["pdf", "docx"])
+with st.sidebar:
+    st.subheader('📄 Upload the Cover Text of your Book')
+    title = st.text_input("Enter the book title", key="book_title")
+    uploaded_file = st.file_uploader("", type=["pdf", "docx"])
 
 # Function to save to database
 def save_to_library(title, prediction):
@@ -92,9 +93,7 @@ if st.sidebar.button('Library'):
 
 #run model for prediction
 if uploaded_file is not None:
-    if uploaded_file.type == "text/plain":
-        preface_text = str(uploaded_file.read(), 'utf-8')
-    elif uploaded_file.type == "application/pdf":
+    if uploaded_file.type == "application/pdf":
         # Read as PDF file
         with st.spinner('📄 Extracting text from PDF...'):
             pdf_reader = PyPDF2.PdfFileReader(uploaded_file)
@@ -117,4 +116,14 @@ if uploaded_file is not None:
 
     st.subheader('💡 Predicted Difficulty Level')
     st.success(f"{prediction[0]}")
+
+if st.sidebar.button('Library'):
+        save_to_library(title, prediction[0])
+        st.sidebar.success("Saved to Library!")
+
+if st.sidebar.button('Library') and title and prediction:
+    save_to_library(title, prediction[0])
+    st.sidebar.success("Saved to Library!")
+else:
+    st.sidebar.error("Please enter a title and make a prediction before saving.")
     
