@@ -105,7 +105,7 @@ with st.sidebar:
     elif filter_options == "Prediction Level":
         pred_filter = st.selectbox("Select Prediction Level", ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'], key='pred_filter')
 
- if st.button("Display Library"):
+     if st.button("Display Library"):
         st.session_state.filter_type = filter_options
         st.session_state.filter_value = st.session_state.title_filter if filter_options == "Title" else st.session_state.pred_filter if filter_options == "Prediction Level" else None
         display_library()
@@ -139,6 +139,8 @@ if predict_button and uploaded_file is not None and title:
     #Automatically save prediction
     save_to_library(title, prediction[0])
 
+if 'filter_type' in st.session_state:
+    display_library()
 
 
 
