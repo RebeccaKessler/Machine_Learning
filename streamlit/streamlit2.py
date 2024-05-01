@@ -19,13 +19,13 @@ st.markdown(
         background-repeat: no-repeat;
     }
     .big-font {
-        font-family:Monopolix; 
+        font-family:Oregon; 
         font-size:140px !important;
         font-weight: bold;
         color: #000000; 
     }
     .pred-font {
-        font-family:Monopolix; 
+        font-family:Oregon; 
         color: #000000;
         font-size:24px !important;
     }
