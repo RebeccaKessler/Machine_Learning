@@ -61,26 +61,29 @@ def show_library():
     filter_type = st.sidebar.radio("Filter by", options=["Title", "Prediction Level"])
     
     if filter_type == "Title":
-        title_filter = st.sidebar.text_input("Title of book")
-        query = "SELECT * FROM library WHERE title LIKE ?"
-        params = ('%' + title_filter + '%',)
+        title_filter = st.sidebar.text_input("Title of book", key='filter_title')
+        if title_filter:  # Ensure that the query runs only if there's input
+            query = "SELECT * FROM library WHERE title LIKE ?"
+            params = ('%' + title_filter + '%',)
+            execute_query(query, params)
     elif filter_type == "Prediction Level":
-        # Assuming predictions levels are something like ['B1', 'B2', 'C1', etc.]
-        prediction_levels = ['A1','A2','B1', 'B2', 'C1', 'C2']  #
-        prediction_filter = st.sidebar.selectbox("Select Prediction Level", prediction_levels)
-        query = "SELECT * FROM library WHERE prediction = ?"
-        params = (prediction_filter,)
+        prediction_levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
+        prediction_filter = st.sidebar.selectbox("Select Prediction Level", prediction_levels, key='filter_prediction')
+        if prediction_filter:  # This check is technically unnecessary as selectbox always has a value
+            query = "SELECT * FROM library WHERE prediction = ?"
+            params = (prediction_filter,)
+            execute_query(query, params)
 
-    if st.sidebar.button("Apply Filter"):
-        with sqlite3.connect(DB_FILE) as conn:
-            c = conn.cursor()
-            c.execute(query, params)
-            data = c.fetchall()
-            if data:
-                df = pd.DataFrame(data, columns=["ID", "Title", "Prediction"])
-                st.table(df)
-            else:
-                st.write("No data found based on filter criteria.")
+def execute_query(query, params):
+    with sqlite3.connect(DB_FILE) as conn:
+        c = conn.cursor()
+        c.execute(query, params)
+        data = c.fetchall()
+        if data:
+            df = pd.DataFrame(data, columns=["ID", "Title", "Prediction"])
+            st.table(df)
+        else:
+            st.write("No data found based on filter criteria.")
 
 
 # Load model and vectorizer once when the app starts
