@@ -32,7 +32,7 @@ st.markdown(
     .header-style {
         padding: 20px;
         background-color: #808080;
-        border-radius: 0 0 50px 10px;
+        border-radius: 0 0 0px 10px;
     }
     .result-box {
         background-color: #C8E6C9; 
