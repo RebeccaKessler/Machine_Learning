@@ -65,8 +65,8 @@ url = 'https://github.com/RebeccaKessler/Machine_Learning/blob/main/streamlit/mo
 model_LR, vectorizer = load_model(url)
 
 # Main content
-st.markdown('<div class="header-style">', unsafe_allow_html=True)
 st.markdown('<p class="big-font">📚 Bookly</p>', unsafe_allow_html=True)
+st.markdown('<div class="header-style">', unsafe_allow_html=True)
 st.subheader('This app allows you to predict the French difficulty level of a book.')
 st.markdown('</div>', unsafe_allow_html=True)
 
@@ -89,7 +89,6 @@ def save_to_library(title, prediction):
 if st.sidebar.button('Library'):
     save_to_library(title, prediction[0])
     st.sidebar.success("Saved to Library!")
-
 
 #run model for prediction
 if uploaded_file is not None:
@@ -117,13 +116,4 @@ if uploaded_file is not None:
     st.subheader('💡 Predicted Difficulty Level')
     st.success(f"{prediction[0]}")
 
-if st.sidebar.button('Library'):
-        save_to_library(title, prediction[0])
-        st.sidebar.success("Saved to Library!")
-
-if st.sidebar.button('Library') and title and prediction:
-    save_to_library(title, prediction[0])
-    st.sidebar.success("Saved to Library!")
-else:
-    st.sidebar.error("Please enter a title and make a prediction before saving.")
     
