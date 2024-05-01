@@ -60,16 +60,27 @@ def execute_query(query, params):
         else:
             st.write("No data found based on filter criteria.")
 
-def show_library():
-    filter_type = st.radio("Filter by", options=["Title", "Prediction Level"])
-    if filter_type == "Title":
-        title_filter = st.text_input("Title of book", key='filter_title')
-        if title_filter:
-            execute_query("SELECT * FROM library WHERE title LIKE ?", ('%' + title_filter + '%',))
-    elif filter_type == "Prediction Level":
-        prediction_levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
-        prediction_filter = st.selectbox("Select Prediction Level", prediction_levels, key='filter_prediction')
-        execute_query("SELECT * FROM library WHERE prediction = ?", (prediction_filter,))
+def display_library(filter_type=None, filter_value=None):
+    if filter_type and filter_value:
+        if filter_type == "title":
+            query = "SELECT * FROM library WHERE title LIKE ?"
+            params = ('%' + filter_value + '%',)
+        elif filter_type == "prediction":
+            query = "SELECT * FROM library WHERE prediction = ?"
+            params = (filter_value,)
+    else:
+        query = "SELECT * FROM library"
+        params = ()
+    
+    with sqlite3.connect(DB_FILE) as conn:
+        c = conn.cursor()
+        c.execute(query, params)
+        data = c.fetchall()
+        if data:
+            df = pd.DataFrame(data, columns=["ID", "Title", "Prediction"])
+            st.table(df)
+        else:
+            st.write("No data found based on filter criteria.")
 
 
 # Load model and vectorizer once when the app starts
@@ -95,6 +106,8 @@ with st.sidebar:
     predict_button = st.button("Predict Difficulty of Book", key='predict_button')
    
 #run model for prediction
+if predict_button or uploaded_file is  None:
+    st.write('please enter title and upload a file')
 if predict_button and uploaded_file is not None and title:
     if uploaded_file.type == "application/pdf":
         with st.spinner('📄 Extracting text from PDF...'):
@@ -122,6 +135,10 @@ if predict_button and uploaded_file is not None and title:
 
 # Library view button
 if st.sidebar.button('Show Library'):
-    show_library()
+    display_library()
+
+if 'init' not in st.session_state:
+    display_library()
+    st.session_state['init'] = True
 
     
