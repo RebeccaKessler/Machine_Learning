@@ -49,17 +49,6 @@ def save_to_library(title, prediction):
         c.execute("INSERT INTO library (title, prediction) VALUES (?, ?)", (title, prediction))
         conn.commit()
 
-def execute_query(query, params):
-    with sqlite3.connect(DB_FILE) as conn:
-        c = conn.cursor()
-        c.execute(query, params)
-        data = c.fetchall()
-        if data:
-            df = pd.DataFrame(data, columns=["Title", "Prediction"])
-            st.table(df)
-        else:
-            st.write("No data found based on filter criteria.")
-
 def display_library(filter_type=None, filter_value=None):
     if filter_type and filter_value:
         if filter_type == "title":
@@ -81,7 +70,6 @@ def display_library(filter_type=None, filter_value=None):
             st.table(df)
         else:
             st.write("No data found based on filter criteria.")
-
 
 # Load model and vectorizer once when the app starts
 @st.cache(allow_output_mutation=True)
@@ -106,8 +94,6 @@ with st.sidebar:
     predict_button = st.button("Predict Difficulty of Book", key='predict_button')
    
 #run model for prediction
-if predict_button or uploaded_file is  None:
-    st.write('please enter title and upload a file')
 if predict_button and uploaded_file is not None and title:
     if uploaded_file.type == "application/pdf":
         with st.spinner('📄 Extracting text from PDF...'):
@@ -133,12 +119,16 @@ if predict_button and uploaded_file is not None and title:
     #Automatically save prediction
     save_to_library(title, prediction[0])
 
-# Library view button
-if st.sidebar.button('Show Library'):
-    display_library()
+# Display library with filters
+filter_type = st.sidebar.radio("Filter by:", ["None", "Title", "Prediction Level"], index=0, key='filter_selection')
+filter_value = None
+if filter_type == "Title":
+    filter_value = st.sidebar.text_input("Enter Title:", key='filter_title_input')
+elif filter_type == "Prediction Level":
+    filter_value = st.sidebar.selectbox("Select Prediction Level", ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'], key='filter_prediction_select')
 
-if 'init' not in st.session_state:
-    display_library()
+if st.sidebar.button('Show Library', key='show_library_button') or 'init' not in st.session_state:
+    display_library("title" if filter_type == "Title" else "prediction" if filter_type == "Prediction Level" else None, filter_value)
     st.session_state['init'] = True
 
     
