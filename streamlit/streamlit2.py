@@ -61,6 +61,7 @@ def fetch_and_display_library(query, params):
             st.write("No data found based on filter criteria.")
 
 def display_library():
+    st.write("## 📓 Library")
     if 'filter_type' in st.session_state and st.session_state.filter_type in ["Title", "Prediction Level"]:
         filter_type = st.session_state.filter_type
         filter_value = st.session_state.filter_value
@@ -98,7 +99,7 @@ with st.sidebar:
     title = st.text_input(" 🖊️ Enter the title of your book", key="book_title", help="Enter title of book.")
     uploaded_file = st.file_uploader("📄 Upload your excerpt", type=["pdf", "docx"], help="Upload abstract of book.")
     predict_button = st.button("Predict Difficulty of Book")
-
+    st.markdown("##") 
     display_button = st.button("Display Library")
     if display_button or 'show_filters' in st.session_state:
         st.session_state.show_filters = True
