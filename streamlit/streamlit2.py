@@ -51,7 +51,7 @@ def save_to_library(title, prediction):
 
 def display_library():
     st.sidebar.markdown("## Filter Options")
-    filter_type = st.sidebar.radio("Filter by:", ["None", "Title", "Prediction Level"], index=0, key='filter_selection')
+    filter_type = st.sidebar.radio("Filter by:", ["Title", "Prediction Level"], index=0, key='filter_selection')
     
     if filter_type == "Title":
         filter_value = st.sidebar.text_input("Enter Title:", key='filter_title_input')
@@ -70,7 +70,7 @@ def display_library():
         c.execute(query, params)
         data = c.fetchall()
         if data:
-            df = pd.DataFrame(data, columns=["ID", "Title", "Prediction"])
+            df = pd.DataFrame(data, columns=["Title", "Prediction"])
             st.write(df)
         else:
             st.write("No data found based on filter criteria.")
