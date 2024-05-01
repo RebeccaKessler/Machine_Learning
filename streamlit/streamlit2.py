@@ -121,7 +121,6 @@ if predict_button and uploaded_file is not None and title:
     save_to_library(title, prediction[0])
 
 # Library view button
-st.markdown("##") 
 if st.sidebar.button('Show Library'):
     show_library()
 
