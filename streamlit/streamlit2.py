@@ -56,7 +56,7 @@ def fetch_and_display_library(query, params):
         data = c.fetchall()
         if data:
             df = pd.DataFrame(data, columns=["ID","Title", "Prediction"])
-            df = df["Title", "Prediction"])
+            df = df["Title", "Prediction"]
             st.write(df)
         else:
             st.write("No data found based on filter criteria.")
