@@ -30,9 +30,9 @@ st.markdown(
         font-size:24px !important;
     }
     .header-style {
-        padding: 100px;
-        background-color: #808080;
-        border-radius: 0 0 0px 0px;
+        padding: 20px;
+        background-color: #D3D3D3;
+        border-radius: 0 0 10px 10px;
     }
     .result-box {
         background-color: #C8E6C9; 
