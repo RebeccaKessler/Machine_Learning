@@ -30,9 +30,9 @@ st.markdown(
         font-size:24px !important;
     }
     .header-style {
-        padding: 20px;
+        padding: 100px;
         background-color: #808080;
-        border-radius: 0 0 0px 10px;
+        border-radius: 0 0 0px 0px;
     }
     .result-box {
         background-color: #C8E6C9; 
@@ -67,7 +67,7 @@ model_LR, vectorizer = load_model(url)
 # Main content
 st.markdown('<p class="big-font">📚 Bookly</p>', unsafe_allow_html=True)
 st.markdown('<div class="header-style">', unsafe_allow_html=True)
-st.subheader('This app allows you to predict the French difficulty level of a book.')
+st.subheader('This app allows you to predict the French difficulty level of a book. Never worry again about whether or not your French skills are sufficient to read a book. Use Bookly and find it out within seconds!')
 st.markdown('</div>', unsafe_allow_html=True)
 
 #Sidebar
