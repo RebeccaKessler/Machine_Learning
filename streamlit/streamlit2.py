@@ -98,17 +98,21 @@ with st.sidebar:
     uploaded_file = st.file_uploader("📄 Upload your abstract", type=["pdf", "docx"], help="Upload abstract of book.")
     predict_button = st.button("Predict Difficulty of Book")
 
-    st.write("## 📓 Filter Library")
-    filter_options = st.radio("Filter by:", ["None", "Title", "Prediction Level"], index=0, key='filter_selection')
-    if filter_options == "Title":
-        title_filter = st.text_input("Enter Title:", key='title_filter')
-    elif filter_options == "Prediction Level":
-        pred_filter = st.selectbox("Select Prediction Level", ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'], key='pred_filter')
+    display_button = st.button("Display Library")
+    if display_button:
+        st.session_state.show_filters = True
 
-    if st.button("Display Library"):
-        st.session_state.filter_type = filter_options
-        st.session_state.filter_value = st.session_state.title_filter if filter_options == "Title" else st.session_state.pred_filter if filter_options == "Prediction Level" else None
-        display_library()
+    if 'show_filters' in st.session_state and st.session_state.show_filters:
+        filter_options = st.radio("Filter by:", ["None", "Title", "Prediction Level"], index=0, key='filter_selection')
+        if filter_options == "Title":
+            title_filter = st.text_input("Enter Title:", key='title_filter')
+        elif filter_options == "Prediction Level":
+            pred_filter = st.selectbox("Select Prediction Level", ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'], key='pred_filter')
+        
+        if st.button("Apply Filters"):
+            st.session_state.filter_type = filter_options
+            st.session_state.filter_value = st.session_state.title_filter if filter_options == "Title" else st.session_state.pred_filter if filter_options == "Prediction Level" else None
+            display_library()
    
 #run model for prediction
 if predict_button and uploaded_file is not None and title:
