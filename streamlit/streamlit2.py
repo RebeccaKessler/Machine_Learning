@@ -57,7 +57,7 @@ def save_to_library(title, prediction):
             ''', (title, prediction))
         conn.commit()
 
-ef show_library():
+def show_library():
     filter_type = st.sidebar.selectbox("Filter by", ["None", "Title", "Prediction"])
     if filter_type != "None":
         filter_value = st.sidebar.text_input(f"Enter {filter_type}")
