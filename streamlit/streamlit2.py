@@ -56,6 +56,7 @@ def fetch_and_display_library(query, params):
         data = c.fetchall()
         if data:
             df = pd.DataFrame(data, columns=["ID","Title", "Prediction"])
+            df = df[["Title", "Prediction"]]
             st.write(df)
         else:
             st.write("No data found based on filter criteria.")
@@ -67,13 +68,13 @@ def display_library():
         filter_value = st.session_state.filter_value
 
         if filter_type == "Title" and filter_value:
-            query = "SELECT title, prediction FROM library WHERE title LIKE ?"
+            query = "SELECT * FROM library WHERE title LIKE ?"
             params = ('%' + filter_value + '%',)
         elif filter_type == "Prediction Level" and filter_value:
-            query = "SELECT title, prediction FROM library WHERE prediction = ?"
+            query = "SELECT * FROM library WHERE prediction = ?"
             params = (filter_value,)
     else:
-        query = "SELECT title, prediction FROM library"
+        query = "SELECT * FROM library"
         params = ()
 
     fetch_and_display_library(query, params)
