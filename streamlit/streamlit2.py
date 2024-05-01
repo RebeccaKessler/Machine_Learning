@@ -20,7 +20,7 @@ st.markdown(
     }
     .big-font {
         font-family:Monopolix; 
-        font-size:200px !important;
+        font-size:100px !important;
         font-weight: bold;
         color: #000000; 
     }
