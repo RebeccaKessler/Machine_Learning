@@ -55,7 +55,7 @@ def fetch_and_display_library(query, params):
         c.execute(query, params)
         data = c.fetchall()
         if data:
-            df = pd.DataFrame(data, columns=["ID", "Title", "Prediction"])
+            df = pd.DataFrame(data, columns=["Title", "Prediction"])
             st.write(df)
         else:
             st.write("No data found based on filter criteria.")
@@ -103,7 +103,7 @@ with st.sidebar:
         st.session_state.show_filters = True
 
     if 'show_filters' in st.session_state and st.session_state.show_filters:
-        filter_options = st.radio("Filter by:", ["None", "Title", "Prediction Level"], index=0, key='filter_selection')
+        filter_options = st.radio("Filter by:", ["Title", "Prediction Level"], index=0, key='filter_selection')
         if filter_options == "Title":
             title_filter = st.text_input("Enter Title:", key='title_filter')
         elif filter_options == "Prediction Level":
