@@ -57,16 +57,27 @@ def save_to_library(title, prediction):
             ''', (title, prediction))
         conn.commit()
 
-def show_library():
-    with sqlite3.connect(DB_FILE) as conn:
-        c = conn.cursor()
-        c.execute('SELECT * FROM library')
-        data = c.fetchall()
-        if data:
-            df = pd.DataFrame(data, columns=["ID", "Title", "Prediction"])
-            st.table(df)
-        else:
-            st.write("No data found in the library.")
+ef show_library():
+    filter_type = st.sidebar.selectbox("Filter by", ["None", "Title", "Prediction"])
+    if filter_type != "None":
+        filter_value = st.sidebar.text_input(f"Enter {filter_type}")
+        if filter_value:
+            with sqlite3.connect(DB_FILE) as conn:
+                c = conn.cursor()
+                c.execute(f"SELECT * FROM library WHERE {filter_type.lower()} LIKE ?", ('%' + filter_value + '%',))
+                data = c.fetchall()
+    else:
+        with sqlite3.connect(DB_FILE) as conn:
+            c = conn.cursor()
+            c.execute("SELECT * FROM library")
+            data = c.fetchall()
+
+    if data:
+        df = pd.DataFrame(data, columns=["ID", "Title", "Prediction"])
+        st.table(df)
+    else:
+        st.write("No data found based on filter criteria.")
+
 
 # Load model and vectorizer once when the app starts
 @st.cache(allow_output_mutation=True)
@@ -100,6 +111,7 @@ if uploaded_file is not None:
         preface_text = "\n".join([para.text for para in doc.paragraphs])
 
     #print result of prediction
+    st.markdown("##") 
     st.write("### 📄 Uploaded Preface")
     st.text_area("", preface_text, height=250, help="This is the preface text extracted from your document.")
 
