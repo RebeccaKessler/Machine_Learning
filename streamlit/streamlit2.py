@@ -93,7 +93,7 @@ with st.sidebar:
     uploaded_file = st.file_uploader("📄 Upload your abstract", type=["pdf", "docx"], help="Upload abstract of book.")
     predict_button = st.button("Predict Difficulty of Book")
     st.markdown("##") 
-    dispaly_button = st.button("Display Library")
+    display_button = st.button("Display Library")
    
 #run model for prediction
 if predict_button and uploaded_file is not None and title:
