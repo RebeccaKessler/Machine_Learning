@@ -67,10 +67,10 @@ def display_library():
         filter_value = st.session_state.filter_value
 
         if filter_type == "Title" and filter_value:
-            query = "SELECT * FROM library WHERE title LIKE ?"
+            query = "SELECT title, prediction FROM library WHERE title LIKE ?"
             params = ('%' + filter_value + '%',)
         elif filter_type == "Prediction Level" and filter_value:
-            query = "SELECT * FROM library WHERE prediction = ?"
+            query = "SELECT title, prediction FROM library WHERE prediction = ?"
             params = (filter_value,)
     else:
         query = "SELECT * FROM library"
