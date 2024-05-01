@@ -61,19 +61,20 @@ def fetch_and_display_library(query, params):
             st.write("No data found based on filter criteria.")
 
 def display_library():
-    filter_type = st.session_state.filter_type
-    filter_value = st.session_state.filter_value
+    if 'filter_type' in st.session_state and st.session_state.filter_type in ["Title", "Prediction Level"]:
+        filter_type = st.session_state.filter_type
+        filter_value = st.session_state.filter_value
 
-    if filter_type == "Title" and filter_value:
-        query = "SELECT * FROM library WHERE title LIKE ?"
-        params = ('%' + filter_value + '%',)
-    elif filter_type == "Prediction Level" and filter_value:
-        query = "SELECT * FROM library WHERE prediction = ?"
-        params = (filter_value,)
+        if filter_type == "Title" and filter_value:
+            query = "SELECT * FROM library WHERE title LIKE ?"
+            params = ('%' + filter_value + '%',)
+        elif filter_type == "Prediction Level" and filter_value:
+            query = "SELECT * FROM library WHERE prediction = ?"
+            params = (filter_value,)
     else:
         query = "SELECT * FROM library"
         params = ()
-    
+
     fetch_and_display_library(query, params)
 
 # Load model and vectorizer once when the app starts
