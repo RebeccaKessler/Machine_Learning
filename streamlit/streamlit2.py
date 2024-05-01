@@ -73,7 +73,7 @@ def display_library():
             query = "SELECT title, prediction FROM library WHERE prediction = ?"
             params = (filter_value,)
     else:
-        query = "SELECT * FROM library"
+        query = "SELECT title, prediction FROM library"
         params = ()
 
     fetch_and_display_library(query, params)
