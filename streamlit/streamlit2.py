@@ -54,9 +54,8 @@ def fetch_and_display_library(query, params):
         c = conn.cursor()
         c.execute(query, params)
         data = c.fetchall()
-        print("Type of data fetched from database:", type(data))  # Add this line for debugging
         if data:
-            df = pd.DataFrame(data, columns=["Title", "Prediction"])
+            df = pd.DataFrame(data, columns=["ID","Title", "Prediction"])
             st.write(df)
         else:
             st.write("No data found based on filter criteria.")
