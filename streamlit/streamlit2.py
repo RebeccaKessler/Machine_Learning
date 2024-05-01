@@ -49,25 +49,29 @@ def save_to_library(title, prediction):
         c.execute("INSERT INTO library (title, prediction) VALUES (?, ?)", (title, prediction))
         conn.commit()
 
-def display_library(filter_type=None, filter_value=None):
-    if filter_type and filter_value:
-        if filter_type == "title":
-            query = "SELECT * FROM library WHERE title LIKE ?"
-            params = ('%' + filter_value + '%',)
-        elif filter_type == "prediction":
-            query = "SELECT * FROM library WHERE prediction = ?"
-            params = (filter_value,)
+def display_library():
+    st.sidebar.markdown("## Filter Options")
+    filter_type = st.sidebar.radio("Filter by:", ["None", "Title", "Prediction Level"], index=0, key='filter_selection')
+    
+    if filter_type == "Title":
+        filter_value = st.sidebar.text_input("Enter Title:", key='filter_title_input')
+        query = "SELECT * FROM library WHERE title LIKE ?"
+        params = ('%' + filter_value + '%',)
+    elif filter_type == "Prediction Level":
+        filter_value = st.sidebar.selectbox("Select Prediction Level", ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'], key='filter_prediction_select')
+        query = "SELECT * FROM library WHERE prediction = ?"
+        params = (filter_value,)
     else:
         query = "SELECT * FROM library"
         params = ()
-    
+
     with sqlite3.connect(DB_FILE) as conn:
         c = conn.cursor()
         c.execute(query, params)
         data = c.fetchall()
         if data:
             df = pd.DataFrame(data, columns=["ID", "Title", "Prediction"])
-            st.table(df)
+            st.write(df)
         else:
             st.write("No data found based on filter criteria.")
 
@@ -101,6 +105,9 @@ if predict_button and uploaded_file is not None and title:
         with st.spinner('📄 Extracting text from PDF...'):
             pdf_reader = PyPDF2.PdfFileReader(uploaded_file)
             preface_text = ""
+            for page_num in range(pdf_reader.numPages):
+                page = pdf_reader.getPage(page_num)
+                preface_text += page.extractText()
     elif uploaded_file.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
         doc = Document(uploaded_file)
         preface_text = "\n".join([para.text for para in doc.paragraphs])
@@ -123,13 +130,6 @@ if predict_button and uploaded_file is not None and title:
 
 if display_button:
     display_library()
-    filter_type = st.sidebar.radio("Filter by:", ["Title", "Prediction Level"], index=0, key='filter_selection')
-    if filter_type == "Title":
-        filter_value = st.sidebar.text_input("Enter Title:", key='filter_title_input')
-    elif filter_type == "Prediction Level":
-        filter_value = st.sidebar.selectbox("Select Prediction Level", ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'], key='filter_prediction_select')
-
-
 
 
 
