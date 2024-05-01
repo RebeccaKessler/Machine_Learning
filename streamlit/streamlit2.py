@@ -32,7 +32,7 @@ st.markdown(
     .header-style {
         padding: 20px;
         background-color: #808080;
-        border-radius: 0 0 10px 10px;
+        border-radius: 0 0 50px 10px;
     }
     .result-box {
         background-color: #C8E6C9; 
@@ -73,8 +73,8 @@ st.markdown('</div>', unsafe_allow_html=True)
 #Sidebar
 with st.sidebar:
     st.subheader('📄 Upload the Cover Text of your Book')
-    title = st.text_input("Enter the book title", key="book_title")
     uploaded_file = st.file_uploader("", type=["pdf", "docx"])
+    title = st.text_input("Enter the title of your book", key="book_title")
 
 # Function to save to database
 def save_to_library(title, prediction):
