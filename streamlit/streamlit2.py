@@ -122,7 +122,7 @@ if predict_button and uploaded_file is not None and title:
     save_to_library(title, prediction[0])
 
 # Display library with filters
-if display_button
+if display_button:
     filter_type = st.sidebar.radio("Filter by:", ["None", "Title", "Prediction Level"], index=0, key='filter_selection')
     filter_value = None
     if filter_type == "Title":
