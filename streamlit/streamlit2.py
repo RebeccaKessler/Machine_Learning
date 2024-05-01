@@ -29,11 +29,6 @@ st.markdown(
         color: #000000;
         font-size:24px !important;
     }
-    .header-style {
-        padding: 20px;
-        background-color: #D3D3D3;
-        border-radius: 0 0 10px 10px;
-    }
     .result-box {
         background-color: #C8E6C9; 
         padding: 5px;
@@ -66,11 +61,7 @@ model_LR, vectorizer = load_model(url)
 
 # Main content
 st.markdown('<p class="big-font">Bookly</p>', unsafe_allow_html=True)
-st.markdown("""
-<div class="header-style">
-    <h2>This app allows you to predict the French difficulty level of a book. Never worry again about whether or not your French skills are sufficient to read a book. Use Bookly and find it out within seconds!</h2>
-</div>
-""", unsafe_allow_html=True)
+st.markdown("This app allows you to predict the French difficulty level of a book. Never worry again about whether or not your French skills are sufficient to read a book. Use Bookly and find it out within seconds!')
 
 with st.sidebar:
     st.write("### Upload the Cover Text of your Book")
@@ -84,7 +75,7 @@ with st.sidebar:
                 save_to_library(title, prediction[0])
                 st.success("Saved to Library!")
             else:
-                st.error("Please enter a title and make a prediction before saving.")
+                st.error("Library is empty.")
 
 # Function to save to database
 def save_to_library(title, prediction):
