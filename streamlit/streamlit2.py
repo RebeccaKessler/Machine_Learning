@@ -20,12 +20,12 @@ st.markdown(
     }
     .big-font {
         font-family:Monopolix; 
-        font-size:100px !important;
+        font-size:140px !important;
         font-weight: bold;
         color: #000000; 
     }
     .pred-font {
-        font-family:Helvetica; 
+        font-family:Monopolix; 
         color: #000000;
         font-size:24px !important;
     }
