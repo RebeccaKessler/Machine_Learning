@@ -120,10 +120,6 @@ with st.sidebar:
 if predict_button and uploaded_file is None or title is None:
     st.markdown("##")
     st.error("### ‼️ Please fill in title and upload file")
-
-if 'display_library' in st.session_state and st.session_state['display_library']:
-    display_library()
-    st.session_state['display_library'] = False  
    
 #run model for prediction
 if predict_button and uploaded_file is not None and title:
