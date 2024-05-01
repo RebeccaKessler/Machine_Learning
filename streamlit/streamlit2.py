@@ -116,7 +116,7 @@ with st.sidebar:
             st.session_state.filter_value = st.session_state.title_filter if filter_options == "Title" else st.session_state.pred_filter if filter_options == "Prediction Level" else None
             display_library()
 
-if predict_button and uploaded_file is None and title:
+if predict_button and uploaded_file is None or title:
     st.write("Please fill in title and upload file")
    
 #run model for prediction
