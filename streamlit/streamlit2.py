@@ -61,7 +61,7 @@ model_LR, vectorizer = load_model(url)
 
 # Main content
 st.markdown('<p class="big-font">Bookly</p>', unsafe_allow_html=True)
-st.write("This app allows you to predict the French difficulty level of a book. Never worry again about whether or not your French skills are sufficient to read a book. Use Bookly and find it out within seconds!')
+st.write("This app allows you to predict the French difficulty level of a book. Never worry again about whether or not your French skills are sufficient to read a book. Use Bookly and find it out within seconds!")
 
 # Sidebar
 with st.sidebar:
