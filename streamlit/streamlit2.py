@@ -117,7 +117,7 @@ with st.sidebar:
             display_library()
 
 if predict_button and uploaded_file is None or title:
-    st.write("## ‼️ Please fill in title and upload file")
+    st.error("## ‼️ Please fill in title and upload file")
    
 #run model for prediction
 if predict_button and uploaded_file is not None and title:
