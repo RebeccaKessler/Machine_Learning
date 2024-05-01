@@ -128,7 +128,7 @@ if display_button:
     elif filter_type == "Prediction Level":
         filter_value = st.sidebar.selectbox("Select Prediction Level", ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'], key='filter_prediction_select')
 
-if display_button or 'init' not in st.session_stat:
+if display_button:
     display_library("title" if filter_type == "Title" else "prediction" if filter_type == "Prediction Level" else None, filter_value)
     st.session_state['init'] = True
 
