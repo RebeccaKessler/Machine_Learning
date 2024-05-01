@@ -49,25 +49,8 @@ def save_to_library(title, prediction):
         c.execute("INSERT INTO library (title, prediction) VALUES (?, ?)", (title, prediction))
         conn.commit()
 
-def display_library():
-    filter_type = st.sidebar.radio("Filter by:", ["None", "Title", "Prediction Level"], index=0, key='filter_selection')
-    
-    if filter_type == "Title":
-        filter_value = st.sidebar.text_input("Enter Title:", key='filter_title_input')
-        if filter_value:
-            query = "SELECT * FROM library WHERE title LIKE ?"
-            params = ('%' + filter_value + '%',)
-        else:
-            query = "SELECT * FROM library"
-            params = ()
-    elif filter_type == "Prediction Level":
-        filter_value = st.sidebar.selectbox("Select Prediction Level", ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'], key='filter_prediction_select')
-        query = "SELECT * FROM library WHERE prediction = ?"
-        params = (filter_value,)
-    else:
-        query = "SELECT * FROM library"
-        params = ()
-
+# Function to fetch and display filtered data
+def fetch_and_display_library(query, params):
     with sqlite3.connect(DB_FILE) as conn:
         c = conn.cursor()
         c.execute(query, params)
@@ -78,6 +61,33 @@ def display_library():
         else:
             st.write("No data found based on filter criteria.")
 
+# Setup sidebar with filter options
+def setup_filters():
+    filter_type = st.sidebar.radio("Filter by:", ["None", "Title", "Prediction Level"], index=0, key='filter_selection')
+
+    if filter_type == "Title":
+        filter_value = st.sidebar.text_input("Enter Title:", key='filter_title_input', on_change=display_library)
+    elif filter_type == "Prediction Level":
+        filter_value = st.sidebar.selectbox("Select Prediction Level", ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'], key='filter_prediction_select', on_change=display_library)
+    else:
+        filter_value = None
+
+    return filter_type, filter_value
+
+def display_library():
+    filter_type, filter_value = setup_filters()
+
+    if filter_type == "Title" and filter_value:
+        query = "SELECT * FROM library WHERE title LIKE ?"
+        params = ('%' + filter_value + '%',)
+    elif filter_type == "Prediction Level" and filter_value:
+        query = "SELECT * FROM library WHERE prediction = ?"
+        params = (filter_value,)
+    else:
+        query = "SELECT * FROM library"
+        params = ()
+
+    fetch_and_display_library(query, params)
 
 # Load model and vectorizer once when the app starts
 @st.cache(allow_output_mutation=True)
@@ -133,15 +143,7 @@ if predict_button and uploaded_file is not None and title:
     save_to_library(title, prediction[0])
 
 
-if 'display_clicked' not in st.session_state:
-    st.session_state.display_clicked = False
-
-display_button = st.button("Display Library")
-
-if display_button:
-    st.session_state.display_clicked = True
-
-if st.session_state.display_clicked:
+if st.sidebar.button("Display Library"):
     display_library()
 
 
