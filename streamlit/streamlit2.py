@@ -65,14 +65,16 @@ url = 'https://github.com/RebeccaKessler/Machine_Learning/blob/main/streamlit/mo
 model_LR, vectorizer = load_model(url)
 
 # Main content
-st.markdown('<p class="big-font">📚 Bookly</p>', unsafe_allow_html=True)
-st.markdown('<div class="header-style">', unsafe_allow_html=True)
-st.subheader('This app allows you to predict the French difficulty level of a book. Never worry again about whether or not your French skills are sufficient to read a book. Use Bookly and find it out within seconds!')
-st.markdown('</div>', unsafe_allow_html=True)
+st.markdown('<p class="big-font">Bookly</p>', unsafe_allow_html=True)
+st.markdown("""
+<div class="header-style">
+    <h2>This app allows you to predict the French difficulty level of a book. Never worry again about whether or not your French skills are sufficient to read a book. Use Bookly and find it out within seconds!</h2>
+</div>
+""", unsafe_allow_html=True)
 
 #Sidebar
 with st.sidebar:
-    st.subheader('📄 Upload the Cover Text of your Book')
+    st.subheader('📄 Upload the Abstract of your Book')
     uploaded_file = st.file_uploader("", type=["pdf", "docx"])
     title = st.text_input("Enter the title of your book", key="book_title")
 
