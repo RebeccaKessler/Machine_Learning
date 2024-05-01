@@ -61,38 +61,31 @@ model_LR, vectorizer = load_model(url)
 
 # Main content
 st.markdown('<p class="big-font">Bookly</p>', unsafe_allow_html=True)
-st.markdown("This app allows you to predict the French difficulty level of a book. Never worry again about whether or not your French skills are sufficient to read a book. Use Bookly and find it out within seconds!')
+st.write("This app allows you to predict the French difficulty level of a book. Never worry again about whether or not your French skills are sufficient to read a book. Use Bookly and find it out within seconds!')
 
+# Sidebar
 with st.sidebar:
     st.write("### Upload the Cover Text of your Book")
-    with st.container():  # First container for inputs
+    with st.container():  
         title = st.text_input("Enter the title of your book", key="book_title")
         uploaded_file = st.file_uploader("", type=["pdf", "docx"])
 
-    with st.container():  # Second container for Library button
-        if st.button('Library', key='library_button'):
-            if title and prediction:
-                save_to_library(title, prediction[0])
-                st.success("Saved to Library!")
-            else:
-                st.error("Library is empty.")
+    with st.container():  
+        if st.button('Show Library', key='library_button'):
+            st.write("### Library of Saved Predictions")
+            show_library()
 
-# Function to save to database
-def save_to_library(title, prediction):
+def show_library():
     DB_FILE = "library.db"
     conn = sqlite3.connect(DB_FILE)
     c = conn.cursor()
-    c.execute('''
-              CREATE TABLE IF NOT EXISTS library
-              ([generated_id] INTEGER PRIMARY KEY, [title] text, [prediction] text)
-              ''')
-    conn.commit()
-    with conn:
-        c.execute('''
-                  INSERT INTO library (title, prediction)
-                  VALUES (?, ?)
-                  ''', (title, prediction))
-        conn.commit()
+    c.execute('SELECT * FROM library')
+    data = c.fetchall()
+    if data:
+        df = pd.DataFrame(data, columns=["ID", "Title", "Prediction"])
+        st.table(df)
+    else:
+        st.write("No data found in the library.")
 
 #run model for prediction
 if uploaded_file is not None:
@@ -119,5 +112,11 @@ if uploaded_file is not None:
 
     st.subheader('💡 Predicted Difficulty Level')
     st.success(f"{prediction[0]}")
+
+    #Automatically save prediction
+    if title:
+        save_to_library(title, prediction[0])
+    else:
+        st.error("Please enter a title for the book before uploading.")
 
     
