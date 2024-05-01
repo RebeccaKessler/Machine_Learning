@@ -96,6 +96,7 @@ st.write("### This app allows you to predict the French difficulty level of a bo
 # Sidebar
 with st.sidebar:
     st.write("# 📓 Upload Excerpt of your Book")
+    st.markdown("##")
     title = st.text_input("🖊️ Enter the title of your book", key="book_title", help="Enter title of book.")
     uploaded_file = st.file_uploader("📄 Upload your excerpt", type=["pdf", "docx"], help="Upload abstract of book.")
     predict_button = st.button("Predict Difficulty of Book")
