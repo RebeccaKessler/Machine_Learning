@@ -72,25 +72,36 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-#Sidebar
 with st.sidebar:
-    st.subheader('📄 Upload the Abstract of your Book')
-    uploaded_file = st.file_uploader("", type=["pdf", "docx"])
-    title = st.text_input("Enter the title of your book", key="book_title")
+    st.write("### Upload the Cover Text of your Book")
+    with st.container():  # First container for inputs
+        title = st.text_input("Enter the title of your book", key="book_title")
+        uploaded_file = st.file_uploader("", type=["pdf", "docx"])
+
+    with st.container():  # Second container for Library button
+        if st.button('Library', key='library_button'):
+            if title and prediction:
+                save_to_library(title, prediction[0])
+                st.success("Saved to Library!")
+            else:
+                st.error("Please enter a title and make a prediction before saving.")
 
 # Function to save to database
 def save_to_library(title, prediction):
-    with sqlite3.connect(DB_FILE) as conn:
-        c = conn.cursor()
+    DB_FILE = "library.db"
+    conn = sqlite3.connect(DB_FILE)
+    c = conn.cursor()
+    c.execute('''
+              CREATE TABLE IF NOT EXISTS library
+              ([generated_id] INTEGER PRIMARY KEY, [title] text, [prediction] text)
+              ''')
+    conn.commit()
+    with conn:
         c.execute('''
                   INSERT INTO library (title, prediction)
                   VALUES (?, ?)
                   ''', (title, prediction))
         conn.commit()
-
-if st.sidebar.button('Library'):
-    save_to_library(title, prediction[0])
-    st.sidebar.success("Saved to Library!")
 
 #run model for prediction
 if uploaded_file is not None:
