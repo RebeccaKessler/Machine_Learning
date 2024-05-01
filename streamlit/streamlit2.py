@@ -102,8 +102,8 @@ with st.sidebar:
     predict_button = st.button("Predict Difficulty of Book")
     st.markdown("##") 
     display_button = st.button("Display Library")
-    if display_button or 'show_filters' in st.session_state:
-        st.session_state.show_filters = True
+    if display_button:
+        st.session_state['display_library'] = True
 
     if 'show_filters' in st.session_state and st.session_state.show_filters:
         filter_options = st.radio("Filter by:", ["Title", "Prediction Level"], index=0, key='filter_selection')
@@ -115,11 +115,15 @@ with st.sidebar:
         if st.button("Apply Filters"):
             st.session_state.filter_type = filter_options
             st.session_state.filter_value = st.session_state.title_filter if filter_options == "Title" else st.session_state.pred_filter if filter_options == "Prediction Level" else None
-            display_library()
+            st.session_state['display_library'] = True
 
 if predict_button and uploaded_file is None or title is None:
     st.markdown("##")
     st.error("### ‼️ Please fill in title and upload file")
+
+if 'display_library' in st.session_state and st.session_state['display_library']:
+    display_library()
+    st.session_state['display_library'] = False  
    
 #run model for prediction
 if predict_button and uploaded_file is not None and title:
