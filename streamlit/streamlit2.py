@@ -22,7 +22,7 @@ st.markdown(
         font-family:Helvetica; 
         font-size:100px !important;
         font-weight: bold;
-        color: #FDBA74; 
+        color: #000000; 
     }
     .pred-font {
         font-family:Helvetica; 
@@ -31,6 +31,7 @@ st.markdown(
     }
     .header-style {
         padding: 20px;
+        background-color: #808080;
         border-radius: 0 0 10px 10px;
     }
     .result-box {
@@ -42,7 +43,15 @@ st.markdown(
     </style>
     """, unsafe_allow_html=True
 )
-
+# Database setup
+DB_FILE = "library.db"
+conn = sqlite3.connect(DB_FILE)
+c = conn.cursor()
+c.execute('''
+          CREATE TABLE IF NOT EXISTS library
+          ([generated_id] INTEGER PRIMARY KEY, [title] text, [prediction] text)
+          ''')
+conn.commit()
 
 # Load model and vectorizer once when the app starts
 @st.cache(allow_output_mutation=True)
@@ -57,17 +66,29 @@ model_LR, vectorizer = load_model(url)
 
 # Main content
 st.markdown('<div class="header-style">', unsafe_allow_html=True)
-st.markdown('<p class="big-font">📚 Bookly</p>', unsafe_allow_html=True)
+st.markdown('<p class="big-font">Bookly</p>', unsafe_allow_html=True)
 st.subheader('This app allows you to predict the French difficulty level of a book. Never worry again about whether or not your French skills are sufficient to read a book. Use Bookly and find it out within seconds!')
 st.markdown('</div>', unsafe_allow_html=True)
 
 #Sidebar
 st.sidebar.subheader('📄 Upload the Cover Text of your Book')
+title = st.sidebar.text_input("Enter the book title", key="book_title")
 uploaded_file = st.sidebar.file_uploader("", type=["pdf", "docx"])
 
-# Input for the book title
-if uploaded_file is not None:
-    book_title = st.sidebar.text_input("Enter the book title", key="book_title")
+# Function to save to database
+def save_to_library(title, prediction):
+    with sqlite3.connect(DB_FILE) as conn:
+        c = conn.cursor()
+        c.execute('''
+                  INSERT INTO library (title, prediction)
+                  VALUES (?, ?)
+                  ''', (title, prediction))
+        conn.commit()
+
+if st.sidebar.button('Library'):
+    save_to_library(title, prediction[0])
+    st.sidebar.success("Saved to Library!")
+
 
 #run model for prediction
 if uploaded_file is not None:
