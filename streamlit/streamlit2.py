@@ -19,8 +19,8 @@ st.markdown(
         background-repeat: no-repeat;
     }
     .big-font {
-        font-family:Helvetica; 
-        font-size:100px !important;
+        font-family:Monopolix; 
+        font-size:200px !important;
         font-weight: bold;
         color: #000000; 
     }
@@ -95,7 +95,7 @@ url = 'https://github.com/RebeccaKessler/Machine_Learning/blob/main/streamlit/mo
 model_LR, vectorizer = load_model(url)
 
 # Main content
-st.markdown('<p class="big-font">Bookly</p>', unsafe_allow_html=True)
+st.markdown('<p class="big-font">BOOKLY</p>', unsafe_allow_html=True)
 st.write("### This app allows you to predict the French difficulty level of a book. Never worry again about whether or not your French skills are sufficient to read a book. Use Bookly and find it out within seconds!")
 
 # Sidebar
