@@ -13,7 +13,7 @@ st.markdown(
     """
     <style>
     .stApp {
-        background-image: url("https://github.com/RebeccaKessler/Machine_Learning/blob/main/streamlit/background1.jpg?raw=true");
+        background-image: url("https://github.com/RebeccaKessler/Machine_Learning/blob/main/streamlit/background1.png?raw=true");
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
