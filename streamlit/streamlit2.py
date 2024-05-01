@@ -100,10 +100,10 @@ st.write("### This app allows you to predict the French difficulty level of a bo
 
 # Sidebar
 with st.sidebar:
-    st.write("### Upload the Cover Text of your Book")
-    title = st.text_input("Enter the title of your book", key="book_title")
-    uploaded_file = st.file_uploader("", type=["pdf", "docx"])
-    predict_button = st.button("Predict", key='predict_button')
+    st.write("### 📓 Upload the Abstract of your Book")
+    title = st.text_input(" 🖊️ Enter the title of your book", key="book_title", help="Enter title of book.")
+    uploaded_file = st.file_uploader("📄 Upload your file", type=["pdf", "docx"], help="Upload abstract of book.")
+    predict_button = st.button("Predict Difficulty of Book", key='predict_button')
    
 #run model for prediction
 if predict_button and uploaded_file is not None and title:
@@ -133,6 +133,7 @@ if predict_button and uploaded_file is not None and title:
 
 # Library view button
 with st.sidebar:
+    st.markdown("##") 
     if st.button('Show Library', key='library_button'):
         show_library()
 
