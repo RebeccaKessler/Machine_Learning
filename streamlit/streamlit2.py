@@ -54,6 +54,7 @@ def fetch_and_display_library(query, params):
         c = conn.cursor()
         c.execute(query, params)
         data = c.fetchall()
+        print("Data fetched from database:", data)  # Add this line for debugging
         if data:
             df = pd.DataFrame(data, columns=["Title", "Prediction"])
             st.write(df)
