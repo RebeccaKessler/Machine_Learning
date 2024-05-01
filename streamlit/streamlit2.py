@@ -1,12 +1,12 @@
 import streamlit as st
 import pandas as pd
+import sqlite3
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 import pickle
 import requests
-from docx import Document  # Import the library to handle .docx files
-import PyPDF2  # Import the library to handle PDF files
-import sqlite3
+from docx import Document  
+import PyPDF2  
 
 # Define colors and styles
 st.markdown(
@@ -23,11 +23,6 @@ st.markdown(
         font-size:140px !important;
         font-weight: bold;
         color: #000000; 
-    }
-    .pred-font {
-        font-family:Oregon; 
-        color: #000000;
-        font-size:24px !important;
     }
     .result-box {
         background-color: #C8E6C9; 
@@ -54,33 +49,27 @@ def save_to_library(title, prediction):
         c.execute("INSERT INTO library (title, prediction) VALUES (?, ?)", (title, prediction))
         conn.commit()
 
-def show_library():
-    filter_type = st.sidebar.radio("Filter by", options=["Title", "Prediction Level"])
-    
-    if filter_type == "Title":
-        title_filter = st.sidebar.text_input("Title of book", key='filter_title')
-        if title_filter:  # Ensure that the query runs only if there's input
-            query = "SELECT * FROM library WHERE title LIKE ?"
-            params = ('%' + title_filter + '%',)
-            execute_query(query, params)
-    elif filter_type == "Prediction Level":
-        prediction_levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
-        prediction_filter = st.sidebar.selectbox("Select Prediction Level", prediction_levels, key='filter_prediction')
-        if prediction_filter:  
-            query = "SELECT * FROM library WHERE prediction = ?"
-            params = (prediction_filter,)
-            execute_query(query, params)
-
 def execute_query(query, params):
     with sqlite3.connect(DB_FILE) as conn:
         c = conn.cursor()
         c.execute(query, params)
         data = c.fetchall()
         if data:
-            df = pd.DataFrame(data, columns=["ID", "Title", "Prediction"])
+            df = pd.DataFrame(data, columns=["Title", "Prediction"])
             st.table(df)
         else:
             st.write("No data found based on filter criteria.")
+
+def show_library():
+    filter_type = st.radio("Filter by", options=["Title", "Prediction Level"])
+    if filter_type == "Title":
+        title_filter = st.text_input("Title of book", key='filter_title')
+        if title_filter:
+            execute_query("SELECT * FROM library WHERE title LIKE ?", ('%' + title_filter + '%',))
+    elif filter_type == "Prediction Level":
+        prediction_levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
+        prediction_filter = st.selectbox("Select Prediction Level", prediction_levels, key='filter_prediction')
+        execute_query("SELECT * FROM library WHERE prediction = ?", (prediction_filter,))
 
 
 # Load model and vectorizer once when the app starts
@@ -132,9 +121,8 @@ if predict_button and uploaded_file is not None and title:
     save_to_library(title, prediction[0])
 
 # Library view button
-with st.sidebar:
-    st.markdown("##") 
-    if st.button('Show Library', key='library_button'):
-        show_library()
+st.markdown("##") 
+if st.sidebar.button('Show Library'):
+    show_library()
 
     
