@@ -48,6 +48,26 @@ c.execute('''
           ''')
 conn.commit()
 
+def save_to_library(title, prediction):
+    with sqlite3.connect(DB_FILE) as conn:
+        c = conn.cursor()
+        c.execute('''
+            INSERT INTO library (title, prediction)
+            VALUES (?, ?)
+            ''', (title, prediction))
+        conn.commit()
+
+def show_library():
+    with sqlite3.connect(DB_FILE) as conn:
+        c = conn.cursor()
+        c.execute('SELECT * FROM library')
+        data = c.fetchall()
+        if data:
+            df = pd.DataFrame(data, columns=["ID", "Title", "Prediction"])
+            st.table(df)
+        else:
+            st.write("No data found in the library.")
+
 # Load model and vectorizer once when the app starts
 @st.cache(allow_output_mutation=True)
 def load_model(url):
@@ -66,38 +86,16 @@ st.write("### This app allows you to predict the French difficulty level of a bo
 # Sidebar
 with st.sidebar:
     st.write("### Upload the Cover Text of your Book")
-    with st.container():  
-        title = st.text_input("Enter the title of your book", key="book_title")
-        uploaded_file = st.file_uploader("", type=["pdf", "docx"])
-
-    with st.container():  
-        if st.button('Show Library', key='library_button'):
-            st.write("### Library of Saved Predictions")
-            show_library()
-
-def show_library():
-    DB_FILE = "library.db"
-    conn = sqlite3.connect(DB_FILE)
-    c = conn.cursor()
-    c.execute('SELECT * FROM library')
-    data = c.fetchall()
-    if data:
-        df = pd.DataFrame(data, columns=["ID", "Title", "Prediction"])
-        st.table(df)
-    else:
-        st.write("No data found in the library.")
+    title = st.text_input("Enter the title of your book", key="book_title")
+    uploaded_file = st.file_uploader("", type=["pdf", "docx"])
 
 #run model for prediction
 if uploaded_file is not None:
     if uploaded_file.type == "application/pdf":
-        # Read as PDF file
         with st.spinner('📄 Extracting text from PDF...'):
             pdf_reader = PyPDF2.PdfFileReader(uploaded_file)
             preface_text = ""
-            for page_num in range(pdf_reader.numPages):
-                preface_text += pdf_reader.getPage(page_num).extractText()
     elif uploaded_file.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
-        # Read as DOCX file
         doc = Document(uploaded_file)
         preface_text = "\n".join([para.text for para in doc.paragraphs])
 
@@ -116,7 +114,10 @@ if uploaded_file is not None:
     #Automatically save prediction
     if title:
         save_to_library(title, prediction[0])
-    else:
-        st.error("Please enter a title for the book before uploading.")
+
+# Library view button
+with st.sidebar:
+    if st.button('Show Library', key='library_button'):
+        show_library()
 
     
