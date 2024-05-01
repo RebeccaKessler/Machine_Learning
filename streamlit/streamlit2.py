@@ -101,8 +101,8 @@ st.write("### This app allows you to predict the French difficulty level of a bo
 # Sidebar
 with st.sidebar:
     st.write("### Upload the Cover Text of your Book")
-    title = st.text_input("Enter the title of your book", key="book_title")
-    uploaded_file = st.file_uploader("", type=["pdf", "docx"])
+    title = st.text_input("Enter the title of your book", key="book_title", help="Enter the title of your book.")
+    uploaded_file = st.file_uploader("", type=["pdf", "docx"], help="Upload the abstract of your book.")
    
 #run model for prediction
 if uploaded_file is not None:
