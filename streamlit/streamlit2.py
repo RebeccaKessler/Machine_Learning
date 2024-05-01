@@ -61,21 +61,10 @@ def fetch_and_display_library(query, params):
         else:
             st.write("No data found based on filter criteria.")
 
-# Setup sidebar with filter options
-def setup_filters():
-    filter_type = st.sidebar.radio("Filter by:", ["None", "Title", "Prediction Level"], index=0, key='filter_selection')
-
-    if filter_type == "Title":
-        filter_value = st.sidebar.text_input("Enter Title:", key='filter_title_input', on_change=display_library)
-    elif filter_type == "Prediction Level":
-        filter_value = st.sidebar.selectbox("Select Prediction Level", ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'], key='filter_prediction_select', on_change=display_library)
-    else:
-        filter_value = None
-
-    return filter_type, filter_value
-
+# Main function to control the library display
 def display_library():
-    filter_type, filter_value = setup_filters()
+    filter_type = st.session_state.filter_type
+    filter_value = st.session_state.filter_value
 
     if filter_type == "Title" and filter_value:
         query = "SELECT * FROM library WHERE title LIKE ?"
@@ -86,8 +75,27 @@ def display_library():
     else:
         query = "SELECT * FROM library"
         params = ()
-
+    
     fetch_and_display_library(query, params)
+
+# Sidebar setup for filters and display library button
+with st.sidebar:
+    st.write("## 📓 Filter Library")
+    filter_options = st.radio("Filter by:", ["None", "Title", "Prediction Level"], index=0, key='filter_selection')
+    if filter_options == "Title":
+        title_filter = st.text_input("Enter Title:", key='title_filter')
+    elif filter_options == "Prediction Level":
+        pred_filter = st.selectbox("Select Prediction Level", ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'], key='pred_filter')
+    
+    # Check if display button is pressed
+    if st.button("Display Library"):
+        st.session_state.filter_type = filter_options
+        st.session_state.filter_value = st.session_state.title_filter if filter_options == "Title" else st.session_state.pred_filter if filter_options == "Prediction Level" else None
+        display_library()
+
+# Ensuring library is displayed if filters are already set
+if 'filter_type' in st.session_state:
+    display_library()
 
 # Load model and vectorizer once when the app starts
 @st.cache(allow_output_mutation=True)
