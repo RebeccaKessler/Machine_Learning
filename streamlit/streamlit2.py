@@ -19,7 +19,7 @@ st.markdown(
         background-repeat: no-repeat;
     }
     .big-font {
-        font-family:Oregon; 
+        font-family:Helvetica; 
         font-size:140px !important;
         font-weight: bold;
         color: #000000; 
