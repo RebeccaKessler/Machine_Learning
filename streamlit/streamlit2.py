@@ -51,10 +51,7 @@ conn.commit()
 def save_to_library(title, prediction):
     with sqlite3.connect(DB_FILE) as conn:
         c = conn.cursor()
-        c.execute('''
-            INSERT INTO library (title, prediction)
-            VALUES (?, ?)
-            ''', (title, prediction))
+        c.execute("INSERT INTO library (title, prediction) VALUES (?, ?)", (title, prediction))
         conn.commit()
 
 def show_library():
@@ -69,7 +66,7 @@ def show_library():
     elif filter_type == "Prediction Level":
         prediction_levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
         prediction_filter = st.sidebar.selectbox("Select Prediction Level", prediction_levels, key='filter_prediction')
-        if prediction_filter:  # This check is technically unnecessary as selectbox always has a value
+        if prediction_filter:  
             query = "SELECT * FROM library WHERE prediction = ?"
             params = (prediction_filter,)
             execute_query(query, params)
@@ -104,11 +101,12 @@ st.write("### This app allows you to predict the French difficulty level of a bo
 # Sidebar
 with st.sidebar:
     st.write("### Upload the Cover Text of your Book")
-    title = st.text_input("Enter the title of your book", key="book_title", help="Enter the title of your book.")
-    uploaded_file = st.file_uploader("", type=["pdf", "docx"], help="Upload the abstract of your book.")
+    title = st.text_input("Enter the title of your book", key="book_title")
+    uploaded_file = st.file_uploader("", type=["pdf", "docx"])
+    predict_button = st.button("Predict", key='predict_button')
    
 #run model for prediction
-if uploaded_file is not None:
+if predict_button and uploaded_file is not None and title:
     if uploaded_file.type == "application/pdf":
         with st.spinner('📄 Extracting text from PDF...'):
             pdf_reader = PyPDF2.PdfFileReader(uploaded_file)
@@ -131,8 +129,7 @@ if uploaded_file is not None:
     st.success(f"{prediction[0]}")
 
     #Automatically save prediction
-    if title:
-        save_to_library(title, prediction[0])
+    save_to_library(title, prediction[0])
 
 # Library view button
 with st.sidebar:
