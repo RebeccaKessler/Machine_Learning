@@ -43,10 +43,20 @@ Accuracy: 0.57
 Accuracy: 0.576
 
 
-{'learning_rate': 10e-5, 'num_train_epochs': 5, 'per_device_train_batch_size': 16}
-Accuracy -> currently trying
+{'learning_rate': 18e-5, 'num_train_epochs': 5, 'per_device_train_batch_size': 32}
+Accuracy: 0.566
+
+{'learning_rate': 17e-5, 'num_train_epochs': 5, 'per_device_train_batch_size': 32}
+Accuracy: 0.571
+
+{'learning_rate': 16e-5, 'num_train_epochs': 5, 'per_device_train_batch_size': 32}
+Accuracy: 5.569
+
+{'learning_rate': 15e-5, 'num_train_epochs': 5, 'per_device_train_batch_size': 32}
+Accuracy: 5.561
+
+{'learning_rate': 18e-5, 'num_train_epochs': 5, 'per_device_train_batch_size': 16}
+Accuracy: -> currently trying
 
 {'learning_rate': 20e-5, 'num_train_epochs': 5, 'per_device_train_batch_size': 16}
-Accuracy -> currently trying
-
-
+Accuracy: -> 0.557
