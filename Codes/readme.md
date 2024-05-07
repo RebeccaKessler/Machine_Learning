@@ -58,7 +58,7 @@ Accuracy: 5.561
 {'learning_rate': 20e-5, 'num_train_epochs': 5, 'per_device_train_batch_size': 16}
 Accuracy: -> 0.557
 
-{'learning_rate': 18e-5, 'num_train_epochs': 5, 'per_device_train_batch_size': 8}
+{'learning_rate': 17e-5, 'num_train_epochs': 5, 'per_device_train_batch_size': 8}
 Accuracy: -> currently trying
 
 {'learning_rate': 18e-5, 'num_train_epochs': 5, 'per_device_train_batch_size': 16}
