@@ -59,11 +59,26 @@ Accuracy: 5.561
 Accuracy: -> 0.557
 
 {'learning_rate': 17e-5, 'num_train_epochs': 5, 'per_device_train_batch_size': 8}
-Accuracy: -> 5.557
+Accuracy: -> 0.539
 
-{'learning_rate': 18e-5, 'num_train_epochs': 5, 'per_device_train_batch_size': 16}
-Accuracy: -> currently trying
+{'learning_rate': 17e-5, 'num_train_epochs': 5, 'per_device_train_batch_size': 16}
+Accuracy: -> 0.548
 
 {'learning_rate': 15e-5, 'num_train_epochs': 6, 'per_device_train_batch_size': 16}
-Accuracy: 5.548
+Accuracy: currently trying
+
+{'learning_rate': 18e-5, 'num_train_epochs': 5, 'per_device_train_batch_size': 16}
+Accuracy: 0.555
+
+{'learning_rate': 14e-5, 'num_train_epochs': 5, 'per_device_train_batch_size': 16}
+Accuracy: 0.567
+
+{'learning_rate': 18e-5, 'num_train_epochs': 3, 'per_device_train_batch_size': 16}
+Accuracy: currently trying
+
+{'learning_rate': 14e-5, 'num_train_epochs': 6, 'per_device_train_batch_size': 16}
+Accuracy: 0.53
+
+{'learning_rate': 14e-5, 'num_train_epochs': 3, 'per_device_train_batch_size': 16}
+Accuracy: currently trying
 
