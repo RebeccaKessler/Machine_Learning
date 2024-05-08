@@ -23,7 +23,7 @@ To succeed in this undertaking, We distirbuted the tasks among the members as fo
 # Comparison of Different Models
 
 
-| Metric    | Logistic Regression | KNN | Decision Tree | Random Forest | Bert     | CamamBert  | 
+| Metric    | Logistic Regression | KNN | Decision Tree | Random Forest | Bert     | CamemBert  | 
 |-----------|---------------------|-----|---------------|---------------|----------|------------|
 | Precision |                     |     |               |               |          |            |              
 | Recall    |                     |     |               |               |          |            |              
@@ -36,7 +36,7 @@ To succeed in this undertaking, We distirbuted the tasks among the members as fo
 
 
 # Final Model
-Our final model is based on CamamBert. CamamBert is a large language model that was pretrained on a large corpus of French texts.
+Our final model is based on CamemBert. CamemBert is a large language model that was pretrained on a large corpus of French texts. It is based on RoBERT (Robustly Optimized BERT) which is an optimized version of the original BERT model. The CamemBert base model consists of 12 layers, 12 attention heads, 768 hidden size and a total paramterers of 110 million. 
 
 
 # Application of the Model
