@@ -13,25 +13,30 @@ In this report, you can find the following sections:
 
 # Team Approach and Task Division
 
-We approached the task as a reiterative process, incrementally improving our model to predict the language level of French texts. We started off with simple ML models inlcuding Logistic Regression, KNN, Decision Tree, and Random Forest before then advancing to more sophisticated text embeddings. Within the different models, we used hyper-parameter optimization to find the best solution. 
-From the beginning, we thereby already started to think about potential applications of our final model, an attractive user interfence, and an engaging concept for the video presentation. 
-Hence, we distirbuted the tasks among the members accordingly:
-- Giulia: creating the ML model to predict the language level of French texts
-- Rebecca: working on the application and UI of the final model as well as preparing the report
-
+We approached the task as a reiterative process, incrementally improving our model to predict the language level of French texts. We started off with simple ML models inlcuding Logistic Regression, KNN, Decision Tree, and Random Forest before then advancing to more sophisticated large language models (LLMs) such as Bert and CamamBert. Within the different models, we used hyper-parameter optimization to find the best solution. Additionally, we generated a larger dataset using ChatGTP to be able to fine-tine our final model even better. 
+Once we were satisifed with the performance of our final model, we started to think about potential applications of our final model, an attractive user interfence, and an engaging concept for the video presentation. 
+To succeed in this undertaking, We distirbuted the tasks among the members as follows:
+- Giulia: creating the different simple ML models to predict the language level of French texts
+- Rebecca: workign on the advanced techniques and developing the user interface on streamlit.
 
 
 # Comparison of Different Models
 
 
-| Metric    | Logistic Regression | KNN | Decision Tree | Random Forest | Any other technique |
-|-----------|---------------------|-----|---------------|---------------|---------------------|
-| Precision |                     |     |               |               |                     |
-| Recall    |                     |     |               |               |                     |
-| F1-score  |                     |     |               |               |                     |
-| Accuracy  |                     |     |               |               |                     |
+| Metric    | Logistic Regression | KNN | Decision Tree | Random Forest | Bert     | CamamBert  | 
+|-----------|---------------------|-----|---------------|---------------|----------------------- 
+| Precision |                     |     |               |               |          |            |              
+| Recall    |                     |     |               |               |          |            |              
+| F1-score  |                     |     |               |               |          |            |
+| Accuracy  |                     |     |               |               |          |            |
+
+
+
+
 
 # Final Model
+Our final model is based on CamamBert. CamamBert is a large language model that was pretrained on a large corpus of French texts.
+
 
 # Application of the Model
 
@@ -41,3 +46,5 @@ Each inputed text will be automatically saved to the app's library. When clickin
 Explore our app: https://machinelearning-bookly.streamlit.app/
 
 # Final Words
+
+Watch our video here: 
