@@ -60,14 +60,14 @@ To increase the performance (i.e. accuracy) of the model we set up a hyperoptimi
 - **Step 8: Prediction**
 Finally, we can use the model to make prediction on the unlabelled test data. For this, we first re-train the model with the optimized parameters on the extended dataset (the one we generated with ChatGTP) and then use this model to make the final predictions. 
 
-
+Find our final model here:
 
 
 
 # Application of the Model
 
 For the application of our model, we decided to create a Streamlit app that can predict the French difficulty level of books. This tool may be helpful for language teachers who are looking for books that match the language level of their students as well as for people learning French and want to read a book that matches their skills. There is nothing more frustrating than reading a book that is way too difficult. Our app BOOKLY is simple and user-friendly. Upon loading the app, users can find the input field in the sidebar on the left. To predict the diffictulty level of a book, all they have to do is enter the title of the book and upload an excerpt of the book in docx format. Our app will then input this text into the ML model and output the difficulty level of the text. 
-Each inputed text will be automatically saved to the app's library. When clicking on the library button in the sidebar on the left, users can brows through all previously uploaded textb excerpts. The search can be filtered by title or language level. In this way, users can either check for the difficulty level of specific books without having to upload them themselves or search for books that match their language level. The value of the app hence grows over time as more and more people upload excerpts of different books to the app, enlarging the library.
+Each inputed text will be automatically saved to the app's library. When clicking on the library button in the sidebar on the left, users can brows through all previously uploaded text excerpts. The search can be filtered by title or language level. In this way, users can either check for the difficulty level of specific books without having to upload them themselves or search for books that match their language level. The value of the app hence grows over time as more and more people upload excerpts of different books to the app, enlarging the library.
 
 Explore our app: https://machinelearning-bookly.streamlit.app/
 
