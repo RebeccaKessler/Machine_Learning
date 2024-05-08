@@ -24,11 +24,12 @@ To succeed in this undertaking, We distirbuted the tasks among the members as fo
 
 
 | Metric    | Logistic Regression | KNN | Decision Tree | Random Forest | Bert     | CamamBert  | 
-|-----------|---------------------|-----|---------------|---------------|----------------------- 
+|-----------|---------------------|-----|---------------|---------------|----------|------------|
 | Precision |                     |     |               |               |          |            |              
 | Recall    |                     |     |               |               |          |            |              
 | F1-score  |                     |     |               |               |          |            |
 | Accuracy  |                     |     |               |               |          |            |
+
 
 
 
