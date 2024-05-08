@@ -13,8 +13,8 @@ In this report, you can find the following sections:
 
 # Team Approach and Task Division
 
-We approached the task as a reiterative process, incrementally improving our model to predict the language level of French texts. We started off with simple ML models inlcuding Logistic Regression, KNN, Decision Tree, and Random Forest before then advancing to more sophisticated large language models (LLMs) such as Bert and CamamBert. Within the different models, we used hyper-parameter optimization to find the best solution. Additionally, we generated a larger dataset using ChatGTP to be able to fine-tine our final model even better. 
-Once we were satisifed with the performance of our final model, we started to think about potential applications of our final model, an attractive user interfence, and an engaging concept for the video presentation. 
+We approached the task as a reiterative process, incrementally improving our models to predict the difficulty level of French sentences as accurately as possible. We started off with simple ML models inlcuding Logistic Regression, KNN, Decision Tree, and Random Forest before then advancing to more sophisticated large language models (LLMs) such as Bert and CamemBert. Within the different models, we used hyper-parameter optimization to find the best solution. Additionally, we generated a larger dataset using ChatGTP to be able to fine-tine our final model even better. 
+Once we were satisifed with the performance of our final model, we started thinking about potential applications of our final model, an attractive user interfence, and an engaging concept for the video presentation. 
 To succeed in this undertaking, We distirbuted the tasks among the members as follows:
 - Giulia: creating the different simple ML models to predict the language level of French texts
 - Rebecca: working on the advanced techniques and developing the user interface on streamlit.
@@ -40,11 +40,11 @@ Our final model is based on CamemBert. CamemBert is a large language model that 
 To set up our model, we went through the following steps:
 
 - **Step 1:  Data collection** 
-Given the provided labelled training data, no data collection or cleaning is required. However, we used ChatGPT to generate additional datapoints which proved quite valuable in increasing the performance of the model in the end. To do so, we uploaded the provided training data set to ChatGPT and asked him/her to randomly generate additional French sentences and their difficulty level.
+Given the provided labelled training data, no data collection or cleaning is required. However, we used ChatGPT to generate additional datapoints which proved quite valuable in increasing the performance of the model in the end. To do so, we uploaded the provided training data set to ChatGPT and asked him/her to randomly generate additional French sentences and their difficulty level. The instructions to ChatGPT are thereby crucial. We explicitly asked ChatGPT to generate sentences based on the provided training dataset to avoid it from generating completely different sentences. Moreover, we highlighted that the generation should be random to avoid hidden patterns in the sentencens that would then lead to an overfitting issue when fine-tuning the model.
 - **Step 2: Data preprocessing & Tokenization**
 To feed our data to the CamemBert model, we needed to apply the Label Encoder to the column "difficulty". We also split our dataset into a training and evaluation set. We then tokenize both our training and evaluation set using the CamemBert tokenizer. The CamemBert tokenizer convers raw text into a numerical format that can be processed by the model.
 - **Step 3: Load model**
-The CamemBert model is loaed with its pretrained weights. In our case, we load the CamembertFor SequencesClassification which adds an additional linear classification layer to the pretrained model.
+The CamemBert model is loaded with its pretrained weights. In our case, we load the CamembertForSequencesClassification which adds an additional linear classification layer to the pretrained model.
 - **Step 4: Define Training Parameters**
 The Camembert model allows to specifc various training arguments such as batch size, learning rate, training epochs, or weight decay. The combination of these parameters can signifcantly impact both the computational resources required to run the model as well as the performance (see step 7). The training parameters automatically included the AdamW optimizer to optimize the weights of the model and a learning rate scheduler which adjusts the learnin rate as the model is fine-tuned. The default loss function is cross-entropy loss.
 - **Step 5: Fine-tuning the model**
@@ -58,7 +58,7 @@ After fine-tuning the model, it was time to evaluate its performance based on th
 - **Step 7: Optimization**
 To increase the performance (i.e. accuracy) of the model we set up a hyperoptimization process using optina. This helps us find a good combination of paramerters (epochs, batch size, and learning rate) which we then furhter adjust manually until we are satisfied with the performance level of the model.
 - **Step 8: Prediction**
-Finally, we can use the model to make prediction on the unlabelled test data. For this, we first re-train the model with the optimized parameters on the extended dataset (the one we generated with CHatGTP) and then use this model to make the final predictions. 
+Finally, we can use the model to make prediction on the unlabelled test data. For this, we first re-train the model with the optimized parameters on the extended dataset (the one we generated with ChatGTP) and then use this model to make the final predictions. 
 
 
 
