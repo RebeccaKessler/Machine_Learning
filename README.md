@@ -44,7 +44,7 @@ Given the provided labelled training data, no data collection or cleaning is req
 - **Step 2: Data preprocessing & Tokenization**
 To feed our data to the CamemBert model, we needed to apply the Label Encoder to the column "difficulty". We also split our dataset into a training and evaluation set. We then tokenize both our training and evaluation set using the CamemBert tokenizer. The CamemBert tokenizer convers raw text into a numerical format that can be processed by the model.
 - **Step 3: Load model**
-The CamemBert model is loaded with its pretrained weights. In our case, we load the CamembertForSequencesClassification which adds an additional linear classification layer to the pretrained model.
+The CamemBert model is loaded with its pretrained weights. In our case, we load the CamembertForSequencesClassification which adds an additional linear classification layer to the pretrained model and randomizes the weigths.
 - **Step 4: Define Training Parameters**
 The Camembert model allows to specifc various training arguments such as batch size, learning rate, training epochs, or weight decay. The combination of these parameters can signifcantly impact both the computational resources required to run the model as well as the performance (see step 7). The training parameters automatically included the AdamW optimizer to optimize the weights of the model and a learning rate scheduler which adjusts the learnin rate as the model is fine-tuned. The default loss function is cross-entropy loss.
 - **Step 5: Fine-tuning the model**
@@ -58,7 +58,10 @@ After fine-tuning the model, it was time to evaluate its performance based on th
 - **Step 7: Optimization**
 To increase the performance (i.e. accuracy) of the model we set up a hyperoptimization process using optina. This helps us find a good combination of paramerters (epochs, batch size, and learning rate) which we then furhter adjust manually until we are satisfied with the performance level of the model.
 - **Step 8: Prediction**
-Finally, we can use the model to make prediction on the unlabelled test data. For this, we first re-train the model with the optimized parameters on the extended dataset (the one we generated with ChatGTP) and then use this model to make the final predictions. 
+Finally, we can use the model to make prediction on the unlabelled test data. For this, we first re-train the model with the optimized parameters on the extended dataset (the one we generated with ChatGTP) and then use this model to make the final predictions. This provided the highest accuracy on the unlabelled data. Re-training on the original training set and then conducting the predictions provides slightly lower accuracy (however, not sigfnicantly lower). This difference can be explained by the fact that a larger dataset allows the model to learn better. 
+
+**Some comments on the result**: With an accuracy of 5.79, the CamemBert performed substantially better than the simple ML models. However, due to the complexity of the model, the accuracy shows some variation from iteration to iteration. This is due to the randomness in the training process. Variations in data splitting, model initialization, or batch shuffling can affect the final accuracy of the model. Methods to improve this variation include cross-validation which conducts several rounds of training and then computes the average accuracy over all training rounds. On deep learning models like Camembert, cross-validation, however, can be copmutationally intensive.
+
 
 Find our final model here:
 
