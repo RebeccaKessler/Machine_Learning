@@ -37,6 +37,9 @@ To succeed in this undertaking, We distirbuted the tasks among the members as fo
 
 # Final Model
 Our final model is based on CamemBert. CamemBert is a large language model that was pretrained on a large corpus of French texts. It is based on RoBERT (Robustly Optimized BERT) which is an optimized version of the original BERT model. The CamemBert base model consists of 12 layers, 12 attention heads, 768 hidden size and a total paramterers of 110 million. 
+To set up our model we followed three steps:
+1. Data collection and preprocessing: Given the provided training data, no cleaning or extensive preprocessing was required.
+2. Tokenization: We then tokenized our data using the CamemBert tokenizer.
 
 
 # Application of the Model
