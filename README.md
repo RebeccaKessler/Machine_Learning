@@ -41,9 +41,9 @@ Our final model is based on CamemBert. CamemBert is a large language model that 
 To set up our model, we went through the following steps:
 
 - **Step 1:  Data collection** 
-Given the provided labelled training data, no data collection or cleaning is required. However, we used ChatGPT to generate additional datapoints which proved quite valuable in increasing the performance of the model in the end. To do so, we uploaded the provided training data set to ChatGPT and asked him/her to randomly generate additional French sentences and their difficulty level. The instructions to ChatGPT are thereby crucial. We explicitly asked ChatGPT to generate sentences based on the provided training dataset to avoid it from generating completely different sentences. Moreover, we highlighted that the generation should be random to avoid hidden patterns in the sentences that could then lead to an overfitting issue later on.
+Given the provided labelled training data, no data collection or cleaning is required per se. However, we used ChatGPT to generate additional datapoints which proved quite valuable in increasing the performance of the model in the end. To do so, we uploaded the provided training data set to ChatGPT and asked him/her to randomly generate additional French sentences and their difficulty level. The instructions to ChatGPT are crucial. We explicitly asked ChatGPT to generate sentences based on the provided training dataset to avoid it from generating completely different sentences. Moreover, we highlighted that the generation should be random to avoid hidden patterns in the sentences that could then lead to an overfitting issue later on.
 - **Step 2: Data preprocessing & Tokenization**
-To feed our data to the CamemBert model, we needed to apply the Label Encoder to the column "difficulty". We also split our dataset into a training and evaluation set (80/20). We then tokenize both our training and evaluation set using the CamemBert tokenizer. The CamemBert tokenizer converts raw text into a numerical format that can be processed by the model.
+To feed our data to the CamemBert model, we needed to apply the Label Encoder to the column "difficulty" before tokenize the data. The CamemBert tokenizer converts raw text into a numerical format that can be processed by the model.
 - **Step 3: Load model**
 The CamemBert model is loaded with its pretrained weights. In our case, we load the CamembertForSequencesClassification which adds an additional linear classification layer to the pretrained model and randomizes the weigths.
 - **Step 4: Define Training Parameters**
@@ -54,15 +54,15 @@ Now it is time to fine-tuned the model on our training data using the defined tr
   - Loss calculation: the loss between the predicted and true labels is calculated using cross-entropy.
   - Backward pass: the loss is backpropagated to calculate gradients.
   - Parameter update: gradients are used to then update model weigths via the optimizer AdamW.
+We thereby implement a 5-fold cross-validation to obtain a more robust performance. This implies that the data is divided into five equal parts. Each part is used as a validation set once while the others serve as the training set, rotating through all five parts. 
 - **Step 6: Evaluation**
-After fine-tuning the model, it was time to evaluate its performance based on the evaluation dataset. Here we primarily use accuracy as the evalution metrics.
+After each fold, the model is evalaute on the evalaution dataset. Here we primarily use accuracy as the evalution metrics. After all five folds, we calculate the final accuracy by taking the average over all folds.
 - **Step 7: Optimization**
-To increase the performance (i.e. accuracy) of the model we set up a hyperoptimization process using optina. This helps us to find a good combination of paramerters (epochs, batch size, and learning rate) which we then further adjust manually until we are satisfied with the performance level of the model.
+To increase the performance (i.e. accuracy) of the model we set up a hyper-optimization process using optina. This helps us to find a good combination of paramerters (epochs, batch size, and learning rate) which we then further adjust manually until we are satisfied with the performance level of the model.
 - **Step 8: Prediction**
 Finally, we can use the model to make predictions on the unlabelled test data. For this, we first re-train the model with the optimized parameters on the extended dataset (the one we generated with ChatGTP) and then use this model to make the final predictions. This provided the highest accuracy on the unlabelled data. Re-training on the original training set and then conducting the predictions provided slightly lower accuracy (however, not sigfnicantly lower). This difference can be explained by the fact that a larger dataset allows the model to learn better. 
 
-**Some comments on the result**: The best accuracy we got with our CamemBert model was 58% which is substantially better than the simple ML models. However, due to the complexity of the model, the accuracy shows some variation from iteration to iteration (55-58%). This is due to the randomness in the training process. Variations in data splitting, model initialization, or batch shuffling can affect the final accuracy of the model. The same applies when we retrain the model on the whole datasetn and then make the predictions on the unlabelled datasets. Methods to improve this variation and ensure a more robust performance include cross-validation which conducts several rounds of splitting and training before computing the average accuracy over all training rounds. 
-
+**Some comments on the result**: The average accuracy of our CamemBert model is eqaul to 58% which is substantially better than the simple ML models. However, due to the complexity of the model, the accuracy shows some variation from iteration to iteration despite applying cross-validation. This is due to the randomness in the training process. Variations in model initialization or batch shuffling can affect the final accuracy of the model. The same applies when we retrain the model on the whole datasetn and then make the predictions on the unlabelled datasets. 
 
 Find our final model here:
 
