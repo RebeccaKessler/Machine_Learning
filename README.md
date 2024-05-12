@@ -54,6 +54,7 @@ Now it is time to fine-tuned the model on our training data using the defined tr
   - Loss calculation: the loss between the predicted and true labels is calculated using cross-entropy.
   - Backward pass: the loss is backpropagated to calculate gradients.
   - Parameter update: gradients are used to then update model weigths via the optimizer AdamW.
+
 We also implemented a K-fold cross-validation to obtain a more robust performance. K-fold cross validation means that the data is divided into "k" equal parts. Each part is used as a validation set once while the others serve as the training set (20/80 split), rotating through all "k" parts. In our case, we set k to 5 to not overwhelm our computational resources. 
 - **Step 6: Evaluation:**
 After each fold, the model is evalaute on the evalaution dataset. Here we primarily use accuracy as the evalution metrics. After all five folds, we calculate the final accuracy by taking the average over all folds.
