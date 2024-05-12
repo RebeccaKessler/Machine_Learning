@@ -38,7 +38,7 @@ To succeed in this undertaking, We distirbuted the tasks among the members as fo
 
 # Final Model
 Our final model is based on CamemBert. CamemBert is a large language model that was pretrained on a large corpus of French texts. It is based on RoBERT (Robustly Optimized BERT) which is an optimized version of the original BERT model. The CamemBert base model consists of 12 layers, 12 attention heads, 768 hidden size and a total paramterers of 110 million. 
-To set up our model, we went through the following steps:
+To set up our final model, we went through the following steps:
 
 - **Step 1:  Data collection:** 
 Given the provided labelled training data, no data collection or cleaning is required per se. However, we used ChatGPT to generate additional datapoints which proved quite valuable in increasing the performance of the model in the end. To do so, we uploaded the provided training data set to ChatGPT and asked him/her to randomly generate additional French sentences and their difficulty level. The instructions to ChatGPT are crucial. We explicitly asked ChatGPT to generate sentences based on the provided training dataset to avoid it from generating completely different sentences. Moreover, we highlighted that the generation should be random to avoid hidden patterns in the sentences that could then lead to an overfitting issue later on.
@@ -59,7 +59,7 @@ We also implemented a K-fold cross-validation to obtain a more robust performanc
 - **Step 6: Evaluation:**
 After each fold, the model is evalaute on the evalaution dataset. Here we primarily use accuracy as the evalution metrics. After all five folds, we calculate the final accuracy by taking the average over all folds.
 - **Step 7: Optimization:**
-To increase the performance (i.e. accuracy) of the model we set up a hyper-optimization process using optina. This helps us  find a good combination of paramerters (epochs, batch size, and learning rate) which we then further adjust manually until we are satisfied with the performance level of the model.
+To increase the performance (i.e. accuracy) of the model we set up a hyper-optimization process using optina. This helps us  find a good combination of parameters (epochs, batch size, and learning rate) which we then further adjust manually until we are satisfied with the performance level of the model.
 - **Step 8: Prediction:**
 Finally, we can use the model to make predictions on the unlabelled test data. For this, we first re-train the model with the optimized parameters on the extended dataset (the one we generated with ChatGTP) and then use this model to make the final predictions. This provided the highest accuracy on the unlabelled data (+60%). Re-training on the original training set and then conducting the predictions provided slightly lower accuracy (however, not sigfnicantly lower (58.5%)). This difference can be explained by the fact that a larger dataset allows the model to learn better. 
 
