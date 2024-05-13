@@ -9,6 +9,35 @@ import torch
 from PyPDF2 import PdfFileReader
 from docx import Document
 
+# Define colors and styles
+st.markdown(
+    """
+    <style>
+    .stApp {
+        background-image: url("https://github.com/RebeccaKessler/Machine_Learning/blob/main/streamlit/background_final.png?raw=true");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    .big-font {
+        font-family:Helvetica; 
+        font-size:140px !important;
+        font-weight: bold;
+        color: #000000; 
+    }
+    .result-box {
+        background-color: #C8E6C9; 
+        padding: 5px;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+    </style>
+    """, unsafe_allow_html=True
+)
+
+
+
+
 # Database setup
 DB_FILE = "library.db"
 conn = sqlite3.connect(DB_FILE)
