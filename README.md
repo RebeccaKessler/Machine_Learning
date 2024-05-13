@@ -1,7 +1,7 @@
 # Machine_Learning
 
 
-## Welcome to final report of the Group Swatch 
+## Welcome to the final report of the Group Swatch 
 
 The objective of this project is to build a model that accurately predicts the difficulty level of French sentences.
 This report is divided in five sections.
