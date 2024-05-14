@@ -24,13 +24,13 @@ To succeed in this undertaking, We distirbuted the tasks among the members as fo
 # Comparison of Different Models
 
 
-| Metric    | Logistic Regression | KNN | Decision Tree | Random Forest | Bert     | CamemBert  | 
-|-----------|---------------------|-----|---------------|---------------|----------|------------|
-| Precision |                     |     |               |               |          |            |              
-| Recall    |                     |     |               |               |          |            |              
-| F1-score  |                     |     |               |               |          |            |
-| Accuracy  |                     |     |               |               |          |    59%        |
-
+| Metric                   | Logistic Regression | KNN | Decision Tree | Random Forest | Bert | CamemBert |
+|--------------------------|---------------------|-----|---------------|---------------|------|-----------|
+| Precision                |                     |     |               |               |      |           |              
+| Recall                   |                     |     |               |               |      |           |              
+| F1-score                 |                     |     |               |               |      |           |
+| Accuracy                 |                     |     |               |               |      |           |
+| Accuracy on Unlabeled Data |                     |     |               |               |      | 59%       |
 
 
 
