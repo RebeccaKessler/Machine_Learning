@@ -91,31 +91,48 @@ def display_library():
 
     fetch_and_display_library(query, params)
 
+# Function to download files from a URL
+def download_file(url, save_path):
+    response = requests.get(url)
+    with open(save_path, 'wb') as file:
+        file.write(response.content)
+        
+# Load model and tokenizer once when the app starts
 @st.cache(allow_output_mutation=True)
-def download_and_load_model():
-    model_url_base = "https://raw.githubusercontent.com/username/repo/main/model_dir/"
-    model_files = [
-        "config.json",
-        "pytorch_model.bin",
-        "tokenizer_config.json",
-        "special_tokens_map.json",
-        "vocab.json",  # or vocab.txt if that's the file you have
-        "tokenizer.json"
-    ]
+def load_model_and_tokenizer(model_url, tokenizer_url):
+    # Paths where the files will be saved
+    model_dir = "camembert_model"
+    tokenizer_dir = "camembert_tokenizer"
 
-    os.makedirs("model_dir", exist_ok=True)
+    # Ensure directories exist
+    if not os.path.exists(model_dir):
+        os.makedirs(model_dir)
+    if not os.path.exists(tokenizer_dir):
+        os.makedirs(tokenizer_dir)
 
-    for file in model_files:
-        response = requests.get(model_url_base + file)
-        with open(os.path.join("model_dir", file), 'wb') as f:
-            f.write(response.content)
+    # Download model files
+    model_files = ["pytorch_model.bin", "config.json"]
+    for file_name in model_files:
+        download_file(f"{model_url}/{file_name}", os.path.join(model_dir, file_name))
 
-    model = CamembertForSequenceClassification.from_pretrained('model_dir')
-    tokenizer = CamembertTokenizer.from_pretrained('model_dir')
+    # Download tokenizer files
+    tokenizer_files = ["tokenizer.json", "config.json"]
+    for file_name in tokenizer_files:
+        download_file(f"{tokenizer_url}/{file_name}", os.path.join(tokenizer_dir, file_name))
+
+    # Load model and tokenizer
+    model = CamembertForSequenceClassification.from_pretrained(model_dir)
+    tokenizer = CamembertTokenizer.from_pretrained(tokenizer_dir)
+    
     return model, tokenizer
 
+# URLs for the model and tokenizer (replace with your actual URLs)
+model_url = 'https://raw.githubusercontent.com/YourUsername/YourRepo/main/path/to/saved/model'
+tokenizer_url = 'https://raw.githubusercontent.com/YourUsername/YourRepo/main/path/to/saved/tokenizer'
+
 # Load model and tokenizer
-model, tokenizer = download_and_load_model()
+model, tokenizer = load_model_and_tokenizer(model_url, tokenizer_url)
+
 
 def extract_text_from_pdf(uploaded_file):
     pdf_reader = PdfFileReader(uploaded_file)
