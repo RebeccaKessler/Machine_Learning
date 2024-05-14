@@ -35,8 +35,15 @@ st.markdown(
     """, unsafe_allow_html=True
 )
 
-
-
+import streamlit as st
+import sqlite3
+import pandas as pd
+import torch
+from transformers import CamembertTokenizer, CamembertForSequenceClassification
+from PyPDF2 import PdfFileReader
+from docx import Document
+import requests
+import os
 
 # Database setup
 DB_FILE = "library.db"
@@ -60,7 +67,7 @@ def fetch_and_display_library(query, params):
         c.execute(query, params)
         data = c.fetchall()
         if data:
-            df = pd.DataFrame(data, columns=["ID","Title", "Prediction"])
+            df = pd.DataFrame(data, columns=["ID", "Title", "Prediction"])
             df = df[["Title", "Prediction"]]
             st.write(df)
         else:
@@ -84,31 +91,31 @@ def display_library():
 
     fetch_and_display_library(query, params)
 
-# Load model and tokenizer once when the app starts
 @st.cache(allow_output_mutation=True)
-def download_and_load_model(model_url, tokenizer_url):
-    # Model
-    response = requests.get(model_url)
-    model_file = BytesIO(response.content)
-    model_dir = tarfile.open(fileobj=model_file)
-    model_dir.extractall(path="./model")
-    model = CamembertForSequenceClassification.from_pretrained('./model')
+def download_and_load_model():
+    model_url_base = "https://raw.githubusercontent.com/username/repo/main/model_dir/"
+    model_files = [
+        "config.json",
+        "pytorch_model.bin",
+        "tokenizer_config.json",
+        "special_tokens_map.json",
+        "vocab.json",  # or vocab.txt if that's the file you have
+        "tokenizer.json"
+    ]
 
-    # Tokenizer
-    response = requests.get(tokenizer_url)
-    tokenizer_file = BytesIO(response.content)
-    tokenizer_dir = tarfile.open(fileobj=tokenizer_file)
-    tokenizer_dir.extractall(path="./tokenizer")
-    tokenizer = CamembertTokenizer.from_pretrained('./tokenizer')
-    
+    os.makedirs("model_dir", exist_ok=True)
+
+    for file in model_files:
+        response = requests.get(model_url_base + file)
+        with open(os.path.join("model_dir", file), 'wb') as f:
+            f.write(response.content)
+
+    model = CamembertForSequenceClassification.from_pretrained('model_dir')
+    tokenizer = CamembertTokenizer.from_pretrained('model_dir')
     return model, tokenizer
 
-# URLs to the model and tokenizer
-model_url = 'https://github.com/username/repo/path/to/model.tar.gz'
-tokenizer_url = 'https://github.com/username/repo/path/to/tokenizer.tar.gz'
-
 # Load model and tokenizer
-model, tokenizer = download_and_load_model(model_url, tokenizer_url)
+model, tokenizer = download_and_load_model()
 
 def extract_text_from_pdf(uploaded_file):
     pdf_reader = PdfFileReader(uploaded_file)
@@ -168,3 +175,6 @@ if predict_button and uploaded_file is not None and title:
 if 'filter_type' in st.session_state:
     display_library()
 
+
+
+ 
