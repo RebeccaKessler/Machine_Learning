@@ -29,7 +29,7 @@ To succeed in this undertaking, We distirbuted the tasks among the members as fo
 | Precision                |44.3%                    |42.9%      |28.9%               |31%               |55.7%      |           |            
 | Recall                   |44.9%                      |37.6%     |29.8%               |32%               |55.4%      |           |             
 | F1-score                 |44.2%                     |36.9%     |24.5%               |29.8%               |55.1%      |           |
-| Accuracy                 |45.1%                   |37.9%       |29.6%               |32.2%               |55.5%      |           |
+| Accuracy on Training Data |45.1%                   |37.9%       |29.6%               |32.2%               |55.5%      |           |
 | Accuracy on Unlabeled Data | 46.5%                    |33.8%     |27.3%               |25.2%               |56.1%      |60.2%       |
 
 
