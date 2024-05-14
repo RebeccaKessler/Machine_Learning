@@ -24,7 +24,7 @@ To succeed in this undertaking, We distirbuted the tasks among the members as fo
 # Comparison of Different Models
 
 
-| Metric                   | Logistic Regression | KNN | Decision Tree | Random Forest | Bert | CamemBert |
+| Metric                   | Logistic Regression | KNN | Decision Tree | Random Forest | Distilbert | CamemBert |
 |--------------------------|---------------------|-----|---------------|---------------|------|-----------|
 | Precision                |44.3%                    |42.9%      |28.9%               |31%               |55.7%      |           |            
 | Recall                   |44.9%                      |37.6%     |29.8%               |32%               |55.4%      |           |             
