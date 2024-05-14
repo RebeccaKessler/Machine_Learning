@@ -30,7 +30,7 @@ To succeed in this undertaking, We distirbuted the tasks among the members as fo
 | Recall                   |                     |     |               |               |      |           |              
 | F1-score                 |                     |     |               |               |      |           |
 | Accuracy                 |                     |     |               |               |      |           |
-| Accuracy on Unlabeled Data |                     |     |               |               |      | 59%       |
+| Accuracy on Unlabeled Data | 46.5%                    |33.8%     |27.3%               |25.2%               |      | 59%       |
 
 
 
