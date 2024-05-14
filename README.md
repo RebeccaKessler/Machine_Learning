@@ -26,10 +26,10 @@ To succeed in this undertaking, We distirbuted the tasks among the members as fo
 
 | Metric                   | Logistic Regression | KNN | Decision Tree | Random Forest | Bert | CamemBert |
 |--------------------------|---------------------|-----|---------------|---------------|------|-----------|
-| Precision                |                     |     |               |               |      |           |              
-| Recall                   |                     |     |               |               |      |           |              
-| F1-score                 |                     |     |               |               |      |           |
-| Accuracy                 |                     |     |               |               |      |           |
+| Precision                |44.3%                    |42.9%      |28.9%               |31%               |      |           |            
+| Recall                   |44.9%                      |37.6%     |29.8%               |32%               |      |           |             
+| F1-score                 |44.2%                     |36.9%     |24.5%               |29.8%               |      |           |
+| Accuracy                 |45.1%                   |37.9%       |29.6%               |32.2%               |      |           |
 | Accuracy on Unlabeled Data | 46.5%                    |33.8%     |27.3%               |25.2%               |      | 59%       |
 
 
