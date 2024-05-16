@@ -34,7 +34,7 @@ To succeed in this undertaking, We distirbuted the tasks among the members as fo
 
 
 # Final Model
-Our final model is based on CamemBert. CamemBert is a large language model that was pretrained on a large corpus of French texts. It is based on RoBERT (Robustly Optimized BERT) which is an optimized version of the original BERT model. The CamemBert base model consists of 12 layers, 12 attention heads, 768 hidden size and a total paramterers of 110 million. 
+Our best perfroming models are based on CamemBert and Flaubert. Both models are large language model that was pretrained on a large corpus of French texts. It is based on RoBERT (Robustly Optimized BERT) which is an optimized version of the original BERT model. The CamemBert base model consists of 12 layers, 12 attention heads, 768 hidden size and a total paramterers of 110 million. 
 To set up our final model, we went through the following steps:
 
 - **Step 1:  Data collection:** 
@@ -53,6 +53,7 @@ Now it is time to fine-tuned the model on our training data using the defined tr
   - Parameter update: gradients are used to then update model weigths via the optimizer AdamW.
 
 We also implemented a K-fold cross-validation to obtain a more robust performance. K-fold cross validation means that the data is divided into "k" equal parts. Each part is used as a validation set once while the others serve as the training set (20/80 split), rotating through all "k" parts. In our case, we set k to 5 to not overwhelm our computational resources. 
+
 - **Step 6: Evaluation:**
 After each fold, the model is evalaute on the evalaution dataset. Here we primarily use accuracy as the evalution metrics. After all five folds, we calculate the final accuracy by taking the average over all folds.
 - **Step 7: Optimization:**
@@ -60,9 +61,10 @@ To increase the performance (i.e. accuracy) of the model we set up a hyper-optim
 - **Step 8: Prediction:**
 Finally, we can use the model to make predictions on the unlabelled test data. For this, we first re-train the model with the optimized parameters on the extended dataset (the one we generated with ChatGTP) and then use this model to make the final predictions. This provided the highest accuracy on the unlabelled data (+60%). Re-training on the original training set and then conducting the predictions provided slightly lower accuracy (however, not sigfnicantly lower). This difference can be explained by the fact that a larger dataset allows the model to learn better. 
 
-**Some comments on the result**: The average accuracy of our CamemBert model is equal to 59% which is substantially better than the simple ML models. However, due to the complexity of the model, the accuracy shows some variation from iteration to iteration despite applying cross-validation. This is due to the randomness in the training process. Variations in model initialization and batch shuffling can affect the final accuracy of the model. The same applies when we retrain the model on the whole dataset and then make the predictions on the unlabelled datasets. 
+**Disussion of results**
+The average training accuracy of both the CamemBert and Flaubert model is equal to 59% and the testing accuracy equal to 60% which is substantially better than the simple ML models. Hence, neural networks seem to be able to better learn from the provided training data and make correct predictions. However, due to the complexity of these neural networks, the accuracy shows some variation each time we run the model despite applying cross-validation. This is due to the randomness in the training process. Variations in model initialization and batch shuffling can affect the final accuracy of the model. The same applies when we retrain the model on the whole dataset and then make the predictions on the unlabelled datasets. This, however, is not uncommon for neural networks.
+Moreover, the models seems to be experiencing some overfitting. While the training and validation loss initially both decrease, the validation loss starts to stagnate at some point, even slightly increasing again. We tried to counteract this overfitting my experimenting wiht various techniques such as dropout rates, learning rate scheduler, and weight decay. Surprisingly, however, most of these techniques lead to lower accuracy on both the training and test data. While this is to be expected on the training data, we would assume the accuracy on the testing data to be better when controlling for overfitting. Overfitting usually leads to poorer generalizatino of models. Hence, we were expecting the validation loss and accuracy to move in the same direction. This discrepancy can be due to several reasons. The increasing in validation loss during the training might only hint at the start of overfitting and might reflect a decreasing confidence in the predictions (i.e. probabilities). Consequently, the model might start to predict the correct class with lower probability. However, the predictions might still be correct, leading to the higher observed accuracy. If we were to prolong the training phase, we would expect the accuracy to decrease at some point.
 
-Find our final model here:
 
 
 
