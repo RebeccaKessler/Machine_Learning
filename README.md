@@ -59,7 +59,9 @@ After each fold, the model is evalaute on the evalaution dataset. Here we primar
 - **Step 7: Optimization:**
 To increase the performance (i.e. accuracy) of the model we set up a hyper-optimization process using optina. This helps us  find a good combination of parameters (epochs, batch size, and learning rate) which we then further adjust manually until we are satisfied with the performance level of the model.
 - **Step 8: Prediction:**
-Finally, we can use the model to make predictions on the unlabelled test data. For this, we first re-train the model with the optimized parameters on the full dataset and then use this model to make the final predictions. We then did the same using our extended dataset. This provided the highest accuracy on the unlabelled data (+60%). Re-training on the original training set and then conducting the predictions provided slightly lower accuracy (however, not sigfnicantly lower). This difference can be explained by the fact that a larger dataset allows the model to learn better. 
+Finally, we can use the model to make predictions on the unlabelled test data. For this, we first re-train the model with the optimized parameters on the full dataset and then use this model to make the final predictions. We then did the same using our extended dataset. This provided the highest accuracy on the unlabelled data (+60%). Re-training on the original training set and then conducting the predictions provided slightly lower accuracy (however, not sigfnicantly lower). This difference can be explained by the fact that a larger dataset allows the model to learn better.
+
+**Combination of Models**
 
 **Discussion of results**
 
