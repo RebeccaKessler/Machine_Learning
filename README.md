@@ -4,7 +4,7 @@
 ## Welcome to the final report of the Group Swatch 
 
 The objective of this project is to build a model that accurately predicts the difficulty level of French sentences.
-This report is divided in five sections.
+This report is divided into five sections.
 - [Team Approach and Task Division](#team-Approach-and-Task-Division)
 - [Comparison of Different Models](#Comparison-of-Different-Models)
 - [Final Model](#Final-Model)
