@@ -34,7 +34,7 @@ To succeed in this undertaking, we distributed the tasks among the members as fo
 
 
 # Final Model
-Our best performing models are based on CamemBert and Flaubert. Both models are large language model that were pretrained on French texts (CamemBert on the OSCAR corpus and Flaubert on a diverse French corpus, including sources such as Common Crawl, Wikipedia, and other text sources).  While CamemBert is based on RoBERT (Robustly Optimized BERT) which is an optimized version of the original BERT model, Flaubert is direclty based on Bert. The CamemBert base model consists of 12 layers, 12 attention heads, 768 hidden size and a total paramterers of 110 million. Flaubert has the same amount of layers, attention heads, and hidden size but slightly more parameters.
+Our best performing models are based on CamemBert and Flaubert. Both models are large language model that were pretrained on French texts (CamemBert on the OSCAR corpus and Flaubert on a diverse French corpus, including sources such as Common Crawl, Wikipedia, and other text sources).  While CamemBert is based on RoBERT (Robustly Optimized BERT) which is an optimized version of the original BERT model, Flaubert is directly based on Bert. The CamemBert base model consists of 12 layers, 12 attention heads, 768 hidden size and a total paramterers of 110 million. Flaubert has the same amount of layers, attention heads, and hidden size but slightly more parameters.
 To set up the models for our task, we went through the following steps:
 
 - **Step 1:  Data collection:** 
