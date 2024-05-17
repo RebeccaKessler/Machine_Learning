@@ -64,7 +64,7 @@ Finally, we can use the model to make predictions on the unlabelled test data. F
 
 **Combination of Models**
 
-We then go one step further and combine the two models. Hence, we first fine-tune the CamemBert and Flaubert model individually and let them each make their predictions on the unlabelled data. These predictions are in the form of a probability distribution over the six classes (A1, A2, ...). To combine the predictions of the two models, we then take the average over the two to obtain a final prediction. This substanitally increases the robustness of the results.
+We then desided to go one step further and combine the two models. Hence, we first fine-tune the CamemBert and Flaubert model individually and let them each make their predictions on the unlabelled data. These predictions are in the form of a probability distribution over the six classes (A1, A2, ...). To combine the predictions of the two models, we then take the average over the two to obtain a final prediction. This substanitally increases the robustness of the results.
 
 **Discussion of results**
 
