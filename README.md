@@ -35,7 +35,7 @@ To succeed in this undertaking, We distirbuted the tasks among the members as fo
 
 # Final Model
 Our best performing models are based on CamemBert and Flaubert. Both models are large language model that were pretrained on French texts (CamemBert on the OSCAR corpus and Flaubert on a diverse French corpus, including sources such as Common Crawl, Wikipedia, and other text sources).  While CamemBert is based on RoBERT (Robustly Optimized BERT) which is an optimized version of the original BERT model, Flaubert is direclty based on Bert. The CamemBert base model consists of 12 layers, 12 attention heads, 768 hidden size and a total paramterers of 110 million. Flaubert has the same amount of layers, attention heads, and hidden size but slightly more parameters.
-To set up these model, we went through the following steps:
+To set up the models for our task, we went through the following steps:
 
 - **Step 1:  Data collection:** 
 Given the provided labelled training data, no data collection or cleaning is required per se. However, we used ChatGPT to generate additional datapoints which proved somewhat valuable in increasing the performance of the model in the end. To do so, we uploaded the provided training data set to ChatGPT and asked him/her to randomly generate additional French sentences and their difficulty level. The instructions to ChatGPT are crucial. We explicitly asked ChatGPT to generate sentences based on the provided training dataset to avoid it from generating completely different sentences. Moreover, we highlighted that the generation should be random to avoid hidden patterns in the sentences that could then lead to an overfitting issue later on.
