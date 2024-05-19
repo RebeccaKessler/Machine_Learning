@@ -49,7 +49,7 @@ Out of the four basic models, the one performing the best is the logistic regres
 
 ADD WHAT IT MEANS!!!!!!!
 
-By displaying the accuracy, precision, recall and F1 scores for each of the six individual classes, we noticed that the logistic regression predicts well the classes A1 and C2, with an accuracy of 64% and 62% respectively. However, for the remaining classes, the prediction is quite poor. This could be caused by an uneven splitting of the data. In other words, the 80% of the training data may disproportionally contain A1 and C2 sentences, compared to sentences of the other levels. In fact, there are more sentences of difficulty A1 (813) and C2 (807) in the training dataset, relative to sentences of other levels (around 795).
+By displaying the accuracy, precision, recall and F1 scores for each of the six individual classes, we noticed that the logistic regression predicts well the classes A1 and C2, with an accuracy of 64% and 62% respectively. However, for the remaining classes, the prediction is quite poor. This could be caused by an uneven distribution of the data. Consequently, if the training data disproportionally contains more A1 and C2 sentences, compared to sentences of other levels, it will impact the prediction accuracies since the model will be more trained on A1 and C2 sentences. In fact, after analysing the data, we find that there are more sentences of difficulty A1 (813) and C2 (807) in the training dataset, compared to sentences of other levels (795 on average). This could explain the difference in accuracies for different classes.
 
 **K-Nearest Neighbors (KNN)**
 
