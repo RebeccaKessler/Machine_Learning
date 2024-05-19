@@ -35,21 +35,27 @@ To succeed in this undertaking, we distributed the tasks among the members as fo
 Before moving to more sophisitcated models, we tried to predict the difficulty level of French sentences with the following models : Logistic Regression, k-Nearest Neighbors (KNN), Decision Tree, and Random Forest. For each of these models we predicted the accuracy on the training data as well as on the test data.
 
 **Splitting the dataset**
+
 First of all, we splitted the training dataset into training data and test data  with the train-test-split method. After the splitting, 80% of the dataset would be used to train the model, and the remaining 20% to test the model.
 
 **Text Preprocessing**
+
 The data we had needed to be preprocessed in order to be processed by our models. We used the TF-IDF vectorizer (Term Frequency-Inverse Document Frequency). This vectorizer converts text into numerical vectors, suitable for machine learning algorithms. 
 
-# Logistic Regression
+**Logistic Regression**
+
 Out of the four basic models, the one performing the best is the logistic regression. Logistic Regression is a linear classification algorithm. It models the probability that a given input belongs to a particular class using a logistic function.
 
 **K-Nearest Neighbors (KNN)**
+
 KNN is a non-parametric classification algorithm that assigns a class label to a data point, based on the majority class of its nearest neighbors. This model doesn't make assumptions about the underlying data distribution.
 
 **Decision Tree**
+
 A decision tree recursively splits the dataset into subsets based on the value of attributes. It's a tree-like structure where each internal node represents a feature, each branch represents a decision rule, and each leaf node represents the outcome or class label.
 
 **Random Forest**
+
 Random forest is an ensemble learning method that constructs multiple decision trees during training and outputs the mode of the classes (classification) or the mean prediction (regression) of the individual trees. It improves upon the decision tree algorithm by reducing overfitting and increasing accuracy.
 
 # Final Model
