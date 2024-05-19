@@ -34,17 +34,22 @@ To succeed in this undertaking, we distributed the tasks among the members as fo
 # Basic Models
 Before moving to more sophisitcated models, we tried to predict the difficulty level of French sentences with the following models : Logistic Regression, k-Nearest Neighbors (KNN), Decision Tree, and Random Forest. For each of these models we predicted the accuracy on the training data as well as on the test data.
 
-**Splitting the dataset**
+**Training and Testing Data**
 
 First of all, we splitted the training dataset into training data and test data  with the train-test-split method. After the splitting, 80% of the dataset would be used to train the model, and the remaining 20% to test the model.
+For each of the four models, we first trained the model on 80% of the data, and tested the model on 20% of the data. Then, we trained the model on the full training dataset, and tested the model on the unlabelled test data.
 
 **Text Preprocessing**
 
-The data we had needed to be preprocessed in order to be processed by our models. We used the TF-IDF vectorizer (Term Frequency-Inverse Document Frequency). This vectorizer converts text into numerical vectors, suitable for machine learning algorithms. 
+The data we had needed to be preprocessed in order to be processed by our models. We used the TF-IDF vectorizer (Term Frequency-Inverse Document Frequency). This vectorizer converts text into numerical vectors, suitable for machine learning algorithms. Term Frequency measures the frequency of a term in a document, it indicates how often a certain word appears in a document relative to the total number of words in that document. The higher it is, the more that word appears in the document. Inverse Document Frequency measures the rarity of a term across all documents in a corpus. By multiplying TF with IDF, we obtain the importance of a term in a document relative to how often it appears across all documents. A high TF-IDF score means that a term is frequent in one document but rare across the corpus of documents, potentially bringing meaningful information. By applying the TF-IDF vectorizer to our data, each sentence is represented by a vector of terms with the corresponding TF-IDF value.
 
 **Logistic Regression**
 
-Out of the four basic models, the one performing the best is the logistic regression. Logistic Regression is a linear classification algorithm. It models the probability that a given input belongs to a particular class using a logistic function.
+Out of the four basic models, the one performing the best is the logistic regression. Logistic Regression is a linear classification algorithm. It models the probability that a given input belongs to a particular class using a logistic function. The class predicted is the one that has the highest probability. We started with a simple Logistic Regression, without specifying any parameters. We trained the model on 80% of the training data, tested it on 20% of the data, and got an accuracy of 45%. The precision, recall and F1 scores are all around 44%.
+
+ADD WHAT IT MEANS!!!!!!!
+
+By displaying the accuracy, precision, recall and F1 scores for each of the six individual classes, we noticed that the logistic regression predicts well the classes A1 and C2, with an accuracy of 64% and 62% respectively. However, for the remaining classes, the prediction is quite poor. This could be caused by an uneven splitting of the data. In other words, the 80% of the training data may disproportionally contain A1 and C2 sentences, compared to sentences of the other levels. In fact, there are more sentences of difficulty A1 (813) and C2 (807) in the training dataset, relative to sentences of other levels (around 795).
 
 **K-Nearest Neighbors (KNN)**
 
@@ -57,6 +62,9 @@ A decision tree recursively splits the dataset into subsets based on the value o
 **Random Forest**
 
 Random forest is an ensemble learning method that constructs multiple decision trees during training and outputs the mode of the classes (classification) or the mean prediction (regression) of the individual trees. It improves upon the decision tree algorithm by reducing overfitting and increasing accuracy.
+
+**Comparison between the basic models**
+TALK ABOUT THE ACCURACY OF INDIVIDUAL CLASSES OF EACH MODEL
 
 # Final Model
 Our best performing model is based on CamemBert and Flaubert. Both of these models are large language models that were pretrained on French texts (CamemBert on the OSCAR corpus and Flaubert on a diverse French corpus, including sources such as Common Crawl, Wikipedia, and other text sources).  While CamemBert is based on RoBERT (Robustly Optimized BERT) which is an optimized version of the original BERT model, Flaubert is directly based on Bert. The CamemBert base model consists of 12 layers, 12 attention heads, 768 hidden size and a total paramterers of 110 million. Flaubert has the same amount of layers, attention heads, and hidden size but slightly more parameters.
