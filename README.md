@@ -31,7 +31,26 @@ To succeed in this undertaking, we distributed the tasks among the members as fo
 | Highest Accuracy on Training Data| 45.1%               | 37.9%| 29.6%         | 32.2%         | 55.5%      | 58.9%     | 59.5%       |
 | Higest Accuracy on Unlabeled Data| 46.5%               | 33.8%| 27.3%         | 25.2%         | 56.1%      | 60.2%     | 59.9 %       |
 
+# Basic Models
+Before moving to more sophisitcated models, we tried to predict the difficulty level of French sentences with the following models : Logistic Regression, k-Nearest Neighbors (KNN), Decision Tree, and Random Forest. For each of these models we predicted the accuracy on the training data as well as on the test data.
 
+**Splitting the dataset**
+First of all, we splitted the training dataset into training data and test data  with the train-test-split method. After the splitting, 80% of the dataset would be used to train the model, and the remaining 20% to test the model.
+
+**Text Preprocessing**
+The data we had needed to be preprocessed in order to be processed by our models. We used the TF-IDF vectorizer (Term Frequency-Inverse Document Frequency). This vectorizer converts text into numerical vectors, suitable for machine learning algorithms. 
+
+# Logistic Regression
+Out of the four basic models, the one performing the best is the logistic regression. Logistic Regression is a linear classification algorithm. It models the probability that a given input belongs to a particular class using a logistic function.
+
+**K-Nearest Neighbors (KNN)**
+KNN is a non-parametric classification algorithm that assigns a class label to a data point, based on the majority class of its nearest neighbors. This model doesn't make assumptions about the underlying data distribution.
+
+**Decision Tree**
+A decision tree recursively splits the dataset into subsets based on the value of attributes. It's a tree-like structure where each internal node represents a feature, each branch represents a decision rule, and each leaf node represents the outcome or class label.
+
+**Random Forest**
+Random forest is an ensemble learning method that constructs multiple decision trees during training and outputs the mode of the classes (classification) or the mean prediction (regression) of the individual trees. It improves upon the decision tree algorithm by reducing overfitting and increasing accuracy.
 
 # Final Model
 Our best performing model is based on CamemBert and Flaubert. Both of these models are large language models that were pretrained on French texts (CamemBert on the OSCAR corpus and Flaubert on a diverse French corpus, including sources such as Common Crawl, Wikipedia, and other text sources).  While CamemBert is based on RoBERT (Robustly Optimized BERT) which is an optimized version of the original BERT model, Flaubert is directly based on Bert. The CamemBert base model consists of 12 layers, 12 attention heads, 768 hidden size and a total paramterers of 110 million. Flaubert has the same amount of layers, attention heads, and hidden size but slightly more parameters.
@@ -46,7 +65,7 @@ The model is loaded with its pretrained weights. In our case, we load the Camemb
 - **Step 4: Define Training Parameters:**
 The models allow to specify various training arguments such as batch size, learning rate, training epochs, or weight decay. The combination of these parameters can signifcantly impact both the computational resources required to run the model as well as the performance (see step 7). The training parameters automatically include the AdamW optimizer to optimize the weights of the model and a learning rate scheduler which adjusts the learning rate as the model is fine-tuned. The default loss function is cross-entropy loss.
 - **Step 5: Fine-tuning the model:**
-Now it is time to fine-tuned the model on our training data using the defined training parameters. Fine-tuning allows to adapt a pre-trained model to perform a specifc taks, in our case to predict the difficulty of French sentences. Hence, fine-tuning allows the model to specialize in the required task. During the fine-tuning process, the model loops through several key steps in each epoch:
+Now it is time to fine-tune the model on our training data using the defined training parameters. Fine-tuning allows to adapt a pre-trained model to perform a specifc taks, in our case to predict the difficulty of French sentences. Hence, fine-tuning allows the model to specialize in the required task. During the fine-tuning process, the model loops through several key steps in each epoch:
   - Forward pass: the inputs (tokzenized text) are passed through the model to get predictions.
   - Loss calculation: the loss between the predicted and true labels is calculated using cross-entropy.
   - Backward pass: the loss is backpropagated to calculate gradients.
