@@ -34,11 +34,11 @@ In the provided git, the following folders and datasets can be found:
 
 | Metric                   | Logistic Regression | KNN | Decision Tree | Random Forest | Distilbert | CamemBert | Flaubert |
 |--------------------------|---------------------|-----|---------------|---------------|------------|-----------|-------------|
-| Precision                | 44.3%               | 42.9%| 29.9%         | 31%           | 55.5%      | 61.2%     | 60.4%       |
-| Recall                   | 44.9%               | 37.6%| 29.8%         | 32%           | 55.0%      | 58.9%     | 59.2%       |
-| F1-score                 | 44.2%               | 36.9%| 24.5%         | 29.8%         | 55.0%      | 59%       | 59.4%       |
-| Highest Accuracy on Training Data| 45.1%               | 37.9%| 29.6%         | 32.2%         | 55.1%      | 58.9%     | 59.5%       |
-| Higest Accuracy on Unlabeled Data| 46.5%               | 33.8%| 33.4%         | 38.9%         | 56.1%      | 60.2%     | 59.9 %       |
+| Precision                | 44.3%               | 42.9%| 29.9%         | 40%           | 55.5%      | 61.2%     | 60.4%       |
+| Recall                   | 44.9%               | 37.6%| 29.8%         | 39.5%           | 55.0%      | 58.9%     | 59.2%       |
+| F1-score                 | 44.2%               | 36.9%| 24.5%         | 38%         | 55.0%      | 59%       | 59.4%       |
+| Highest Accuracy on Training Data| 45.1%               | 37.9%| 29.6%         | 39.7%         | 55.1%      | 58.9%     | 59.5%       |
+| Higest Accuracy on Unlabeled Data| 46.5%               | 33.8%| 33.4%         | 40.5%         | 56.1%      | 60.2%     | 59.9 %       |
 
 # Basic Models
 Before moving to more sophisitcated models, we tried to predict the difficulty level of French sentences with the following models : Logistic Regression, k-Nearest Neighbors (KNN), Decision Tree, and Random Forest. For each of these models we predicted the accuracy on the training data as well as on the test data.
