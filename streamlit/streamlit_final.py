@@ -101,8 +101,8 @@ def download_file(url, save_path):
 @st.cache(allow_output_mutation=True)
 def load_model_and_tokenizer(model_url, tokenizer_url):
     # Paths where the files will be saved
-    model_dir = "camembert_model"
-    tokenizer_dir = "camembert_tokenizer"
+    model = CamembertForSequenceClassification.from_pretrained(model_dir)
+    tokenizer = CamembertTokenizer.from_pretrained(tokenizer_dir)
 
     # Ensure directories exist
     if not os.path.exists(model_dir):
