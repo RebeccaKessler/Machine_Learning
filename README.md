@@ -60,7 +60,7 @@ After the simple Logistic Regression, we performed hyperparameter tuning to find
 -  **Max iter** : It specifies the maximum number of iterations done by the solver before converging. Increasing the number of iterations should help the solver find a better solution.
 -  **Tol** : This parameter sets the tolerance for stopping criteria. It determines when the algorithm should stop to iterate. Smaller values can lead to a more precise convergence, altough it takes more time to train.
 
-We used GridSearchCV to go through the combinations of these parameters to find the best configuration for our logistic regression model.
+We used GridSearchCV to go through the combinations of these parameters to find the best configuration for our logistic regression model. This method uses cross-validation to evaluate the performance of the model with each set of parameters.
 
 Surprisingly, the optimal parameters that are expected to provide the best accuracy for the model actually result in the same accuracy as the previous logistic regression model, which had no specified parameters.
 
