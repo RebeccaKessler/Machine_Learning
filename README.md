@@ -98,7 +98,7 @@ The model is loaded with its pretrained weights. In our case, we load the Camemb
 - **Step 4: Define Training Parameters:**
 The models allow to specify various training arguments such as batch size, learning rate, training epochs, or weight decay. The combination of these parameters can signifcantly impact both the computational resources required to run the model as well as the performance (see step 7). The training parameters automatically include the AdamW optimizer to optimize the weights of the model and a learning rate scheduler which adjusts the learning rate as the model is fine-tuned. The default loss function is cross-entropy loss.
 - **Step 5: Fine-tuning the model:**
-Now it is time to fine-tune the model on our training data using the defined training parameters. Fine-tuning allows to adapt a pre-trained model to perform a specifc taks, in our case to predict the difficulty of French sentences. Hence, fine-tuning allows the model to specialize in the required task. During the fine-tuning process, the model loops through several key steps in each epoch:
+Now it is time to fine-tune the model on our training data using the defined training parameters. Fine-tuning allows to adapt a pre-trained model to perform a specifc task, in our case to predict the difficulty of French sentences. Hence, fine-tuning allows the model to specialize in the required task. During the fine-tuning process, the model loops through several key steps in each epoch:
   - Forward pass: the inputs (tokzenized text) are passed through the model to get predictions.
   - Loss calculation: the loss between the predicted and true labels is calculated using cross-entropy.
   - Backward pass: the loss is backpropagated to calculate gradients.
