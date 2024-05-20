@@ -101,25 +101,28 @@ def download_file(url, save_path):
 @st.cache(allow_output_mutation=True)
 def load_model_and_tokenizer(model_url, tokenizer_url):
     # Paths where the files will be saved
-    model = CamembertForSequenceClassification.from_pretrained(model_dir)
-    tokenizer = CamembertTokenizer.from_pretrained(tokenizer_dir)
+    model_dir = "camembert_model"
+    tokenizer_dir = "camembert_tokenizer"
 
     # Ensure directories exist
-    if not os.path.exists(model_dir):
-        os.makedirs(model_dir)
-    if not os.path.exists(tokenizer_dir):
-        os.makedirs(tokenizer_dir)
+    os.makedirs(model_dir, exist_ok=True)
+    os.makedirs(tokenizer_dir, exist_ok=True)
 
+    # Helper function to download files
+    def download_files(urls, save_dir):
+        for url in urls:
+            file_name = os.path.basename(url)
+            save_path = os.path.join(save_dir, file_name)
+            download_file(url, save_path)
+    
     # Download model files
-    model_files = ["pytorch_model.bin", "config.json"]
-    for file_name in model_files:
-        download_file(f"{model_url}/{file_name}", os.path.join(model_dir, file_name))
+    model_files = [f"{model_url}/pytorch_model.bin", f"{model_url}/config.json"]
+    download_files(model_files, model_dir)
 
     # Download tokenizer files
-    tokenizer_files = ["tokenizer.json", "config.json"]
-    for file_name in tokenizer_files:
-        download_file(f"{tokenizer_url}/{file_name}", os.path.join(tokenizer_dir, file_name))
-
+    tokenizer_files = [f"{tokenizer_url}/tokenizer.json", f"{tokenizer_url}/tokenizer_config.json", f"{tokenizer_url}/special_tokens_map.json", f"{tokenizer_url}/vocab.json", f"{tokenizer_url}/merges.txt"]
+    download_files(tokenizer_files, tokenizer_dir)
+    
     # Load model and tokenizer
     model = CamembertForSequenceClassification.from_pretrained(model_dir)
     tokenizer = CamembertTokenizer.from_pretrained(tokenizer_dir)
