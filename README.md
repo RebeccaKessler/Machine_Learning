@@ -45,15 +45,34 @@ The data we had needed to be preprocessed in order to be processed by our models
 
 **Logistic Regression**
 
-Out of the four basic models, the one performing the best is the logistic regression. Logistic Regression is a linear classification algorithm. It models the probability that a given input belongs to a particular class using a logistic function. The class predicted is the one that has the highest probability. We started with a simple Logistic Regression, without specifying any parameters. We trained the model on 80% of the training data, tested it on 20% of the data, and got an accuracy of 45%. The precision, recall and F1 scores are all around 44%.
+Out of the four basic models, the one performing the best is the logistic regression. Logistic Regression is a linear classification algorithm. It models the probability that a given input belongs to a particular class using a logistic function. The class predicted is the one that has the highest probability.
 
-ADD WHAT IT MEANS!!!!!!!
+We started with a simple Logistic Regression, without specifying any parameters. We trained the model on 80% of the training data, tested it on 20% of the data, and got an accuracy of 45%. The precision, recall and F1 scores are all around 44%.
+
+ADD WHAT IT MEANS !!!
 
 By displaying the accuracy, precision, recall and F1 scores for each of the six individual classes, we noticed that the logistic regression predicts well the classes A1 and C2, with an accuracy of 64% and 62% respectively. However, for the remaining classes, the prediction is quite poor. This could be caused by an uneven distribution of the data. Consequently, if the training data disproportionally contains more A1 and C2 sentences, compared to sentences of other levels, it will impact the prediction accuracies since the model will be more trained on A1 and C2 sentences. In fact, after analysing the data, we find that there are more sentences of difficulty A1 (813) and C2 (807) in the training dataset, compared to sentences of other levels (795 on average). This could explain the difference in accuracies for different classes.
+
+After the simple Logistic Regression, we performed hyperparameter tuning to find the optimal parameters for the model. Here's an overview of the parameters:
+
+- **C** : This parameter controls the strength of regularization. A smaller value (ex.: C=0.01) leads to stronger regularization and a simpler model, a larger value (ex.: C=1.0) leads to weaker regularization and a more complex model. In other words, the higher it is the more the model will be complex at the cost of fitting the data.
+- **Penalty** : This parameter specifies the type of regularization to apply. In our case, it's either ridge regularization, which helps prevent overfitting by penalizing the sum of the squared coefficients, or no regularization.
+- **Solver** : This parameter specifies which algorithm to use for optimization.
+- **Class weight** : It is used to handle imbalanced classes. It specifies if there is weight adjustment for the classes during training.
+-  **Max iter** : It specifies the maximum number of iterations done by the solver before converging. Increasing the number of iterations should help the solver find a better solution.
+-  **Tol** : This parameter sets the tolerance for stopping criteria. It determines when the algorithm should stop to iterate. Smaller values can lead to a more precise convergence, altough it takes more time to train.
+
+We used GridSearchCV to go through the combinations of these parameters to find the best configuration for our logistic regression model.
+
+Surprisingly, the optimal parameters that are expected to provide the best accuracy for the model actually result in the same accuracy as the previous logistic regression model, which had no specified parameters.
+
+Finally, we retrained the model on the full training dataset without specifying any parameters, as previously noted, this would not improve the accuracy of prediction. After testing the model on the unlabelled test data, we obtain an accuracy of 46.5%.
 
 **K-Nearest Neighbors (KNN)**
 
 KNN is a non-parametric classification algorithm that assigns a class label to a data point, based on the majority class of its nearest neighbors. This model doesn't make assumptions about the underlying data distribution.
+
+Similarly as for the Logistic Regression, we started by applying a 
 
 **Decision Tree**
 
