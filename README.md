@@ -47,9 +47,7 @@ The data we had needed to be preprocessed in order to be processed by our models
 
 Out of the four basic models, the one performing the best is the logistic regression. Logistic Regression is a linear classification algorithm. It models the probability that a given input belongs to a particular class using a logistic function. The class predicted is the one that has the highest probability.
 
-We started with a simple Logistic Regression, without specifying any parameters. We trained the model on 80% of the training data, tested it on 20% of the data, and got an accuracy of 45%. The precision, recall and F1 scores are all around 44%.
-
-ADD WHAT IT MEANS !!!
+We started with a simple Logistic Regression, without specifying any parameters. We trained the model on 80% of the training data, tested it on 20% of the data, and got an accuracy of 45%. The precision, recall and F1 scores are all around 44%. This means that the model performance is quite balanced, it is able to identify similarly true positives (precision) and positives in general (recall), which is desirable in classification tasks such as this one.
 
 By displaying the accuracy, precision, recall and F1 scores for each of the six individual classes, we noticed that the logistic regression predicts well the classes A1 and C2, with an accuracy of 64% and 62% respectively. However, for the remaining classes, the prediction is quite poor. This could be caused by an uneven distribution of the data. Consequently, if the training data disproportionally contains more A1 and C2 sentences, compared to sentences of other levels, it will impact the prediction accuracies since the model will be more trained on A1 and C2 sentences. In fact, after analysing the data, we find that there are more sentences of difficulty A1 (813) and C2 (807) in the training dataset, compared to sentences of other levels (795 on average). This could explain the difference in accuracies for different classes.
 
@@ -65,6 +63,8 @@ After the simple Logistic Regression, we performed hyperparameter tuning to find
 We used GridSearchCV to go through the combinations of these parameters to find the best configuration for our logistic regression model.
 
 Surprisingly, the optimal parameters that are expected to provide the best accuracy for the model actually result in the same accuracy as the previous logistic regression model, which had no specified parameters.
+
+SAY WHY WE THINK THIS IS THE CASE
 
 Finally, we retrained the model on the full training dataset without specifying any parameters, as previously noted, this would not improve the accuracy of prediction. After testing the model on the unlabelled test data, we obtain an accuracy of 46.5%.
 
