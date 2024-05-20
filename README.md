@@ -37,7 +37,7 @@ In the provided git, the following folders and datasets can be found:
 | Precision                | 44.3%               | 42.9%| 28.9%         | 31%           | 55.5%      | 61.2%     | 60.4%       |
 | Recall                   | 44.9%               | 37.6%| 29.8%         | 32%           | 55.0%      | 58.9%     | 59.2%       |
 | F1-score                 | 44.2%               | 36.9%| 24.5%         | 29.8%         | 55.0%      | 59%       | 59.4%       |
-| Highest Accuracy on Training Data| 45.1%               | 31.9%| 29.6%         | 32.2%         | 55.1%      | 58.9%     | 59.5%       |
+| Highest Accuracy on Training Data| 45.1%               | 37.9%| 29.6%         | 32.2%         | 55.1%      | 58.9%     | 59.5%       |
 | Higest Accuracy on Unlabeled Data| 46.5%               | 33.8%| 32.4%         | 38.9%         | 56.1%      | 60.2%     | 59.9 %       |
 
 # Basic Models
