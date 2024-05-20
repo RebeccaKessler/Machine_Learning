@@ -66,7 +66,7 @@ Random forest is an ensemble learning method that constructs multiple decision t
 **Comparison between the basic models**
 TALK ABOUT THE ACCURACY OF INDIVIDUAL CLASSES OF EACH MODEL
 
-# Other Techniques - Bert models
+# Other Techniques 
 Our best performing models are based on CamemBert and Flaubert. Both of these models are large language models that were pretrained on French texts (CamemBert on the OSCAR corpus and Flaubert on a diverse French corpus, including sources such as Common Crawl, Wikipedia, and other text sources).  While CamemBert is based on RoBERT (Robustly Optimized BERT) which is an optimized version of the original BERT model, Flaubert is directly based on Bert. The CamemBert base model consists of 12 layers, 12 attention heads, 768 hidden size and a total paramterers of 110 million. Flaubert has the same amount of layers, attention heads, and hidden size but slightly more parameters.
 To set up our final model for our task, we went through the following steps:
 
