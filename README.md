@@ -4,7 +4,7 @@
 ## Welcome to the final report of the Group Swatch 
 
 The objective of this project is to build a model that accurately predicts the difficulty level of French sentences.
-This report is divided into five sections.
+This report is divided into six sections.
 - [Team Approach and Task Division](#team-Approach-and-Task-Division)
 - [Overview of Git Repository](#overview-of-git-repository)
 - [Comparison of Different Models](#Comparison-of-Different-Models)
@@ -25,8 +25,8 @@ To succeed in this undertaking, we distributed the tasks among the members as fo
 
 In the provided git, the following folders and datasets can be found:
 - Codes: python files containing the code for the basic models and the various Bert models.
-- Streamlit: all necessary files to build the user interface on streamlit
-- Sample texts: example book exerpts to try out our application
+- Streamlit: all the files required to build our user interface on streamlit
+- Book examples: example book excerpts to try out our application
 - Training dataset, unlabelled test data, ChatGPT generated training dataset (called "combined_random_french_sentences.csv), and the final submission
 
 
