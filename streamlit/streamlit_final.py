@@ -116,12 +116,10 @@ def load_model_and_tokenizer(model_url, tokenizer_url):
             download_file(url, save_path)
     
     # Download model files
-    model_files = [f"{model_url}/pytorch_model.bin", f"{model_url}/config.json"]
-    download_files(model_files, model_dir)
+    download_files(model_urls, model_dir)
 
     # Download tokenizer files
-    tokenizer_files = [f"{tokenizer_url}/tokenizer.json", f"{tokenizer_url}/tokenizer_config.json", f"{tokenizer_url}/special_tokens_map.json", f"{tokenizer_url}/vocab.json", f"{tokenizer_url}/merges.txt"]
-    download_files(tokenizer_files, tokenizer_dir)
+    download_files(tokenizer_urls, tokenizer_dir)
     
     # Load model and tokenizer
     model = CamembertForSequenceClassification.from_pretrained(model_dir)
@@ -130,11 +128,19 @@ def load_model_and_tokenizer(model_url, tokenizer_url):
     return model, tokenizer
 
 # URLs for the model and tokenizer (replace with your actual URLs)
-model_url = 'https://raw.githubusercontent.com/YourUsername/YourRepo/main/path/to/saved/model'
-tokenizer_url = 'https://raw.githubusercontent.com/RebeccaKessler/Machine_Learning/main/streamlit/tokenizer_config.json'
-
+model_urls = [
+    'https://raw.githubusercontent.com/YourUsername/YourRepo/main/path/to/saved/model/pytorch_model.bin',
+    'https://raw.githubusercontent.com/YourUsername/YourRepo/main/path/to/saved/model/config.json'
+]
+tokenizer_urls = [
+    'https://raw.githubusercontent.com/YourUsername/YourRepo/main/path/to/saved/tokenizer/tokenizer.json',
+    'https://raw.githubusercontent.com/YourUsername/YourRepo/main/path/to/saved/tokenizer/tokenizer_config.json',
+    'https://raw.githubusercontent.com/YourUsername/YourRepo/main/path/to/saved/tokenizer/special_tokens_map.json',
+    'https://raw.githubusercontent.com/YourUsername/YourRepo/main/path/to/saved/tokenizer/vocab.json',
+    'https://raw.githubusercontent.com/YourUsername/YourRepo/main/path/to/saved/tokenizer/merges.txt'
+]
 # Load model and tokenizer
-model, tokenizer = load_model_and_tokenizer(model_url, tokenizer_url)
+model, tokenizer = load_model_and_tokenizer(model_urls, tokenizer_urls)
 
 
 def extract_text_from_pdf(uploaded_file):
