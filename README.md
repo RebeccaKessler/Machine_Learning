@@ -6,6 +6,7 @@
 The objective of this project is to build a model that accurately predicts the difficulty level of French sentences.
 This report is divided into five sections.
 - [Team Approach and Task Division](#team-Approach-and-Task-Division)
+- [Overview of Git Repository](#overview-of-git-repository)
 - [Comparison of Different Models](#Comparison-of-Different-Models)
 - [Other Techniques](#Other-Techniques)
 - [Application of the Model](#Application-of-the-Model)
@@ -17,8 +18,16 @@ This report is divided into five sections.
 We approached the task as a reiterative process, incrementally improving our models to predict the difficulty level of French sentences as accurately as possible. We started off with simple machine learning models inlcuding Logistic Regression, KNN, Decision Tree, and Random Forest before then advancing to more sophisticated large language models (LLMs) such as Distilbert, CamemBert, and Flaubert. Within the different models, we used hyper-parameter optimization to find the best solution. Additionally, we generated a larger dataset using ChatGTP to be able to fine-tine our final model even better. 
 Once we were satisifed with the performance of our models, we started thinking about potential applications of our final model, an attractive user interfence, and an engaging concept for the video presentation. 
 To succeed in this undertaking, we distributed the tasks among the members as follows:
-- Giulia: creating the different simple machine learning models to predict the language level of French texts.
+- Giulia: creating the different basic machine learning models to predict the language level of French texts.
 - Rebecca: working on the advanced techniques and developing the user interface on streamlit.
+
+# Overview of Git Repository
+
+In the provided git, the following folders and datasets can be found:
+- Codes: python files containing the code for the basic models and the various Bert models.
+- Streamlit: all necessary files to build the user interface on streamlit
+- Sample texts: example book exerpts to try out our application
+- Training dataset, unlabelled test data, ChatGPT generated training dataset (called "combined_random_french_sentences.csv), and the final submission
 
 
 # Comparison of Different Models
