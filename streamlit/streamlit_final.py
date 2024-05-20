@@ -128,7 +128,7 @@ def load_model_and_tokenizer(model_url, tokenizer_url):
 
 # URLs for the model and tokenizer (replace with your actual URLs)
 model_url = 'https://raw.githubusercontent.com/YourUsername/YourRepo/main/path/to/saved/model'
-tokenizer_url = 'https://raw.githubusercontent.com/YourUsername/YourRepo/main/path/to/saved/tokenizer'
+tokenizer_url = 'https://raw.githubusercontent.com/RebeccaKessler/Machine_Learning/main/streamlit/tokenizer_config.json'
 
 # Load model and tokenizer
 model, tokenizer = load_model_and_tokenizer(model_url, tokenizer_url)
