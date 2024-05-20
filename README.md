@@ -56,7 +56,7 @@ The data we had needed to be preprocessed in order to be processed by our models
 
 Out of the four basic models, the one performing the best is the logistic regression. Logistic Regression is a linear classification algorithm. It models the probability that a given input belongs to a particular class using a logistic function. The class predicted is the one that has the highest probability.
 
-We started with a simple Logistic Regression, without specifying any parameters. We trained the model on 80% of the training data, tested it on 20% of the data, and got an accuracy of 45%. The precision, recall and F1 scores are all around 44%. This means that the model performance is quite balanced, it is able to identify similarly true positives (precision) and positives in general (recall), which is desirable in classification tasks such as this one.
+We started with a simple Logistic Regression, without specifying any parameters. We trained the model on 80% of the training data, tested it on 20% of the data, and got an accuracy of 45.1%. The precision, recall and F1 scores are all around 44%. This means that the model performance is quite balanced, it is able to identify similarly true positives (precision) and positives in general (recall), which is desirable in classification tasks such as this one.
 
 By displaying the accuracy, precision, recall and F1 scores for each of the six individual classes, we noticed that the logistic regression predicts well the classes A1 and C2, with an accuracy of 64% and 62% respectively. However, for the remaining classes, the prediction is quite poor. This could be caused by an uneven distribution of the data. Consequently, if the training data disproportionally contains more A1 and C2 sentences, compared to sentences of other levels, it will impact the prediction accuracies since the model will be more trained on A1 and C2 sentences. In fact, after analysing the data, we find that there are more sentences of difficulty A1 (813) and C2 (807) in the training dataset, compared to sentences of other levels (795 on average). This could explain the difference in accuracies for different classes.
 
@@ -71,7 +71,7 @@ After the simple Logistic Regression, we performed hyperparameter tuning to find
 
 We used GridSearchCV to go through the combinations of these parameters to find the best configuration for our logistic regression model. This method uses cross-validation to evaluate the performance of the model with each set of parameters.
 
-Surprisingly, the optimal parameters that are expected to provide the best accuracy for the model actually result in the same accuracy as the previous logistic regression model, which had no specified parameters.
+Surprisingly, the optimal parameters that are expected to provide the best accuracy for the model (C: 10, Class weights: None, Max iter: 100, Penalty: 12, Solver: liblinear, Tol: 0.0001) actually result in the same accuracy as the previous logistic regression model, which had no specified parameters, namely 45.1%.
 
 SAY WHY WE THINK THIS IS THE CASE
 
@@ -83,9 +83,42 @@ KNN is a non-parametric classification algorithm that assigns a class label to a
 
 Similarly as for the Logistic Regression, we started with a K-Neighbors Classifier without specifying any parameter. After training the model on 80% of the training data, and testing it on 20% of the data, we got an accuracy of 31.9%. The precision, recall and F1 scores were lower than for the logistic regression model.
 
+By examining the scores for the individual classes, we observed that sentences in the A1 class are correctly predicted with an accuracy of around 85%, which is significantly higher than the prediction accuracy for the other classes, lower than 25%.
+
+To improve the KNN model's class prediction accuracy, we employed multiple loops to iterate over the model parameters and identify which are the optimal ones. The parameters we considered are the following: 
+
+- **N Neighbors** : This parameter specifies the number of neighbors to use to make predictions. A larger number of neighbors makes the model less sensitive to noise in the data, but renders it more computationally resource-intensive.
+- **P values** : When p=1, it corresponds to the Manhattan distance (L1 norm: distance calculated as the sum of the absolute differences of the coordinates), when p=2, it corresponds to the Euclidian distance (L2 norm: distance calculated as the square root of the sum of the squared differences of the coordinates). Euclidean distance is more sensitive to differences in magnitude, while Manhattan distance is more robust to outliers.
+- **Weights** : This parameter specifies how to weight the contributions of the neighbors when making a prediction. When it's set to uniform, all neighbors are equally weighted, when it's set to distance, weights are inversely proportional to the distance, meaning that closer neighbors have a greater influence on the prediction.
+
+We found that the best parameters are k=1 (1 neighbor), p=2 (Euclidian distance), and weight = distance. When training the model with these parameters on 80% of the data, and testing it on 20% of the data, we get an accuracy of 37.9%. We can consider it a great improvement.
+
+Finally, to go a step further, we used GridSearchCV for hyperparameter tuning to identify the optimal model parameters. Not much differed from our previous approach using loops. We retained the same parameters for the p value and the weights in the parameter grid. The only change was allowing the number of neighbors to range from 1 to 10, to evaluate if this would enhance accuracy.
+
+Unfortunately, this approach did not yield higher accuracy. In fact, it suggested different parameters, resulting in a lower accuracy of ADD THE ACCURACY, compared to the previous 37.9%. It is possible for hyperparameter tuning to fail in identifying the optimal parameters. Thus, it was beneficial to search for the best parameters using the loops.
+
+As a final step, we retrained the KNN classifier on the full training dataset with the best parameters mentioned previously, and tested it on the unlabelled test data. We obtain an accuracy of 33.8%.
+
 **Decision Tree**
 
 A decision tree recursively splits the dataset into subsets based on the value of attributes. It's a tree-like structure where each internal node represents a feature, each branch represents a decision rule, and each leaf node represents the outcome or class label.
+
+Once again, we started by using a Decision Tree Classifier without specifying any parameter. We trained the model on 80% of the training data and tested it on 20% of training data. We get an accuracy of 29.9%. The precision, recall and F1 scores are all around 29%, meaning that the model performance is balanced despite being poor. Similarly to the two previous models, the individual accuracy of the A1 class is higher compared to the accuracy of the other classes, altough the difference is minor this time. In fact, the A1 class accuracy is 55.4%, while for the other classes it ranges between 20-27%.
+
+WHAT CAUSES THIS DIFFERENCE ???
+
+Like for the KNN classifier, we looped over some model parameters to find the optimal parameters. These are the parameters we considered:
+
+- **Criterion** : This parameter specifies which function to use to measure the quality of a split, it determines how the decision tree evaluates the potential splits at each node. If it's equal to Gini, it uses the Gini impurity to measure the quality of a split. If it's equal to Entropy, it uses the information gain based on entropy to measure it.
+- **Max depth** : This parameter specifies the maximum depth of the tree, in other words, how many times the tree will split. Increasing the depth allows the tree to learn more in the data but also increases the risk of overfitting.
+
+After looping over these model parameters, we found that the highest accuracy of 29.6% was obtained with the model parameters Criterion: entropy and Max depth: 5. However, this accuracy of 29.6% is lower than the initially obtained one, namely, 29.9%.
+
+Once again, in order to find parameters yielding the highest accuracy, we used GridSearchCV to perform hyperparameter tuning. In the parameter grid, we retained the same parameters as for the loops, and additionally we allowed the max depth to range from 1 to 10. This time, the best parameters seemed to be Criterion: entropy and Max depth: 9. However, surprisingly, the accuracy obtained with these parameters is 29.6%. The same as with the previous best parameters and still lower than the initial one (29.9%).
+
+Finally, we retrained the model on the full training dataset without specifying any parameter, then tested it on the unlabelled test data. We obtain an accuracy of 27.3%.
+
+RETEST ON KAGGLE + SAY WHY IT'S LOWER !!!
 
 **Random Forest**
 
