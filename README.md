@@ -28,7 +28,7 @@ To succeed in this undertaking, we distributed the tasks among the members as fo
 | Precision                | 44.3%               | 42.9%| 28.9%         | 31%           | 55.5%      | 61.2%     | 60.4%       |
 | Recall                   | 44.9%               | 37.6%| 29.8%         | 32%           | 55.0%      | 58.9%     | 59.2%       |
 | F1-score                 | 44.2%               | 36.9%| 24.5%         | 29.8%         | 55.0%      | 59%       | 59.4%       |
-| Highest Accuracy on Training Data| 45.1%               | 37.9%| 29.6%         | 32.2%         | 55.1%      | 58.9%     | 59.5%       |
+| Highest Accuracy on Training Data| 45.1%               | 31.9%| 29.6%         | 32.2%         | 55.1%      | 58.9%     | 59.5%       |
 | Higest Accuracy on Unlabeled Data| 46.5%               | 33.8%| 27.3%         | 25.2%         | 56.1%      | 60.2%     | 59.9 %       |
 
 # Basic Models
@@ -72,7 +72,7 @@ Finally, we retrained the model on the full training dataset without specifying 
 
 KNN is a non-parametric classification algorithm that assigns a class label to a data point, based on the majority class of its nearest neighbors. This model doesn't make assumptions about the underlying data distribution.
 
-Similarly as for the Logistic Regression, we started by applying a 
+Similarly as for the Logistic Regression, we started with a K-Neighbors Classifier without specifying any parameter. After training the model on 80% of the training data, and testing it on 20% of the data, we got an accuracy of 31.9%. The precision, recall and F1 scores were lower than for the logistic regression model.
 
 **Decision Tree**
 
