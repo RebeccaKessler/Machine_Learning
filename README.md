@@ -103,7 +103,7 @@ As a final step, we retrained the KNN classifier on the full training dataset wi
 
 A decision tree recursively splits the dataset into subsets based on the value of attributes. It's a tree-like structure where each internal node represents a feature, each branch represents a decision rule, and each leaf node represents the outcome or class label.
 
-Once again, we started by using a Decision Tree Classifier without specifying any parameter. We trained the model on 80% of the training data and tested it on 20% of training data. We get an accuracy of 29.9%. The precision, recall and F1 scores are all around 29%, meaning that the model performance is balanced despite being poor. Similarly to the two previous models, the individual accuracy of the A1 class is higher compared to the accuracy of the other classes, altough the difference is minor this time. In fact, the A1 class accuracy is 55.4%, while for the other classes it ranges between 20-27%.
+Once again, we started by using a Decision Tree Classifier without specifying any parameter. We trained the model on 80% of the training data and tested it on 20% of training data. We get an accuracy of 29.6%. The precision, recall and F1 scores are all around 29%, meaning that the model performance is balanced despite being poor. Similarly to the two previous models, the individual accuracies of the A1 and C1 classes are higher compared to the accuracy of the other classes, altough the difference is smaller this time. In fact, the A1 class accuracy is 67.5%, for C1 it is 57.2%, while for the other classes it ranges between 1-27%.
 
 WHAT CAUSES THIS DIFFERENCE ???
 
@@ -124,7 +124,7 @@ COMMENT ON IT !!!
 
 The last basic model that we tried is the Random Forest Classifier. Random Forest is an ensemble learning method that constructs multiple decision trees during training and outputs the mode of the classes of the individual trees. It improves upon the decision tree algorithm by reducing overfitting and increasing accuracy.
 
-The Random Forest Classifier without any parameter specified, outputed an accuracy of 40.4%. Once again, the accuracy of the A1 class (77.7%) is disproportionately higher than the accuracy of the other classes (30% on average).
+The Random Forest Classifier without any parameter specified, outputed an accuracy of 39.7%. Once again, the accuracy of the A1 class (77.7%) is disproportionately higher than the accuracy of the other classes (30% on average).
 
 SAY WHYYYY ???
 
@@ -132,11 +132,11 @@ Like for the other models, we looped over model some model parameters to find th
 
 - **N estimators** : This parameter specifies the number of decision trees to be included in the random forest. Increasing the number of estimators generally improves the performance of the model by reducing overfitting. However, at the same time, it increases computational cost.
 
-This method gives as best parameters N estimators: 11, Criterion: entropy, Max depth: 10 for an accuracy of 34.8%, not representing an improvement compared to the initial accuracy of 40.4%.
+This method gives as best parameters N estimators: 11, Criterion: entropy, Max depth: 10 for an accuracy of 34.8%, not representing an improvement compared to the initial accuracy of 39.7%.
 
-Then we performed hyperparameter tuning using GridSearchCV, which gave as optimal parameters N estimators: 9, Criterion: entropy, Max depth: 8. This, once again, doesn't seem to have worked as the accuracy obtained with those parameters is 29.6%, significantly lower than 40.4%.
+Then we performed hyperparameter tuning using GridSearchCV, which gave as optimal parameters N estimators: 9, Criterion: entropy, Max depth: 9. This, once again, doesn't seem to have worked as the accuracy obtained with those parameters is 29.6%, significantly lower than 39.7%.
 
-Finally, we retrained the Random Forest Classifier on the full training data and tested it on the unlabelled test data. We obtain an accuracy of 38.9%.
+Finally, we retrained the Random Forest Classifier on the full training data and tested it on the unlabelled test data. We obtain an accuracy of 40.5%.
 
 # Other Techniques 
 Our best performing models are based on CamemBert and Flaubert. Both of these models are large language models that were pretrained on French texts (CamemBert on the OSCAR corpus and Flaubert on a diverse French corpus, including sources such as Common Crawl, Wikipedia, and other text sources).  While CamemBert is based on RoBERT (Robustly Optimized BERT) which is an optimized version of the original BERT model, Flaubert is directly based on Bert. The CamemBert base model consists of 12 layers, 12 attention heads, 768 hidden size and a total paramterers of 110 million. Flaubert has the same amount of layers, attention heads, and hidden size but slightly more parameters.
