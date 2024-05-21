@@ -184,7 +184,7 @@ For the application of our model, we decided to create a Streamlit app that can 
 Each inputed text will be automatically saved to the app's library. When clicking on the library button in the sidebar on the left, users can brows through all previously uploaded text excerpts. The search can be filtered by title or language level. In this way, users can either check for the difficulty level of specific books without having to upload them themselves or search for books that match their language level. Consequently, the value of the app grows over time as more and more people upload excerpts of different books to the app, enlarging the library.
 (note: the app is running on the logisitc regression model as the Bert models were to large to upload to our github).
 
-Explore our app: https://machinelearning-bookly.streamlit.app/
+Explore our app: [https://machinelearning-bookly.streamlit.app](https://machinelearning-bookly.streamlit.app)
 
 # Final Words
 
