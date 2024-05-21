@@ -82,8 +82,8 @@ def display_library():
 # Load Camembert model and tokenizer
 @st.cache_resource
 def load_camembert_model():
-    tokenizer = CamembertTokenizer.from_pretrained("camembert-base")
-    model = CamembertForSequenceClassification.from_pretrained("camembert-base")
+    tokenizer = CamembertTokenizer.from_pretrained("saved_model")
+    model = CamembertForSequenceClassification.from_pretrained("saved_model")
     return tokenizer, model
 
 tokenizer, model = load_camembert_model()
