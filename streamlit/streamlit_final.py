@@ -83,8 +83,8 @@ def display_library():
 # Load Camembert model and tokenizer from Hugging Face Model Hub
 @st.cache_resource
 def load_camembert_model():
-    tokenizer = CamembertTokenizer.from_pretrained("huggingrebecca/Camembert_final")
-    model = CamembertForSequenceClassification.from_pretrained("huggingrebecca/Camembert_final")
+    tokenizer = CamembertTokenizer.from_pretrained("huggingrebecca/Camembert_final/saved_model")
+    model = CamembertForSequenceClassification.from_pretrained("huggingrebecca/Camembert_final/saved_model")
     return tokenizer, model
 
 tokenizer, model = load_camembert_model()
