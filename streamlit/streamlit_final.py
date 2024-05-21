@@ -1,13 +1,11 @@
 import streamlit as st
-import sqlite3
 import pandas as pd
-import requests
-import tarfile
-from io import BytesIO
+import sqlite3
 from transformers import CamembertTokenizer, CamembertForSequenceClassification
 import torch
-from PyPDF2 import PdfFileReader
+import requests
 from docx import Document
+import PyPDF2
 
 # Define colors and styles
 st.markdown(
@@ -34,17 +32,6 @@ st.markdown(
     </style>
     """, unsafe_allow_html=True
 )
-
-import streamlit as st
-import sqlite3
-import pandas as pd
-import torch
-from transformers import CamembertTokenizer, CamembertForSequenceClassification
-from PyPDF2 import PdfFileReader
-from docx import Document
-import requests
-import os
-
 # Database setup
 DB_FILE = "library.db"
 conn = sqlite3.connect(DB_FILE)
@@ -55,11 +42,13 @@ c.execute('''
           ''')
 conn.commit()
 
+
 def save_to_library(title, prediction):
     with sqlite3.connect(DB_FILE) as conn:
         c = conn.cursor()
         c.execute("INSERT INTO library (title, prediction) VALUES (?, ?)", (title, prediction))
         conn.commit()
+
 
 def fetch_and_display_library(query, params):
     with sqlite3.connect(DB_FILE) as conn:
@@ -72,6 +61,7 @@ def fetch_and_display_library(query, params):
             st.write(df)
         else:
             st.write("No data found based on filter criteria.")
+
 
 def display_library():
     st.write("## 📓 Library")
@@ -91,74 +81,21 @@ def display_library():
 
     fetch_and_display_library(query, params)
 
-# Function to download files from a URL
-def download_file(url, save_path):
-    response = requests.get(url)
-    with open(save_path, 'wb') as file:
-        file.write(response.content)
-        
-# Load model and tokenizer once when the app starts
-@st.cache(allow_output_mutation=True)
-def load_model_and_tokenizer(model_url, tokenizer_url):
-    # Paths where the files will be saved
-    model_dir = "camembert_model"
-    tokenizer_dir = "camembert_tokenizer"
 
-    # Ensure directories exist
-    os.makedirs(model_dir, exist_ok=True)
-    os.makedirs(tokenizer_dir, exist_ok=True)
-
-    # Helper function to download files
-    def download_files(urls, save_dir):
-        for url in urls:
-            file_name = os.path.basename(url)
-            save_path = os.path.join(save_dir, file_name)
-            download_file(url, save_path)
-    
-    # Download model files
-    download_files(model_urls, model_dir)
-
-    # Download tokenizer files
-    download_files(tokenizer_urls, tokenizer_dir)
-    
-    # Load model and tokenizer
-    model = CamembertForSequenceClassification.from_pretrained(model_dir)
-    tokenizer = CamembertTokenizer.from_pretrained(tokenizer_dir)
-    
-    return model, tokenizer
-
-# URLs for the model and tokenizer (replace with your actual URLs)
-model_urls = [
-    'https://raw.githubusercontent.com/YourUsername/YourRepo/main/path/to/saved/model/pytorch_model.bin',
-    'https://raw.githubusercontent.com/YourUsername/YourRepo/main/path/to/saved/model/config.json'
-]
-tokenizer_urls = [
-    'https://raw.githubusercontent.com/YourUsername/YourRepo/main/path/to/saved/tokenizer/tokenizer.json',
-    'https://raw.githubusercontent.com/YourUsername/YourRepo/main/path/to/saved/tokenizer/tokenizer_config.json',
-    'https://raw.githubusercontent.com/YourUsername/YourRepo/main/path/to/saved/tokenizer/special_tokens_map.json',
-    'https://raw.githubusercontent.com/YourUsername/YourRepo/main/path/to/saved/tokenizer/vocab.json',
-    'https://raw.githubusercontent.com/YourUsername/YourRepo/main/path/to/saved/tokenizer/merges.txt'
-]
-# Load model and tokenizer
-model, tokenizer = load_model_and_tokenizer(model_urls, tokenizer_urls)
+# Load Camembert model and tokenizer
+@st.cache_resource
+def load_camembert_model():
+    tokenizer = CamembertTokenizer.from_pretrained("/Users/rebecca/Desktop/Machine_Learning/streamlit/saved_model")
+    model = CamembertForSequenceClassification.from_pretrained("/Users/rebecca/Desktop/Machine_Learning/streamlit/saved_model")
+    return tokenizer, model
 
 
-def extract_text_from_pdf(uploaded_file):
-    pdf_reader = PdfFileReader(uploaded_file)
-    preface_text = ""
-    for page_num in range(pdf_reader.numPages):
-        page = pdf_reader.getPage(page_num)
-        preface_text += page.extractText()
-    return preface_text
-
-def extract_text_from_docx(uploaded_file):
-    doc = Document(uploaded_file)
-    preface_text = "\n".join([para.text for para in doc.paragraphs])
-    return preface_text
+tokenizer, model = load_camembert_model()
 
 # Main content
 st.markdown('<p class="big-font">BOOKLY</p>', unsafe_allow_html=True)
-st.write("### This app allows you to predict the French difficulty level of a book. Never worry again about whether or not your French skills are sufficient to read a book. Use Bookly and find it out within seconds!")
+st.write(
+    "### This app allows you to predict the French difficulty level of a book. Never worry again about whether or not your French skills are sufficient to read a book. Use Bookly and find it out within seconds!")
 
 # Sidebar
 with st.sidebar:
@@ -167,7 +104,7 @@ with st.sidebar:
     title = st.text_input("🖊️ Enter the title of your book", key="book_title", help="Enter title of book.")
     uploaded_file = st.file_uploader("📄 Upload your excerpt", type=["pdf", "docx"], help="Upload abstract of book.")
     predict_button = st.button("Predict Difficulty of Book")
-    st.markdown("##") 
+    st.markdown("##")
     display_button = st.button("Display Library")
     if display_button or 'show_filters' in st.session_state:
         st.session_state.show_filters = True
@@ -177,26 +114,51 @@ with st.sidebar:
         if filter_options == "Title":
             title_filter = st.text_input("Enter Title:", key='title_filter')
         elif filter_options == "Prediction Level":
-            pred_filter = st.selectbox("Select Prediction Level", ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'], key='pred_filter')
-        
+            pred_filter = st.selectbox("Select Prediction Level", ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'],
+                                       key='pred_filter')
+
         if st.button("Apply Filters"):
             st.session_state.filter_type = filter_options
             st.session_state.filter_value = st.session_state.title_filter if filter_options == "Title" else st.session_state.pred_filter if filter_options == "Prediction Level" else None
             st.session_state['display_library'] = True
 
+if predict_button and (uploaded_file is None or title is None):
+    st.markdown("##")
+    st.error("### ‼️ Please fill in title and upload file")
+
+# Run model for prediction
 if predict_button and uploaded_file is not None and title:
-    preface_text = extract_text_from_pdf(uploaded_file) if uploaded_file.type == "application/pdf" else extract_text_from_docx(uploaded_file)
-    
-    inputs = tokenizer(preface_text, return_tensors="pt", padding=True, truncation=True, max_length=512)
-    outputs = model(**inputs)
-    predictions = torch.nn.functional.softmax(outputs.logits, dim=-1)
-    predicted_index = predictions.argmax().item()
-    prediction_label = model.config.id2label[predicted_index]
+    if uploaded_file.type == "application/pdf":
+        with st.spinner('📄 Extracting text from PDF...'):
+            pdf_reader = PyPDF2.PdfFileReader(uploaded_file)
+            preface_text = ""
+            for page_num in range(pdf_reader.numPages):
+                page = pdf_reader.getPage(page_num)
+                preface_text += page.extractText()
+    elif uploaded_file.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+        doc = Document(uploaded_file)
+        preface_text = "\n".join([para.text for para in doc.paragraphs])
+
+    # Print result of prediction
+    st.markdown("##")
+    st.write("### 📄 Uploaded Preface")
+    st.text_area("", preface_text, height=250, help="This is the preface text extracted from your document.")
+
+    # Progress bar during prediction
+    with st.spinner('🔍 Predicting difficulty level...'):
+        inputs = tokenizer(preface_text, return_tensors="pt", truncation=True, padding=True)
+        outputs = model(**inputs)
+        prediction = torch.argmax(outputs.logits, dim=1).item()
+
+    # Convert prediction to difficulty level (assuming a mapping, adjust as needed)
+    difficulty_levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']
+    predicted_level = difficulty_levels[prediction]
 
     st.subheader('💡 Predicted Difficulty Level')
-    st.success(f"{prediction_label}")
+    st.success(f"{predicted_level}")
 
-    save_to_library(title, prediction_label)
+    # Automatically save prediction
+    save_to_library(title, predicted_level)
 
 if 'filter_type' in st.session_state:
     display_library()
