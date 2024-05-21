@@ -32,6 +32,7 @@ st.markdown(
     </style>
     """, unsafe_allow_html=True
 )
+
 # Database setup
 DB_FILE = "library.db"
 conn = sqlite3.connect(DB_FILE)
@@ -42,13 +43,11 @@ c.execute('''
           ''')
 conn.commit()
 
-
 def save_to_library(title, prediction):
     with sqlite3.connect(DB_FILE) as conn:
         c = conn.cursor()
         c.execute("INSERT INTO library (title, prediction) VALUES (?, ?)", (title, prediction))
         conn.commit()
-
 
 def fetch_and_display_library(query, params):
     with sqlite3.connect(DB_FILE) as conn:
@@ -56,12 +55,11 @@ def fetch_and_display_library(query, params):
         c.execute(query, params)
         data = c.fetchall()
         if data:
-            df = pd.DataFrame(data, columns=["ID", "Title", "Prediction"])
+            df = pd.DataFrame(data, columns=["ID","Title", "Prediction"])
             df = df[["Title", "Prediction"]]
             st.write(df)
         else:
             st.write("No data found based on filter criteria.")
-
 
 def display_library():
     st.write("## 📓 Library")
@@ -81,21 +79,18 @@ def display_library():
 
     fetch_and_display_library(query, params)
 
-
-# Load Camembert model and tokenizer
+# Load Camembert model and tokenizer from local directory
 @st.cache_resource
 def load_camembert_model():
-    tokenizer = CamembertTokenizer.from_pretrained("/Users/rebecca/Desktop/Machine_Learning/streamlit/saved_model")
-    model = CamembertForSequenceClassification.from_pretrained("/Users/rebecca/Desktop/Machine_Learning/streamlit/saved_model")
+    tokenizer = CamembertTokenizer.from_pretrained("saved_model")
+    model = CamembertForSequenceClassification.from_pretrained("saved_model")
     return tokenizer, model
-
 
 tokenizer, model = load_camembert_model()
 
 # Main content
 st.markdown('<p class="big-font">BOOKLY</p>', unsafe_allow_html=True)
-st.write(
-    "### This app allows you to predict the French difficulty level of a book. Never worry again about whether or not your French skills are sufficient to read a book. Use Bookly and find it out within seconds!")
+st.write("### This app allows you to predict the French difficulty level of a book. Never worry again about whether or not your French skills are sufficient to read a book. Use Bookly and find it out within seconds!")
 
 # Sidebar
 with st.sidebar:
@@ -114,8 +109,7 @@ with st.sidebar:
         if filter_options == "Title":
             title_filter = st.text_input("Enter Title:", key='title_filter')
         elif filter_options == "Prediction Level":
-            pred_filter = st.selectbox("Select Prediction Level", ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'],
-                                       key='pred_filter')
+            pred_filter = st.selectbox("Select Prediction Level", ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'], key='pred_filter')
 
         if st.button("Apply Filters"):
             st.session_state.filter_type = filter_options
@@ -162,6 +156,7 @@ if predict_button and uploaded_file is not None and title:
 
 if 'filter_type' in st.session_state:
     display_library()
+
 
 
 
