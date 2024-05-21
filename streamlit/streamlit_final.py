@@ -83,6 +83,7 @@ def display_library():
 # Load Camembert model and tokenizer from Hugging Face Model Hub
 @st.cache_resource
 def load_camembert_model():
+    # Correctly reference the Hugging Face repository
     tokenizer = CamembertTokenizer.from_pretrained("huggingrebecca/Camembert_final/saved_model")
     model = CamembertForSequenceClassification.from_pretrained("huggingrebecca/Camembert_final/saved_model")
     return tokenizer, model
@@ -157,6 +158,7 @@ if predict_button and uploaded_file is not None and title:
 
 if 'filter_type' in st.session_state:
     display_library()
+
 
 
 
