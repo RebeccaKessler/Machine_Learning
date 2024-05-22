@@ -8,6 +8,7 @@ This report is divided into six sections.
 - [Team Approach and Task Division](#team-Approach-and-Task-Division)
 - [Overview of Git Repository](#overview-of-git-repository)
 - [Comparison of Different Models](#Comparison-of-Different-Models)
+- [Basic Models](#Other-Techniques)
 - [Other Techniques](#Other-Techniques)
 - [Application of the Model](#Application-of-the-Model)
 - [Final Words](#Final-Words)
