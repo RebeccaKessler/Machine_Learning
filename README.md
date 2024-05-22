@@ -151,7 +151,7 @@ Now it is time to fine-tune the model on our training data using the optimized t
   - Backward pass: the loss is backpropagated to calculate gradients.
   - Parameter update: gradients are used to then update the current model weigths via the optimizer AdamW.
 
-In this step, we now implemented a K-fold cross-validation to obtain a more robust performance (without cross-validation the accuracy would vary quite stronlgy each time we ran the model). K-fold cross validation means that the data is divided into "k" equal parts. Each part is used as a validation set once while the others serve as the training set (20/80 split), rotating through all "k" parts. In our case, we set k to 5 to not overwhelm our computational resources.
+In this step, we now implemented a K-fold cross-validation to obtain a more robust performance (without cross-validation the accuracy would vary quite stronlgy each time we ran the model). We set k to 5 to not overwhelm our computational resources.
 
 - **Step 6: Evaluation:**
 After each fold, the model is evaluated on the evaluation dataset. Here we primarily use accuracy as the evaluation metric. Based on the result, we continued to manually adjust the various parameters until we were satisifed with the performance of the model. 
