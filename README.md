@@ -151,7 +151,7 @@ Now it is time to fine-tune the model on our training data using the optimized t
   - Backward pass: the loss is backpropagated to calculate gradients.
   - Parameter update: gradients are used to then update the current model weigths via the optimizer AdamW.
 
-In this step, we now implemented a K-fold cross-validation to obtain a more robust performance (without cross-validation the accuracy would vary quite stronlgy each time we ran the model). We set k to 5 to not overwhelm our computational resources.
+In this step, we now implemented a K-fold cross-validation to obtain a more robust performance (without cross-validation the accuracy would vary quite stronlgy each time we ran the model). Hence, in this context, we use cross-validation not to fine-tune the parameters but rather to evaluate the model and compare the Camambert and Flaubert. We set k to 5 to not overwhelm our computational resources.
 
 - **Step 6: Evaluation:**
 After each fold, the model is evaluated on the evaluation dataset. Here we primarily use accuracy as the evaluation metric. After all five folds, we take the average of the statistics to obtain the final evaluation of the model on the training data. 
