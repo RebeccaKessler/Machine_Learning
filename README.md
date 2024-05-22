@@ -17,7 +17,7 @@ This report is divided into six sections.
 # Team Approach and Task Division
 
 We approached the task as a reiterative process, incrementally improving our models to predict the difficulty level of French sentences as accurately as possible. We started off with simple machine learning models inlcuding Logistic Regression, KNN, Decision Tree, and Random Forest before then advancing to more sophisticated large language models (LLMs) such as Distilbert, CamemBert, and Flaubert. Within the different models, we used hyper-parameter optimization to find the best solution. Additionally, we generated a larger dataset using ChatGTP to be able to fine-tine our final model even better. 
-Once we were satisifed with the performance of our models, we started thinking about potential applications of our final model, an attractive user interfence, and an engaging concept for the video presentation. 
+Once we were satisifed with the performance of our models, we started thinking about potential applications of our final model, an attractive user interface, and an engaging concept for the video presentation. 
 To succeed in this undertaking, we distributed the tasks among the members as follows:
 - Giulia: building the different basic machine learning models to predict the language level of French texts and creating the video.
 - Rebecca: working on the advanced techniques and developing the user interface on streamlit.
