@@ -143,7 +143,7 @@ To feed our data to the CamemBert or Flaubert model, we needed to apply the Labe
 - **Step 3: Load model:**
 The model is loaded with its pretrained weights.
 - **Step 4: Define Training Parameters:**
-The models allow to specify various training arguments such as batch size, learning rate, training epochs, or weight decay. The combination of these parameters can signifcantly impact both the computational resources required to run the model as well as the performance. To achieve the best possible performance (i.e. accuracy) of the model we set up a separate hyper-optimization process using Optina. This helped us find a good combination of parameters (epochs, batch size, and learning rate). Ideally, we would already apply cross-validation during this hyperoptimziation process. However, due to limited computational resources, this was not possible.
+The models allow to specify various training arguments such as batch size, learning rate, training epochs, or weight decay. The combination of these parameters can signifcantly impact both the computational resources required to run the model as well as the performance. To achieve the best possible performance (i.e. accuracy) of the model we set up a separate hyper-optimization process using Optina. This helped us find a good combination of parameters (epochs, batch size, and learning rate). Ideally, we would apply cross-validation during this hyperoptimziation process. However, due to limited computational resources, this was not possible.
 - **Step 5: Fine-tuning the model:**
 Now it is time to fine-tune the model on our training data using the optimized training parameters. Fine-tuning allows to adapt a pre-trained model to perform a specifc task, in our case to predict the difficulty of French sentences. Hence, fine-tuning allows the model to specialize in the required task. During the fine-tuning process, the model loops through several key steps in each epoch:
   - Forward pass: the inputs (tokzenized text) are passed through the model to get predictions.
@@ -155,8 +155,8 @@ In this step, we now implemented a K-fold cross-validation to obtain a more robu
 Moreover, we continued to manually adjust the parameters until we were satisfied with the final performance level of the model.
 
 - **Step 6: Evaluation:**
-After each fold, the model is evaluated on the evaluation dataset. Here we primarily use accuracy as the evaluation metric. After the five folds, we calculate the final accuracy by taking the average over all folds. This is the final evaluation depicted in the table above.
-- **Step 7: Prediction:**
+After each fold, the model is evaluated on the evaluation dataset. Here we primarily use accuracy as the evaluation metric. After the five folds, we calculate the final accuracy on the training data by taking the average over all folds. 
+- **Step 7: Prediction on Test Data:**
 Finally, we can use the model to make predictions on the unlabelled test data. For this, we first re-train the model with the optimized parameters on the full dataset and then use this model to make the final predictions. We then did the same using our extended dataset. This provided the highest accuracy on the unlabelled data. Re-training on the original training set and then conducting the predictions provided slightly lower accuracy (however, not sigfnicantly lower). This difference can be explained by the fact that a larger dataset allows the model to learn better. However, the results obtained by retraining on the extended dataset proved to be a lot less robust and would fluctuate a lot each time we run the model. In our final model (see next paragraph), we hence solely relied on the provided training data.
 
 **Combination of Models**
