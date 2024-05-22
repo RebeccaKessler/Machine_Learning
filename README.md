@@ -39,7 +39,7 @@ In the provided git, the following folders and datasets can be found:
 | Recall                   | 46.5%               | 37.6%| 29.9%         | 39.7%           | 55.0%      | 58.9%     | 59.2%       |
 | F1-score                 | 46.1%               | 36.9%| 27.3%         | 37.3%         | 55.0%      | 59%       | 59.4%       |
 | Highest Accuracy on Training Data| 46.7%               | 37.9%| 30%         | 40%         | 55.1%      | 58.9%     | 59.5%       |
-| Higest Accuracy on Unlabeled Data| 46.5%               | 33.8%| 33.4%         | 40.5%         | 56.1%      | 60.2%     | 59.9 %       |
+| Higest Accuracy on Unlabeled Data| 47.5%               | 33.8%| 33.4%         | 40.5%         | 56.1%      | 60.2%     | 59.9 %       |
 
 # Basic Models
 Before moving to more sophisitcated models, we tried to predict the difficulty level of French sentences with the following models : Logistic Regression, k-Nearest Neighbors (KNN), Decision Tree, and Random Forest. For each of these models we predicted the accuracy on the training data as well as on the test data.
