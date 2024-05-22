@@ -93,7 +93,7 @@ To improve the KNN model's class prediction accuracy, we employed multiple loops
 
 We found that the best parameters are k=1 (1 neighbor), p=2 (Euclidian distance), and weight = distance. When training the model with these parameters on 80% of the data, and testing it on 20% of the data, we get an accuracy of 37.9%. We can consider it a great improvement.
 
-To go a step further, we used GridSearchCV for hyperparameter tuning to identify the optimal model parameters. Not much differed from our previous approach using loops. We retained the same parameters for the p value and the weights in the parameter grid. The only change was allowing the number of neighbors to range from 1 to 10, to evaluate if this would enhance accuracy.
+To go a step further, we additionally also used GridSearchCV for hyperparameter tuning to identify the optimal model parameters. Not much differed from our previous approach using loops. We retained the same parameters for the p value and the weights in the parameter grid. The only change was allowing the number of neighbors to range from 1 to 10, to evaluate if this would enhance accuracy.
 
 Unfortunately, this approach did not yield higher accuracy. In fact, it suggested different parameters, resulting in a lower accuracy of 37%, compared to the previous 37.9%. It is possible for hyperparameter tuning to fail in identifying the optimal parameters. Thus, it was beneficial to search for the best parameters using the loops.
 
