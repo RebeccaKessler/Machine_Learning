@@ -34,10 +34,10 @@ In the provided git, the following folders and datasets can be found:
 
 | Metric                   | Logistic Regression | KNN | Decision Tree | Random Forest | Distilbert | CamemBert | Flaubert |
 |--------------------------|---------------------|-----|---------------|---------------|------------|-----------|-------------|
-| Precision                | 44.3%               | 42.9%| 29.9%         | 40%           | 55.5%      | 61.2%     | 60.4%       |
-| Recall                   | 44.9%               | 37.6%| 29.8%         | 39.5%           | 55.0%      | 58.9%     | 59.2%       |
-| F1-score                 | 44.2%               | 36.9%| 24.5%         | 38%         | 55.0%      | 59%       | 59.4%       |
-| Highest Accuracy on Training Data| 45.1%               | 37.9%| 29.6%         | 39.7%         | 55.1%      | 58.9%     | 59.5%       |
+| Precision                | 46.3%               | 42.9%| 31.2%         | 40.5%           | 55.5%      | 61.2%     | 60.4%       |
+| Recall                   | 46.5%               | 37.6%| 29.9%         | 39.7%           | 55.0%      | 58.9%     | 59.2%       |
+| F1-score                 | 46.1%               | 36.9%| 27.3%         | 37.3%         | 55.0%      | 59%       | 59.4%       |
+| Highest Accuracy on Training Data| 46.7%               | 37.9%| 30%         | 40%         | 55.1%      | 58.9%     | 59.5%       |
 | Higest Accuracy on Unlabeled Data| 46.5%               | 33.8%| 33.4%         | 40.5%         | 56.1%      | 60.2%     | 59.9 %       |
 
 # Basic Models
