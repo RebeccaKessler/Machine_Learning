@@ -43,6 +43,8 @@ In the provided git, the following folders and datasets can be found:
 # Basic Models
 Before moving to more sophisitcated models, we tried to predict the difficulty level of French sentences with the following models : Logistic Regression, k-Nearest Neighbors (KNN), Decision Tree, and Random Forest. For each of these models we predicted the accuracy on the training data as well as on the test data.
 
+*Disclamer* : The models output slightly different scores every time the code is run. Thus, it is normal that the numbers in this report do not precisely correspond to the scores obtained when running the code.
+
 **Training and Testing Data**
 
 First of all, we splitted the training dataset into training data and test data  with the train-test-split method. After the splitting, 80% of the dataset would be used to train the model, and the remaining 20% to test the model.
@@ -54,7 +56,7 @@ The data we had needed to be preprocessed in order to be processed by our models
 
 **Logistic Regression**
 
-Out of the four basic models, the one performing the best is the logistic regression. Logistic Regression is a linear classification algorithm. It models the probability that a given input belongs to a particular class using a logistic function. The class predicted is the one that has the highest probability.
+Out of the four basic models, the one performing the best is the Logistic Regression. The Logistic Regression model is a linear classification algorithm. It models the probability that a given input belongs to a particular class using a logistic function. The class predicted is the one that has the highest probability.
 
 We started with a simple Logistic Regression, without specifying any parameters. We trained the model on 80% of the training data, tested it on 20% of the data, and got an accuracy of 45.1%. The precision, recall and F1 scores are all around 44%. This means that the model performance is quite balanced, it is able to identify similarly true positives (precision) and positives in general (recall), which is desirable in classification tasks such as this one.
 
@@ -73,9 +75,7 @@ We used GridSearchCV to go through the combinations of these parameters to find 
 
 Surprisingly, the optimal parameters that are expected to provide the best accuracy for the model (C: 10, Class weights: None, Max iter: 100, Penalty: 12, Solver: liblinear, Tol: 0.0001) actually result in the same accuracy as the previous logistic regression model, which had no specified parameters, namely 45.1%.
 
-SAY WHY WE THINK THIS IS THE CASE
-
-Finally, we retrained the model on the full training dataset without specifying any parameters, as previously noted, this would not improve the accuracy of prediction. After testing the model on the unlabelled test data, we obtain an accuracy of 46.5%.
+Finally, we retrained the model on the full training dataset without specifying any parameters, as previously noted, this would not improve the accuracy of prediction but be more computationally costly. After testing the model on the unlabelled test data, we obtain an accuracy of 46.5%.
 
 **K-Nearest Neighbors (KNN)**
 
@@ -93,9 +93,9 @@ To improve the KNN model's class prediction accuracy, we employed multiple loops
 
 We found that the best parameters are k=1 (1 neighbor), p=2 (Euclidian distance), and weight = distance. When training the model with these parameters on 80% of the data, and testing it on 20% of the data, we get an accuracy of 37.9%. We can consider it a great improvement.
 
-Finally, to go a step further, we used GridSearchCV for hyperparameter tuning to identify the optimal model parameters. Not much differed from our previous approach using loops. We retained the same parameters for the p value and the weights in the parameter grid. The only change was allowing the number of neighbors to range from 1 to 10, to evaluate if this would enhance accuracy.
+To go a step further, we used GridSearchCV for hyperparameter tuning to identify the optimal model parameters. Not much differed from our previous approach using loops. We retained the same parameters for the p value and the weights in the parameter grid. The only change was allowing the number of neighbors to range from 1 to 10, to evaluate if this would enhance accuracy.
 
-Unfortunately, this approach did not yield higher accuracy. In fact, it suggested different parameters, resulting in a lower accuracy of ADD THE ACCURACY, compared to the previous 37.9%. It is possible for hyperparameter tuning to fail in identifying the optimal parameters. Thus, it was beneficial to search for the best parameters using the loops.
+Unfortunately, this approach did not yield higher accuracy. In fact, it suggested different parameters, resulting in a lower accuracy of 37%, compared to the previous 37.9%. It is possible for hyperparameter tuning to fail in identifying the optimal parameters. Thus, it was beneficial to search for the best parameters using the loops.
 
 As a final step, we retrained the KNN classifier on the full training dataset with the best parameters mentioned previously, and tested it on the unlabelled test data. We obtain an accuracy of 33.8%.
 
@@ -104,8 +104,6 @@ As a final step, we retrained the KNN classifier on the full training dataset wi
 A decision tree recursively splits the dataset into subsets based on the value of attributes. It's a tree-like structure where each internal node represents a feature, each branch represents a decision rule, and each leaf node represents the outcome or class label.
 
 Once again, we started by using a Decision Tree Classifier without specifying any parameter. We trained the model on 80% of the training data and tested it on 20% of training data. We get an accuracy of 29.6%. The precision, recall and F1 scores are all around 29%, meaning that the model performance is balanced despite being poor. Similarly to the two previous models, the individual accuracies of the A1 and C1 classes are higher compared to the accuracy of the other classes, altough the difference is smaller this time. In fact, the A1 class accuracy is 67.5%, for C1 it is 57.2%, while for the other classes it ranges between 1-27%.
-
-WHAT CAUSES THIS DIFFERENCE ???
 
 Like for the KNN classifier, we looped over some model parameters to find the optimal parameters. These are the parameters we considered:
 
@@ -118,17 +116,13 @@ Once again, in order to find parameters yielding the highest accuracy, we used G
 
 Finally, we retrained the model on the full training dataset without specifying any parameter, then tested it on the unlabelled test data. We obtain an accuracy of 32.4%.
 
-COMMENT ON IT !!!
-
 **Random Forest**
 
 The last basic model that we tried is the Random Forest Classifier. Random Forest is an ensemble learning method that constructs multiple decision trees during training and outputs the mode of the classes of the individual trees. It improves upon the decision tree algorithm by reducing overfitting and increasing accuracy.
 
 The Random Forest Classifier without any parameter specified, outputed an accuracy of 39.7%. Once again, the accuracy of the A1 class (77.7%) is disproportionately higher than the accuracy of the other classes (30% on average).
 
-SAY WHYYYY ???
-
-Like for the other models, we looped over model some model parameters to find the optimal ones. In this case, the parameters are the same as for the Decision Tree Classifier, with an additional one:
+Like for the other models, we looped over some model parameters to find the optimal ones. In this case, the parameters are the same as for the Decision Tree Classifier, with an additional one:
 
 - **N estimators** : This parameter specifies the number of decision trees to be included in the random forest. Increasing the number of estimators generally improves the performance of the model by reducing overfitting. However, at the same time, it increases computational cost.
 
