@@ -74,9 +74,9 @@ After the simple Logistic Regression, we performed hyperparameter tuning to find
 
 We used GridSearchCV to go through the combinations of these parameters to find the best configuration for our logistic regression model. This method uses cross-validation to evaluate the performance of the model with each set of parameters.
 
-Surprisingly, the optimal parameters that are expected to provide the best accuracy for the model (C: 10, Class weights: None, Max iter: 100, Penalty: 12, Solver: liblinear, Tol: 0.0001) actually result in the same accuracy as the previous logistic regression model, which had no specified parameters, namely 45.1%.
+The optimal parameters resulting from this optimization (C: 10, Class weights: None, Max iter: 100, Penalty: 12, Solver: liblinear, Tol: 0.0001) give an accuracy of 46.7%, which is an improvement compared to the initial accuracy of 45.1%.
 
-Finally, we retrained the model on the full training dataset without specifying any parameters, as previously noted, this would not improve the accuracy of prediction but be more computationally costly. After testing the model on the unlabelled test data, we obtain an accuracy of 46.5%.
+Finally, we retrained the model on the full training dataset with these optimal parameters. After testing the model on the unlabelled test data, we obtain an accuracy of 47.5%.
 
 **K-Nearest Neighbors (KNN)**
 
@@ -84,7 +84,7 @@ KNN is a non-parametric classification algorithm that assigns a class label to a
 
 Similarly as for the Logistic Regression, we started with a K-Neighbors Classifier without specifying any parameter. After training the model on 80% of the training data, and testing it on 20% of the data, we got an accuracy of 31.9%. The precision, recall and F1 scores were lower than for the logistic regression model.
 
-By examining the scores for the individual classes, we observed that sentences in the A1 class are correctly predicted with an accuracy of around 85%, which is significantly higher than the prediction accuracy for the other classes, lower than 25%.
+By examining the scores for the individual classes, we observed that sentences in the A1 class are correctly predicted with an accuracy of around 85%, which is significantly higher than the prediction accuracy for the other classes, being lower than 25%.
 
 To improve the KNN model's class prediction accuracy, we employed multiple loops to iterate over the model parameters and identify which are the optimal ones. The parameters we considered are the following: 
 
@@ -92,30 +92,32 @@ To improve the KNN model's class prediction accuracy, we employed multiple loops
 - **P values** : When p=1, it corresponds to the Manhattan distance (L1 norm: distance calculated as the sum of the absolute differences of the coordinates), when p=2, it corresponds to the Euclidian distance (L2 norm: distance calculated as the square root of the sum of the squared differences of the coordinates). Euclidean distance is more sensitive to differences in magnitude, while Manhattan distance is more robust to outliers.
 - **Weights** : This parameter specifies how to weight the contributions of the neighbors when making a prediction. When it's set to uniform, all neighbors are equally weighted, when it's set to distance, weights are inversely proportional to the distance, meaning that closer neighbors have a greater influence on the prediction.
 
-We found that the best parameters are k=1 (1 neighbor), p=2 (Euclidian distance), and weight = distance. When training the model with these parameters on 80% of the data, and testing it on 20% of the data, we get an accuracy of 37.9%. We can consider it a great improvement.
+We found that the best parameters are k=1 (1 neighbor), p=2 (Euclidian distance), and weights=uniform. When training the model with these parameters on 80% of the data, and testing it on 20% of the data, we get an accuracy of 37.9%. We can consider it a great improvement.
 
-To go a step further, we additionally also used GridSearchCV for hyperparameter tuning to identify the optimal model parameters. Not much differed from our previous approach using loops. We retained the same parameters for the p value and the weights in the parameter grid. The only change was allowing the number of neighbors to range from 1 to 10, to evaluate if this would enhance accuracy.
+To go a step further, we additionally also used GridSearchCV for hyperparameter tuning to identify the optimal model parameters. Not much differed from our previous approach using loops. We retained the same parameters for the p value and the weights in the parameter grid. The only change was allowing the number of neighbors to range from 1 to 8, to evaluate if this would enhance accuracy.
 
-Unfortunately, this approach did not yield higher accuracy. In fact, it suggested different parameters, resulting in a lower accuracy of 37%, compared to the previous 37.9%. It is possible for hyperparameter tuning to fail in identifying the optimal parameters. Thus, it was beneficial to search for the best parameters using the loops.
+Unfortunately, this approach did not yield higher accuracy. In fact, it suggested different parameters (k=3, p=2, weights=distance), resulting in a lower accuracy of 35.8%, compared to the previous 37.9%. It is possible for hyperparameter tuning to fail in identifying the optimal parameters. Thus, it was beneficial to search for the best parameters using the loops.
 
-As a final step, we retrained the KNN classifier on the full training dataset with the best parameters mentioned previously, and tested it on the unlabelled test data. We obtain an accuracy of 33.8%.
+This difference could arise because manual search relies on a single train-test split, which might not generalize well if the split isn't representative of the overall data distribution. In contrast, GridSearchCV uses k-fold cross-validation, evaluating each parameter combination multiple times on different data subsets. Usually, this approach provides a more reliable model performance and allows to identify parameters that generalize better. Therefore, the single train-test split in manual search may be different from the splits used in cross-validation by GridSearchCV, leading to different best parameters. However, in our case the manual search gave parameters resulting in a higher model accuracy than GridSearchCV.
+
+As a final step, we retrained the KNN classifier on the full training dataset with the best parameters mentioned previously (k=1, p=2, weights=uniform.), and tested it on the unlabelled test data. We obtain an accuracy of 33.8%.
 
 **Decision Tree**
 
 A decision tree recursively splits the dataset into subsets based on the value of attributes. It's a tree-like structure where each internal node represents a feature, each branch represents a decision rule, and each leaf node represents the outcome or class label.
 
-Once again, we started by using a Decision Tree Classifier without specifying any parameter. We trained the model on 80% of the training data and tested it on 20% of training data. We get an accuracy of 29.6%. The precision, recall and F1 scores are all around 29%, meaning that the model performance is balanced despite being poor. Similarly to the two previous models, the individual accuracies of the A1 and C1 classes are higher compared to the accuracy of the other classes, altough the difference is smaller this time. In fact, the A1 class accuracy is 67.5%, for C1 it is 57.2%, while for the other classes it ranges between 1-27%.
+Once again, we started by using a Decision Tree Classifier without specifying any parameter. We trained the model on 80% of the training data and tested it on 20% of training data. We got an accuracy of 28.8%. The precision, recall and F1 scores are all around 28%, meaning that the model performance is balanced despite being poor. Similarly to the two previous models, the individual accuracy of the A1 class is higher compared to the accuracy of the other classes, altough the difference is smaller this time. In fact, for the A1 class the accuracy is 55.4%, while for the other classes it ranges between 19-26%.
 
 Like for the KNN classifier, we looped over some model parameters to find the optimal parameters. These are the parameters we considered:
 
 - **Criterion** : This parameter specifies which function to use to measure the quality of a split, it determines how the decision tree evaluates the potential splits at each node. If it's equal to Gini, it uses the Gini impurity to measure the quality of a split. If it's equal to Entropy, it uses the information gain based on entropy to measure it.
 - **Max depth** : This parameter specifies the maximum depth of the tree, in other words, how many times the tree will split. Increasing the depth allows the tree to learn more in the data but also increases the risk of overfitting.
 
-After looping over these model parameters, we found that the highest accuracy of 29.6% was obtained with the model parameters Criterion: entropy and Max depth: 5. However, this accuracy of 29.6% is lower than the initially obtained one, namely, 29.9%.
+After looping over these model parameters, we found that the highest accuracy of 29.6% was obtained with the model parameters Criterion: entropy and Max depth: 5. This newly obtained accuracy was already slightly higher than the initially obtained one, namely, 28.8%.
 
-Once again, in order to find parameters yielding the highest accuracy, we used GridSearchCV to perform hyperparameter tuning. In the parameter grid, we retained the same parameters as for the loops, and additionally we allowed the max depth to range from 1 to 10. This time, the best parameters seemed to be Criterion: entropy and Max depth: 9. However, surprisingly, the accuracy obtained with these parameters is 29.6%. The same as with the previous best parameters and still lower than the initial one (29.9%).
+Once again, in order to find parameters yielding the highest accuracy, we used GridSearchCV to perform hyperparameter tuning. In the parameter grid, we retained the same parameters as for the loops, and additionally we allowed the max depth to range from 1 to 10. This time, the best parameters were Criterion: entropy and Max depth: 10. The accuracy obtained with these parameters slightly increased again, reaching 30%.
 
-Finally, we retrained the model on the full training dataset without specifying any parameter, then tested it on the unlabelled test data. We obtain an accuracy of 32.4%.
+Finally, we retrained the model on the full training dataset with these optimal parameters (Criterion: entropy, Max depth: 10), and tested it on the unlabelled test data. We obtain an accuracy of 32.4%.
 
 **Random Forest**
 
