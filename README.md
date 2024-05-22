@@ -123,15 +123,15 @@ Finally, we retrained the model on the full training dataset with these optimal 
 
 The last basic model that we tried is the Random Forest Classifier. Random Forest is an ensemble learning method that constructs multiple decision trees during training and outputs the mode of the classes of the individual trees. It improves upon the decision tree algorithm by reducing overfitting and increasing accuracy.
 
-The Random Forest Classifier without any parameter specified, outputed an accuracy of 39.7%. Once again, the accuracy of the A1 class (77.7%) is disproportionately higher than the accuracy of the other classes (30% on average).
+The Random Forest Classifier without any parameter specified, outputed an accuracy of 37.8%. Once again, the accuracy of the A1 class (80.7%) is disproportionately higher than the accuracy of the other classes (29% on average).
 
 Like for the other models, we looped over some model parameters to find the optimal ones. In this case, the parameters are the same as for the Decision Tree Classifier, with an additional one:
 
 - **N estimators** : This parameter specifies the number of decision trees to be included in the random forest. Increasing the number of estimators generally improves the performance of the model by reducing overfitting. However, at the same time, it increases computational cost.
 
-This method gives as best parameters N estimators: 11, Criterion: entropy, Max depth: 10 for an accuracy of 34.8%, not representing an improvement compared to the initial accuracy of 39.7%.
+This method gives as best parameters N estimators: 150, Criterion: entropy, Max depth: 10 for an accuracy of 40%, representing an improvement compared to the initial accuracy of 39.7%.
 
-Then we performed hyperparameter tuning using GridSearchCV, which gave as optimal parameters N estimators: 9, Criterion: entropy, Max depth: 9. This, once again, doesn't seem to have worked as the accuracy obtained with those parameters is 29.6%, significantly lower than 39.7%.
+Then, we tried to perform hyperparameter tuning using GridSearchCV, as we did for the other models, to see if we could get parameters leading to an even higher accuracy. Unfortunately, this method was too computationally costly, very likely due to the high number of N estimators. Therefore, we decided to stop there and take the best parameters resulting from the manual search.
 
 Finally, we retrained the Random Forest Classifier on the full training data and tested it on the unlabelled test data. We obtain an accuracy of 40.5%.
 
