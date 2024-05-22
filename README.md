@@ -183,4 +183,4 @@ Explore our app: https://bookly.streamlit.app/
 # Final Words
 
 To present our application, we developed an interactive video.
-Watch our video here: 
+Watch our video here: https://youtu.be/MpiiiEG3VD8
